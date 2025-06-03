@@ -105,7 +105,7 @@ const DesktopNavContent: React.FC<DesktopNavContentProps> = ({
 };
 
 export function NavigationBar() {
-  const [isOpen, setIsOpen] = useState(false);
+  
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'menu' | 'categories'>('menu');
   const [isStickyDesktopNav, setIsStickyDesktopNav] = useState(false);
