@@ -57,10 +57,10 @@ const DesktopNavContent: React.FC<DesktopNavContentProps> = ({
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
-              className="flex items-center border-none out-of-range:outline-none shadow-none bg-transparent hover:bg-transparent space-x-2 h-10 focus-visible:outline-none focus-visible:ring-0"
+              className="flex items-center border-none font-normal px-10 out-of-range:outline-none shadow-none bg-transparent hover:bg-transparent space-x-2 h-10 focus-visible:outline-none focus-visible:ring-0"
             >
-              <Menu className="h-8 w-8 text-red-700 font-bold" />
-              <span className="text-sm">All Categories</span>
+              <Menu className="     scale-200" />
+              <span className="text-lg  ">All Categories</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-64">
@@ -83,12 +83,14 @@ const DesktopNavContent: React.FC<DesktopNavContentProps> = ({
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <div className="flex items-center border-black justify-center flex-1 space-x-4">
+     
+
+        <div className="flex items-center  justify-center flex-1  ">
           {navItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="text-gray-700 hover:text-blue-700 hover:bg-blue-900/10 px-3 py-2 rounded-md text-md font-medium"
+              className="text-gray-900   hover:text-gray-700 px-3 py-2  transition-all   rounded-none hover:border-b-2 hover:font-medium border-black bg-transparent text-md font-normal"
             >
               {item.name}
             </Link>
@@ -141,12 +143,12 @@ export function NavigationBar() {
 
   const navItems = [
     { name: "Home", href: "/" },
-    { name: "apple Silicone Case", href: "/apple-silicone-case" },
-    { name: "Packing Materials", href: "/packing-materials" },
+    { name: "New Arrivals", href: "/apple-silicone-case" },
+    { name: "Offers", href: "/packing-materials" },
     { name: "Contact", href: "/contact" },
-    { name: "Track", href: "/track" },
-    { name: "blog", href: "/blog" },
-    { name: "Wishlist", href: "/wishlist" },
+    { name: "About", href: "/track" },
+    { name: "Track Order", href: "/blog" },
+    
   ];
 
   const categories = [
@@ -174,7 +176,7 @@ export function NavigationBar() {
   ];
 
   return (
-    <div className={isDesktop? "flex flex-col mb-[-58px]" : "flex flex-col "}>
+    <div className={isDesktop? "flex flex-col mb-[-70px]" : "flex flex-col "}>
       {/* Top Announcement Bar */}
       <div className="bg-blue-900 text-white flex items-center justify-between py-2 px-4 text-sm">
         <div className="hidden sm:flex space-x-3">
@@ -207,7 +209,7 @@ export function NavigationBar() {
                 transform: isStickyMobileNav ? 'translateY(0)' : 'translateY(0)',
                 top: isStickyMobileNav ? '0' : 'auto',
                 transition: isStickyMobileNav
-                  ? 'transform 500ms ease-in-out, box-shadow 500ms ease-in-out'
+                  ? 'transform 500ms ease-in-out  , box-shadow 500ms ease-in-out'
                   : 'none',
               }
             : {}
@@ -315,9 +317,9 @@ export function NavigationBar() {
             <div className="relative w-full max-w-xs">
               <Input
                 placeholder="Search our store"
-                className="w-full pr-10 rounded-none focus:border-none shadow-none border-2 text-lg h-14 font-bold"
+                className="w-full pr-10 rounded-none focus:border-none  border-gray-900 focus-visible:outline-none  shadow-none border-1 text-lg h-12 font-normal text-gray-900"
               />
-              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 sm:scale-125 text-gray-400" />
+              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 sm:scale-100 text-gray-900" />
             </div>
           </div>
         </div>
@@ -376,17 +378,17 @@ export function NavigationBar() {
         <>
           <div
             ref={desktopNavRef}
-            className={`hidden md:block  border-b border-gray-200 border-t h-14 bg-white w-full relative transition-opacity duration-300 ${
+            className={`hidden md:block  border-b lg:flex lg:items-center border-gray-200 border-t h-18 bg-white w-full relative transition-opacity duration-300 ${
               isStickyDesktopNav ? 'invisible opacity-0' : 'visible opacity-100'
             }`}
           >
-            <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8" style={{width:'100%'}}>
               <DesktopNavContent navItems={navItems} categories={categories} />
             </div>
           </div>
 
           <nav
-            className={`hidden md:block border-b border-gray-200 border-t h-14 bg-white transition-transform duration-300 transition-opacity duration-300 w-full ${
+            className={`hidden md:block border-b lg:flex lg:items-center  border-gray-200 border-t h-18 bg-white transition-transform duration-300 transition-opacity duration-300 w-full ${
               isStickyDesktopNav ? 'fixed top-0 z-40 shadow-md' : 'relative'
             }`}
             style={{
@@ -395,7 +397,7 @@ export function NavigationBar() {
               pointerEvents: isStickyDesktopNav ? 'auto' : 'none',
             }}
           >
-            <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8" style={{width:'100%'}}>
               <DesktopNavContent navItems={navItems} categories={categories} />
             </div>
           </nav>

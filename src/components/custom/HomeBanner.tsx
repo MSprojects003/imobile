@@ -86,22 +86,22 @@ export function HomeBanner() {
 
         {/* Previous Button */}
         <CarouselPrevious
-          className={`absolute top-1/2 -translate-y-1/2 bg-blue-900 text-white rounded-full border-none p-3 transition-all duration-300 ease-in-out ${
-            isHovered ? 'left-[20%] opacity-100' : 'left[0%] opacity-0'
+          className={`absolute top-1/2 -translate-y-1/2 bg-blue-900 shadow-sm shadow-black   text-white rounded-full border-none p-6 transition-all duration-300 ease-in-out ${
+            isHovered ? 'left-[5%] opacity-100 ' : 'left[0%] opacity-0'
           }`}
           aria-label="Previous Slide"
         >
-          <ChevronLeft className="h-6 w-6" />
+          <ChevronLeft   />
         </CarouselPrevious>
 
         {/* Next Button */}
         <CarouselNext
-          className={`absolute top-1/2 -translate-y-1/2 bg-blue-900 text-white rounded-full border-none p-3 transition-all duration-300 ease-in-out ${
-            isHovered ? 'right-[20%] opacity-100' : 'right-[0%] opacity-0'
+          className={`absolute top-1/2 -translate-y-1/2 bg-blue-900 shadow-sm shadow-black text-white rounded-full border-none  p-6 transition-all duration-300 ease-in-out ${
+            isHovered ? 'right-[5%] opacity-100' : 'right-[0%] opacity-0'
           }`}
           aria-label="Next Slide"
         >
-          <ChevronRight className="h-6 w-6" />
+          <ChevronRight   />
         </CarouselNext>
       </Carousel>
     </div>
