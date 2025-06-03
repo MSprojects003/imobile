@@ -1,3 +1,4 @@
+ 
 'use client';
 
 import { Button } from "@/components/ui/button";
@@ -9,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import {
   ShoppingCart,
@@ -20,6 +21,7 @@ import {
   Youtube,
   Search,
   User,
+  Percent,
 } from "lucide-react";
 
 import logo from "../../pictures/logo.png";
@@ -36,10 +38,69 @@ import {
 
 // Basic VisuallyHidden utility for accessibility title
 const VisuallyHidden = ({ children }: { children: React.ReactNode }) => {
+  return <span className="sr-only">{children}</span>;
+};
+
+interface DesktopNavContentProps {
+  navItems: { name: string; href: string }[];
+  categories: string[];
+}
+
+const DesktopNavContent: React.FC<DesktopNavContentProps> = ({
+  navItems,
+  categories,
+}) => {
   return (
-    <span className="sr-only">
-      {children}
-    </span>
+    <>
+      <div className="flex items-center h-14">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="outline"
+              className="flex items-center border-none out-of-range:outline-none shadow-none bg-transparent hover:bg-transparent space-x-2 h-10 focus-visible:outline-none focus-visible:ring-0"
+            >
+              <Menu className="h-8 w-8 text-red-700 font-bold" />
+              <span className="text-sm">All Categories</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-64">
+            <DropdownMenuItem className="font-semibold text-blue-900 text-sm">
+              Shop by Category
+            </DropdownMenuItem>
+            {categories.map((category) => (
+              <DropdownMenuItem key={category} asChild>
+                <Link
+                  href={`/category/${category
+                    .toLowerCase()
+                    .replace(/ & /g, '-')
+                    .replace(/ /g, '-')}`}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-900/10 hover:text-blue-700"
+                >
+                  {category}
+                </Link>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <div className="flex items-center border-black justify-center flex-1 space-x-4">
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className="text-gray-700 hover:text-blue-700 hover:bg-blue-900/10 px-3 py-2 rounded-md text-md font-medium"
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
+
+        <div className="flex items-center space-x-2 text-red-600 font-medium ml-auto">
+          <Percent className="h-5 w-5" />
+          <span>Special up to 60% Off all item</span>
+        </div>
+      </div>
+    </>
   );
 };
 
@@ -47,6 +108,36 @@ export function NavigationBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'menu' | 'categories'>('menu');
+  const [isStickyDesktopNav, setIsStickyDesktopNav] = useState(false);
+  const [isStickyMobileNav, setIsStickyMobileNav] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  const mainNavRef = useRef<HTMLDivElement>(null);
+  const desktopNavRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setIsDesktop(window.innerWidth >= 990);
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 990);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolledPast = window.scrollY > 100;
+      if (isDesktop) {
+        setIsStickyDesktopNav(scrolledPast);
+        setIsStickyMobileNav(false);
+      } else {
+        setIsStickyMobileNav(scrolledPast);
+        setIsStickyDesktopNav(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isDesktop]);
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -83,10 +174,9 @@ export function NavigationBar() {
   ];
 
   return (
-    <div className="flex flex-col">
+    <div className={isDesktop? "flex flex-col mb-[-58px]" : "flex flex-col "}>
       {/* Top Announcement Bar */}
       <div className="bg-blue-900 text-white flex items-center justify-between py-2 px-4 text-sm">
-        {/* Hide social media icons on mobile */}
         <div className="hidden sm:flex space-x-3">
           <Link href="https://facebook.com">
             <Facebook className="h-4 w-4" />
@@ -94,54 +184,54 @@ export function NavigationBar() {
           <Link href="https://instagram.com">
             <Instagram className="h-4 w-4" />
           </Link>
-         
           <Link href="https://youtube.com">
             <Youtube className="h-4 w-4" />
           </Link>
         </div>
         <div className="flex items-center space-x-2">
           <span>Free Delivery for orders above Rs. 1999</span>
-           
         </div>
       </div>
 
       {/* Main Navigation Bar */}
-      <div className="flex items-center justify-between py-3 px-6 border-b border-gray-200 bg-gray-50">
-        {/* Left Section - Hamburger Menu (Mobile) and Search (Desktop) */}
+      <div
+        ref={mainNavRef}
+        className={`flex items-center justify-between py-3 px-6 border-b border-gray-200 bg-white transition-all duration-200 ease-in-out w-full ${
+          isStickyMobileNav && !isDesktop
+            ? 'fixed top-0 left-0 right-0 z-50 shadow-md'
+            : 'relative'
+        }`}
+        style={
+          !isDesktop
+            ? {
+                transform: isStickyMobileNav ? 'translateY(0)' : 'translateY(0)',
+                top: isStickyMobileNav ? '0' : 'auto',
+                transition: isStickyMobileNav
+                  ? 'transform 500ms ease-in-out, box-shadow 500ms ease-in-out'
+                  : 'none',
+              }
+            : {}
+        }
+      >
         <div className="flex items-center md:w-1/3">
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-10 w-10"
-                >
+                <Button variant="ghost" size="icon" className="h-10 w-10">
                   <Menu className="scale-200" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-full sm:max-w-sm flex flex-col px-4 pb-4 sheet-content-no-default-close">
+              <SheetContent
+                side="left"
+                className="w-full sm:max-w-sm flex flex-col px-4 pb-4 sheet-content-no-default-close"
+              >
                 <SheetHeader className="flex flex-row items-center justify-between py-2">
-                  {/* Logo in Sheet Header */}
                   <div>
-                    <Image
-                      src={logo}
-                      alt="Perfect Deals Logo"
-                      width={100}
-                      height={100}
-                    />
+                    <Image src={logo} alt="Perfect Deals Logo" width={100} height={100} />
                   </div>
-                   {/* Accessible Title (Visually Hidden) */}
-                   <SheetTitle>
-                     <VisuallyHidden>Navigation Menu</VisuallyHidden>
-                   </SheetTitle>
-                  {/* Close Button */}
-                  <SheetClose asChild>
-                    <Button variant="ghost" size="icon" className="h-10 w-10">
-                      <X className="h-5 w-5 text-gray-600" />
-                    </Button>
-                  </SheetClose>
-                  {/* Hide the default close button that comes with SheetContent */}
+                  <SheetTitle>
+                    <VisuallyHidden>Navigation Menu</VisuallyHidden>
+                  </SheetTitle>
                   <style jsx global>{`
                     [data-slot="sheet-content"] > button[data-radix-dialog-close]:not(:has(span.sr-only)) {
                       display: none !important;
@@ -149,25 +239,31 @@ export function NavigationBar() {
                   `}</style>
                 </SheetHeader>
 
-                {/* Tabs */}
                 <div className="flex border-b border-gray-200">
                   <Button
                     variant={activeTab === 'menu' ? 'default' : 'outline'}
-                    className={`flex-1 py-2 text-sm ${activeTab === 'menu' ? 'bg-blue-900 text-white' : 'text-gray-700'}`}
+                    className={`flex-1 py-2 text-sm ${
+                      activeTab === 'menu'
+                        ? 'border-b-2 border-blue-900 text-black bg-transparent rounded-none'
+                        : 'text-gray-700 border-none shadow-none'
+                    }`}
                     onClick={() => setActiveTab('menu')}
                   >
                     Menu
                   </Button>
                   <Button
                     variant={activeTab === 'categories' ? 'default' : 'outline'}
-                    className={`flex-1 py-2 text-sm ${activeTab === 'categories' ? 'bg-blue-900 text-white' : 'text-gray-700'}`}
+                    className={`flex-1 py-2 text-sm ${
+                      activeTab === 'categories'
+                        ? 'border-b-2 border-blue-900 text-black bg-transparent rounded-none'
+                        : 'text-gray-700 border-none shadow-none'
+                    }`}
                     onClick={() => setActiveTab('categories')}
                   >
                     Categories
                   </Button>
                 </div>
 
-                {/* Tab Content */}
                 <div className="px-4 pt-2 pb-4 space-y-1 overflow-y-auto flex-grow">
                   {activeTab === 'menu' ? (
                     <>
@@ -175,7 +271,7 @@ export function NavigationBar() {
                         <SheetClose asChild key={item.name}>
                           <Link
                             href={item.href}
-                            className="block px-3 py-2 text-gray-700 hover:bg-blue-900/10 hover:text-blue-700 rounded-md text-base font-medium"
+                            className="block px-3 py-2 text-gray-700 hover:bg-blue-900/10 hover:text-blue-700 rounded-md font-medium"
                           >
                             {item.name}
                           </Link>
@@ -187,7 +283,10 @@ export function NavigationBar() {
                       {categories.map((category) => (
                         <SheetClose asChild key={category}>
                           <Link
-                            href={`/category/${category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
+                            href={`/category/${category
+                              .toLowerCase()
+                              .replace(/ & /g, '-')
+                              .replace(/ /g, '-')}`}
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-900/10 hover:text-blue-700"
                           >
                             {category}
@@ -198,9 +297,8 @@ export function NavigationBar() {
                   )}
                 </div>
 
-                {/* My Account Section */}
                 <div className="px-4 pt-4 border-t border-gray-200 mt-auto">
-                  <p className="px-3 py-2 text-gray-700 font-medium text-sm">My Account</p>
+                  <p className="px-3 py-2 text-gray-900 font-medium text-sm">My Account</p>
                   <SheetClose asChild>
                     <Button
                       variant="default"
@@ -217,49 +315,42 @@ export function NavigationBar() {
             <div className="relative w-full max-w-xs">
               <Input
                 placeholder="Search our store"
-                className="w-full pr-10  rounded-none focus:border-none border-2  h-10 text-sm"
+                className="w-full pr-10 rounded-none focus:border-none shadow-none border-2 text-lg h-14 font-bold"
               />
-              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 sm:scale-125 text-gray-400" />
             </div>
           </div>
         </div>
 
-        {/* Center Section - Logo */}
         <div className="flex-1 flex justify-center items-center">
           <Link href="/" className="block">
-            <Image
-              src={logo}
-              alt="Perfect Deals Logo"
-              width={150}
-              height={150}
-            />
+            <Image src={logo} alt="Perfect Deals Logo" width={170} height={170} />
           </Link>
         </div>
 
-        {/* Right Section - Search (Mobile), Cart, and Profile */}
-        <div className="flex items-center justify-end md:w-1/3 space-x-4">
-         <Button
-  variant="ghost"
-  size="icon"
-  onClick={() => setIsSearchOpen(!isSearchOpen)}
-  className="md:hidden   text-grey-600 hover:text-blue-700"
->
-  <Search  className="scale-150"/>
-</Button>
+        <div className="flex items-center justify-end md:w-1/3 space-x-2 md:space-x-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsSearchOpen(!isSearchOpen)}
+            className="md:hidden text-grey-600 hover:text-blue-700"
+          >
+            <Search className="scale-150" />
+          </Button>
 
           <Link href="/cart" className="relative">
-            <ShoppingCart className=" sm:scale-125  text-gray-900 hover:text-blue-700" />
+            <ShoppingCart className="sm:scale-125 text-gray-900 hover:text-blue-700" />
             <span className="absolute -top-1 -right-1 bg-blue-900 text-white text-[9px] rounded-full h-4 w-4 flex items-center justify-center">
               0
             </span>
           </Link>
           <Link href="/profile" className="hidden md:block">
-            <User className="h-5 w-5 text-gray-600 hover:text-blue-700" />
+            <User className="sm:scale-125 text-gray-900 hover:text-blue-900" />
           </Link>
         </div>
       </div>
 
-      {/* Mobile Search Bar (Top to Bottom Transform) */}
+      {/* Mobile Search Bar */}
       {isSearchOpen && (
         <div className="md:hidden bg-white border-b border-gray-200 px-4 py-3 animate-slide-down">
           <div className="relative">
@@ -281,49 +372,49 @@ export function NavigationBar() {
       )}
 
       {/* Desktop Navigation */}
-      <nav className="hidden md:block border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
-          <div className="flex items-center h-14">
-            {/* All Categories - Aligned Left */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="flex items-center border-none shadow-none bg-transparent hover:bg-transparent space-x-2 h-10">
-                  <Menu className="h-8 w-8 text-red-700 font-bold" />
-                  <span className="text-sm">All Categories</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-64">
-                <DropdownMenuItem className="font-semibold text-blue-900 text-sm">
-                  Shop by Category
-                </DropdownMenuItem>
-                {categories.map((category) => (
-                  <DropdownMenuItem key={category} asChild>
-                    <Link
-                      href={`/category/${category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-900/10 hover:text-blue-700"
-                    >
-                      {category}
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            {/* Centered Navigation Links */}
-            <div className="flex items-center justify-center flex-1 space-x-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-gray-700 hover:text-blue-700 hover:bg-blue-900/10 px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  {item.name}
-                </Link>
-              ))}
+      {isDesktop && (
+        <>
+          <div
+            ref={desktopNavRef}
+            className={`hidden md:block  border-b border-gray-200 border-t h-14 bg-white w-full relative transition-opacity duration-300 ${
+              isStickyDesktopNav ? 'invisible opacity-0' : 'visible opacity-100'
+            }`}
+          >
+            <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
+              <DesktopNavContent navItems={navItems} categories={categories} />
             </div>
           </div>
-        </div>
-      </nav>
+
+          <nav
+            className={`hidden md:block border-b border-gray-200 border-t h-14 bg-white transition-transform duration-300 transition-opacity duration-300 w-full ${
+              isStickyDesktopNav ? 'fixed top-0 z-40 shadow-md' : 'relative'
+            }`}
+            style={{
+              transform: isStickyDesktopNav ? 'translateY(0)' : 'translateY(-100%)',
+              opacity: isStickyDesktopNav ? 1 : 0,
+              pointerEvents: isStickyDesktopNav ? 'auto' : 'none',
+            }}
+          >
+            <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
+              <DesktopNavContent navItems={navItems} categories={categories} />
+            </div>
+          </nav>
+        </>
+      )}
+
+      {/* Placeholder for Sticky Navigation */}
+      {(isStickyDesktopNav && isDesktop && desktopNavRef.current) ||
+      (isStickyMobileNav && !isDesktop && mainNavRef.current) ? (
+        <div
+          style={{
+            height: isDesktop
+              ? `${desktopNavRef.current?.offsetHeight}px`
+              : `${mainNavRef.current?.offsetHeight}px`,
+            transition: 'height 200ms ease-in-out',
+          }}
+        ></div>
+      ) : null}
     </div>
   );
 }
+ 
