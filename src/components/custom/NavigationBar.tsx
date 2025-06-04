@@ -21,6 +21,7 @@ import {
   Search,
   User,
   Percent,
+  UserCog,
 } from "lucide-react";
 
 import logo from "../../pictures/logo.png"; // Adjust path if needed
@@ -292,13 +293,17 @@ export function NavigationBar() {
                 </div>
 
                 <div className="px-4 pt-4 border-t border-gray-200 mt-auto">
-                  <p className="px-3 py-2 text-gray-900 font-medium text-sm">My Account</p>
+                  <p className="px-3 py-2 flex items-center gap-4 text-gray-900 font-medium text-sm">
+                    <UserCog />
+                    My Account</p>
                   <SheetClose asChild>
                     <Button
                       variant="default"
                       className="w-full mt-2 bg-blue-900 text-white hover:bg-blue-700 h-10 text-sm"
                     >
+                      <Link href="/login">
                       <User className="h-4 w-4 mr-2" /> Log in
+                      </Link>
                     </Button>
                   </SheetClose>
                 </div>
@@ -338,7 +343,7 @@ export function NavigationBar() {
               0
             </span>
           </Link>
-          <Link href="/profile" className="hidden xl:block">
+          <Link href="/login" className="hidden xl:block">
             <User className="scale-125 text-gray-900 hover:text-blue-900" />
           </Link>
         </div>
