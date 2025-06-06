@@ -22,6 +22,8 @@ import {
   User,
   Percent,
   UserCog,
+  Check,
+  Badge,
 } from "lucide-react";
 
 import logo from "../../pictures/logo.png"; // Adjust path if needed
@@ -34,6 +36,15 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { useQuery } from "@tanstack/react-query";
+import { getAuthUser } from "@/lib/db/user";
+import { toast } from "sonner";
 
 // Basic VisuallyHidden utility for accessibility title
 const VisuallyHidden = ({ children }: { children: React.ReactNode }) => {
@@ -41,28 +52,36 @@ const VisuallyHidden = ({ children }: { children: React.ReactNode }) => {
 };
 
 interface DesktopNavContentProps {
-  navItems: { name: string; href: string }[];
+  navItems: { name: string; href: string; requiresAuth?: boolean }[];
   categories: string[];
+  user: any | null;
 }
 
 const DesktopNavContent: React.FC<DesktopNavContentProps> = ({
   navItems,
   categories,
+  user,
 }) => {
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
+
   return (
     <div className="flex items-center h-14">
-      <DropdownMenu>
+      <DropdownMenu onOpenChange={(open) => setIsCategoriesOpen(open)}>
         <DropdownMenuTrigger asChild>
           <Button
             variant="outline"
             className="flex items-center border-none font-normal px-10 outline-none shadow-none bg-transparent hover:bg-transparent space-x-2 h-10 focus-visible:outline-none focus-visible:ring-0"
           >
-            <Menu className="scale-200" />
+            {isCategoriesOpen ? (
+              <X className="scale-200 transition-transform duration-200" />
+            ) : (
+              <Menu className="scale-200 transition-transform duration-200" />
+            )}
             <span className="text-lg">All Categories</span>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-64">
-          <DropdownMenuItem className="font-semibold text-blue-900 text-sm">
+        <DropdownMenuContent className="w-80 ml-4 pb-3">
+          <DropdownMenuItem className="font-semibold text-blue-900 text-sm px-6 py-3">
             Shop by Category
           </DropdownMenuItem>
           {categories.map((category) => (
@@ -72,7 +91,7 @@ const DesktopNavContent: React.FC<DesktopNavContentProps> = ({
                   .toLowerCase()
                   .replace(/ & /g, '-')
                   .replace(/ /g, '-')}`}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-900/10 hover:text-blue-700"
+                className="block px-6 py-2.5 text-sm text-gray-700 hover:bg-blue-900/10 hover:text-blue-700"
               >
                 {category}
               </Link>
@@ -83,13 +102,29 @@ const DesktopNavContent: React.FC<DesktopNavContentProps> = ({
 
       <div className="flex items-center justify-center flex-1">
         {navItems.map((item) => (
-          <Link
-            key={item.name}
-            href={item.href}
-            className="text-gray-900 hover:text-gray-700 px-3 py-2 transition-all rounded-none hover:border-b-2 hover:font-medium border-black bg-transparent text-md font-normal"
-          >
-            {item.name}
-          </Link>
+          <TooltipProvider key={item.name}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                {item.requiresAuth && !user ? (
+                  <span className="text-gray-400 cursor-not-allowed px-3 py-2 text-md font-normal">
+                    {item.name}
+                  </span>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className="text-gray-900 hover:text-gray-700 px-3 py-2 transition-all rounded-none hover:border-b-2 hover:font-medium border-black bg-transparent text-md font-normal"
+                  >
+                    {item.name}
+                  </Link>
+                )}
+              </TooltipTrigger>
+              {item.requiresAuth && !user && (
+                <TooltipContent>
+                  <p>Please sign in to {item.name.toLowerCase()}</p>
+                </TooltipContent>
+              )}
+            </Tooltip>
+          </TooltipProvider>
         ))}
       </div>
 
@@ -107,9 +142,16 @@ export function NavigationBar() {
   const [isStickyDesktopNav, setIsStickyDesktopNav] = useState(false);
   const [isStickyMobileNav, setIsStickyMobileNav] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
 
   const mainNavRef = useRef<HTMLDivElement>(null);
   const desktopNavRef = useRef<HTMLDivElement>(null);
+  
+  const { data: user } = useQuery({
+    queryKey: ["auth-user"],
+    queryFn: getAuthUser,
+    retry: false,
+  });
 
   useEffect(() => {
     setIsDesktop(window.innerWidth >= 990);
@@ -141,7 +183,7 @@ export function NavigationBar() {
     { name: "Offers", href: "/packing-materials" },
     { name: "Contact", href: "/contact" },
     { name: "About", href: "/track" },
-    { name: "Track Order", href: "/blog" },
+    { name: "Track Order", href: "/blog", requiresAuth: true },
   ];
 
   const categories = [
@@ -167,6 +209,10 @@ export function NavigationBar() {
     "Computer Accessories",
     "Gadgets",
   ];
+
+  const handleDisabledClick = () => {
+    window.location.href = "/login";
+  };
 
   return (
     <div className={isDesktop ? "flex flex-col mb-[-70px]" : "flex flex-col"}>
@@ -264,12 +310,21 @@ export function NavigationBar() {
                     <>
                       {navItems.map((item) => (
                         <SheetClose asChild key={item.name}>
-                          <Link
-                            href={item.href}
-                            className="block px-3 py-2 text-gray-700 hover:bg-blue-900/10 hover:text-blue-700 rounded-md font-medium"
-                          >
-                            {item.name}
-                          </Link>
+                          {item.requiresAuth && !user ? (
+                            <div 
+                              onClick={handleDisabledClick}
+                              className="block px-3 py-2 text-gray-400 cursor-pointer hover:text-gray-600"
+                            >
+                              {item.name}
+                            </div>
+                          ) : (
+                            <Link
+                              href={item.href}
+                              className="block px-3 py-2 text-gray-700 hover:bg-blue-900/10 hover:text-blue-700 rounded-md font-medium"
+                            >
+                              {item.name}
+                            </Link>
+                          )}
                         </SheetClose>
                       ))}
                     </>
@@ -293,16 +348,49 @@ export function NavigationBar() {
                 </div>
 
                 <div className="px-4 pt-4 border-t border-gray-200 mt-auto">
-                  <p className="px-3 py-2 flex items-center gap-4 text-gray-900 font-medium text-sm">
-                    <UserCog />
-                    My Account</p>
+                  <div className="px-3 py-2 flex items-center gap-4 text-gray-900 font-medium text-sm">
+                    <div className="relative">
+                      <UserCog />
+                      {user && (
+                        <Badge className="absolute -top-1 -right-1 h-4 w-4 text-white bg-blue-800 rounded-full p-0.5" />
+                      )}
+                    </div>
+                    <span>My Account</span>
+                    {user && (
+                      <span className="text-sm text-gray-500">({user.email})</span>
+                    )}
+                  </div>
+
+                  <SheetClose asChild>
+                    {user ? (
+                      <Link href="/cart" className="flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-blue-900/10 hover:text-blue-700 rounded-md mt-2">
+                        <ShoppingCart className="h-5 w-5" />
+                        <span>Cart</span>
+                        <span className="bg-blue-900 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                          0
+                        </span>
+                      </Link>
+                    ) : (
+                      <div 
+                        onClick={handleDisabledClick}
+                        className="flex items-center gap-2 px-3 py-2 text-gray-400 cursor-pointer hover:text-gray-600 mt-2"
+                      >
+                        <ShoppingCart className="h-5 w-5" />
+                        <span>Cart</span>
+                        <span className="bg-gray-400 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                          0
+                        </span>
+                      </div>
+                    )}
+                  </SheetClose>
+
                   <SheetClose asChild>
                     <Button
                       variant="default"
                       className="w-full mt-2 bg-blue-900 text-white hover:bg-blue-700 h-10 text-sm"
                     >
                       <Link href="/login">
-                      <User className="h-4 w-4 mr-2" /> Log in
+                        <User className="h-4 w-4 mr-2" /> {user ? "View Profile" : "Log in"}
                       </Link>
                     </Button>
                   </SheetClose>
@@ -337,15 +425,60 @@ export function NavigationBar() {
             <Search className="scale-150" />
           </Button>
 
-          <Link href="/cart" className="relative">
-            <ShoppingCart className="scale-125 text-gray-900 hover:text-blue-700" />
-            <span className="absolute -top-1 -right-1 bg-blue-900 text-white text-[9px] rounded-full h-4 w-4 flex items-center justify-center">
-              0
-            </span>
-          </Link>
-          <Link href="/login" className="hidden xl:block">
-            <User className="scale-125 text-gray-900 hover:text-blue-900" />
-          </Link>
+          {user ? (
+            <Link href="/cart" className="relative">
+              <ShoppingCart className="scale-125 text-gray-900 hover:text-blue-700" />
+              <span className="absolute -top-1 -right-1 bg-blue-900 text-white text-[9px] rounded-full h-4 w-4 flex items-center justify-center">
+                0
+              </span>
+            </Link>
+          ) : (
+            <>
+              {/* Mobile view - Link to login */}
+              <Link 
+                href="/login"
+                className="xl:hidden relative cursor-pointer"
+              >
+                <ShoppingCart className="scale-125 text-gray-400" />
+                <span className="absolute -top-1 -right-1 bg-gray-400 text-white text-[9px] rounded-full h-4 w-4 flex items-center justify-center">
+                  0
+                </span>
+              </Link>
+
+              {/* Desktop view - Tooltip */}
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="hidden xl:block relative cursor-not-allowed">
+                      <ShoppingCart className="scale-125 text-gray-400" />
+                      <span className="absolute -top-1 -right-1 bg-gray-400 text-white text-[9px] rounded-full h-4 w-4 flex items-center justify-center">
+                        0
+                      </span>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Please sign in to access cart</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </>
+          )}
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link href={user ? "/profile" : "/login"} className="hidden xl:block relative">
+                  <User className="scale-125 text-gray-900 hover:text-blue-900" />
+                  {user && (
+                    <Badge className="absolute -top-1 -right-1 h-4 w-4 text-white bg-blue-800 rounded-full p-0.5" />
+                  )}
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{user ? user.email : "Sign in to your account"}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
 
@@ -380,7 +513,7 @@ export function NavigationBar() {
             }`}
           >
             <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8" style={{ width: '100%' }}>
-              <DesktopNavContent navItems={navItems} categories={categories} />
+              <DesktopNavContent navItems={navItems} categories={categories} user={user} />
             </div>
           </div>
 
@@ -395,7 +528,7 @@ export function NavigationBar() {
             }}
           >
             <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8" style={{ width: '100%' }}>
-              <DesktopNavContent navItems={navItems} categories={categories} />
+              <DesktopNavContent navItems={navItems} categories={categories} user={user} />
             </div>
           </nav>
         </>

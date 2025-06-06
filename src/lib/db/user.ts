@@ -1,4 +1,5 @@
 import { supabase } from "../supabase/client";
+import { PostgrestError } from "@supabase/supabase-js";
 
 type TablesInsert = {
   id: string;
@@ -7,6 +8,11 @@ type TablesInsert = {
   address: string;
   created_date?: string;
   is_deleted?: boolean;
+};
+
+type UserResponse = {
+  data: any[] | null;
+  error: PostgrestError | null;
 };
 
 // Correct way to define userData
@@ -18,14 +24,21 @@ type TablesInsert = {
 };*/
 
 // Function to create a user in the users table
-export async function createUser(userData: TablesInsert) {
+export async function createUser(userData: TablesInsert): Promise<UserResponse> {
   const { data, error } = await supabase.from('users').insert(userData).select('*');
 
   if (error) {
-    throw new Error(error.message);
+    return { data: null, error };
   }
-  return data;
+  return { data, error: null };
 }
 
 // Usage example:
 // createUser(userData).then(data => console.log(data)).catch(err => console.error(err));
+
+// Function to get authenticated user
+export async function getAuthUser() {
+  const { data: { user }, error } = await supabase.auth.getUser();
+  if (error) throw error;
+  return user;
+}

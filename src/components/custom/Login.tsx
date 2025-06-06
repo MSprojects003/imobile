@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +11,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { createUser, getAuthUser } from "@/lib/db/user";
+import { supabase } from "@/lib/supabase/client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 // Define types for our form data
 interface SignInFormData {
@@ -29,6 +34,100 @@ interface SignUpFormData {
 
 export default function Auth() {
   const [activeTab, setActiveTab] = useState<"signin" | "signup">("signin");
+  const [signupError, setSignupError] = useState<string>("");
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  // Check auth status using useEffect
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const user = await getAuthUser();
+        console.log("Current user:", user);
+      } catch (error) {
+        console.log("No user logged in");
+      }
+    };
+    checkUser();
+  }, []);
+
+  // Add mutation for user creation
+  const createUserMutation = useMutation({
+    mutationFn: async (data: SignUpFormData) => {
+      try {
+        // First, sign up with Supabase auth
+        const { data: authData, error: authError } = await supabase.auth.signUp({
+          email: data.email,
+          password: data.password,
+        });
+
+        if (authError) {
+          if (authError.message.includes("already registered")) {
+            throw new Error("This email is already registered. Please try signing in instead.");
+          }
+          throw new Error("Failed to create account. Please try again.");
+        }
+
+        // Then create the user record in the database
+        const userData = {
+          id: authData.user?.id || "7f029cb9-a85c-4061-80f4-2572250f9e8b",
+          email: data.email,
+          phone_number: data.phoneNumber,
+          address: data.address,
+        };
+
+        const result = await createUser(userData);
+        
+        if (result.error) {
+          throw new Error("Failed to create user profile. Please try again.");
+        }
+
+        return result.data;
+      } catch (error) {
+        if (error instanceof Error) {
+          throw error;
+        }
+        throw new Error("An unexpected error occurred. Please try again.");
+      }
+    },
+    onSuccess: async (data) => {
+      toast.success("Account created successfully! Please check your email to verify your account.");
+      resetSignUp();
+      setActiveTab("signin");
+      await queryClient.invalidateQueries({ queryKey: ["auth-user"] });
+    },
+    onError: (error: Error) => {
+      toast.error(error.message);
+      setSignupError(error.message);
+    },
+  });
+
+  // Add sign in mutation
+  const signInMutation = useMutation({
+    mutationFn: async (data: SignInFormData) => {
+      const { data: authData, error } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      });
+
+      if (error) {
+        if (error.message.includes("Invalid login credentials")) {
+          throw new Error("Invalid email or password. Please try again.");
+        }
+        throw new Error("Failed to sign in. Please try again.");
+      }
+
+      return authData;
+    },
+    onSuccess: async () => {
+      toast.success("Signed in successfully!");
+      await queryClient.invalidateQueries({ queryKey: ["auth-user"] });
+      router.push("/");
+    },
+    onError: (error: Error) => {
+      toast.error(error.message);
+    },
+  });
 
   // Separate form instances for sign-in and sign-up
   const {
@@ -57,12 +156,13 @@ export default function Auth() {
 
   // Handle sign-in submission
   const onSignInSubmit = (data: SignInFormData) => {
-    console.log("Signin data:", data);
+    signInMutation.mutate(data);
   };
 
   // Handle sign-up submission
   const onSignUpSubmit = (data: SignUpFormData) => {
-    console.log("Signup data:", data);
+    setSignupError("");
+    createUserMutation.mutate(data);
   };
 
   // Reset forms when switching tabs
@@ -179,6 +279,9 @@ export default function Auth() {
               <TabsContent value="signup" className="mt-6">
                 <div className="space-y-4">
                   <div className="text-center text-blue-600 text-sm">Create your account below</div>
+                  {signupError && (
+                    <div className="text-red-500 text-sm text-center">{signupError}</div>
+                  )}
                   <form onSubmit={handleSubmitSignUp(onSignUpSubmit)} className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="signup-email" className="text-blue-900 font-medium">
@@ -289,8 +392,12 @@ export default function Auth() {
                       </span>
                     </div>
 
-                    <Button type="submit" className="w-full bg-blue-900 hover:bg-blue-800 text-white h-11 font-medium">
-                      Create Account
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-blue-900 hover:bg-blue-800 text-white h-11 font-medium"
+                      disabled={createUserMutation.isPending}
+                    >
+                      {createUserMutation.isPending ? "Creating Account..." : "Create Account"}
                     </Button>
                   </form>
                 </div>
