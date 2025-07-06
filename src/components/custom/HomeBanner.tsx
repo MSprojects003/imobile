@@ -1,10 +1,9 @@
-
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
- 
+
 import {
   Carousel,
   CarouselContent,
@@ -52,7 +51,7 @@ export function HomeBanner() {
 
   return (
     <div
-      className="relative w-full mt-0 pt-0" // Removed top margin and padding
+      className="relative w-full mt-0 pt-0"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -70,7 +69,7 @@ export function HomeBanner() {
           {bannerImages.map((banner, index) => (
             <CarouselItem key={index}>
               <Link href={banner.href} className="block w-full">
-                <div className="relative w-full h-48 sm:h-64 md:h-96">
+                <div className="relative w-full h-[250px] sm:h-[250px] md:h-[461px]">
                   <Image
                     src={banner.imageUrl}
                     alt={`Banner ${index + 1}`}
@@ -86,22 +85,22 @@ export function HomeBanner() {
 
         {/* Previous Button */}
         <CarouselPrevious
-          className={`absolute top-1/2 -translate-y-1/2 bg-blue-900 shadow-sm shadow-black   text-white rounded-full border-none p-6 transition-all duration-300 ease-in-out ${
-            isHovered ? 'left-[5%] opacity-100 ' : 'left[0%] opacity-0'
+          className={`absolute top-1/2 -translate-y-1/2 bg-slate-900 shadow-sm shadow-black text-white rounded-full border-none p-6 transition-all duration-300 ease-in-out ${
+            isHovered ? 'left-[5%] opacity-100' : 'left-[0%] opacity-0'
           }`}
           aria-label="Previous Slide"
         >
-          <ChevronLeft   />
+          <ChevronLeft />
         </CarouselPrevious>
 
         {/* Next Button */}
         <CarouselNext
-          className={`absolute top-1/2 -translate-y-1/2 bg-blue-900 shadow-sm shadow-black text-white rounded-full border-none  p-6 transition-all duration-300 ease-in-out ${
+          className={`absolute top-1/2 -translate-y-1/2 bg-slatee-900 shadow-sm shadow-black text-white rounded-full border-none p-6 transition-all duration-300 ease-in-out ${
             isHovered ? 'right-[5%] opacity-100' : 'right-[0%] opacity-0'
           }`}
           aria-label="Next Slide"
         >
-          <ChevronRight   />
+          <ChevronRight />
         </CarouselNext>
       </Carousel>
     </div>

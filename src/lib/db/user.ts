@@ -11,7 +11,7 @@ type TablesInsert = {
 };
 
 type UserResponse = {
-  data: any[] | null;
+  data: Record<string, unknown>[] | null;
   error: PostgrestError | null;
 };
 

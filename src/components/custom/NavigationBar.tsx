@@ -7,7 +7,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
@@ -22,7 +21,6 @@ import {
   User,
   Percent,
   UserCog,
-  Check,
   Badge,
 } from "lucide-react";
 
@@ -44,7 +42,9 @@ import {
 } from "@/components/ui/tooltip";
 import { useQuery } from "@tanstack/react-query";
 import { getAuthUser } from "@/lib/db/user";
-import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import SearchProductsBox from "@/components/custom/SearchProductsBox";
+import { sampleProducts } from "@/app/data/products";
 
 // Basic VisuallyHidden utility for accessibility title
 const VisuallyHidden = ({ children }: { children: React.ReactNode }) => {
@@ -54,13 +54,15 @@ const VisuallyHidden = ({ children }: { children: React.ReactNode }) => {
 interface DesktopNavContentProps {
   navItems: { name: string; href: string; requiresAuth?: boolean }[];
   categories: string[];
-  user: any | null;
+  user: unknown | null;
+  handleCategoryClick: (category: string) => void;
 }
 
 const DesktopNavContent: React.FC<DesktopNavContentProps> = ({
   navItems,
   categories,
   user,
+  handleCategoryClick,
 }) => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
 
@@ -81,20 +83,18 @@ const DesktopNavContent: React.FC<DesktopNavContentProps> = ({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-80 ml-4 pb-3">
-          <DropdownMenuItem className="font-semibold text-blue-900 text-sm px-6 py-3">
+          <DropdownMenuItem className="font-semibold text-slate-900 text-sm px-6 py-3">
             Shop by Category
           </DropdownMenuItem>
           {categories.map((category) => (
             <DropdownMenuItem key={category} asChild>
-              <Link
-                href={`/category/${category
-                  .toLowerCase()
-                  .replace(/ & /g, '-')
-                  .replace(/ /g, '-')}`}
-                className="block px-6 py-2.5 text-sm text-gray-700 hover:bg-blue-900/10 hover:text-blue-700"
+              <button
+                type="button"
+                onClick={() => handleCategoryClick(category)}
+                className="block w-full text-left px-6 py-2.5 text-sm text-gray-700 hover:bg-slate-900/10 hover:text-slate-700"
               >
                 {category}
-              </Link>
+              </button>
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>
@@ -142,7 +142,6 @@ export function NavigationBar() {
   const [isStickyDesktopNav, setIsStickyDesktopNav] = useState(false);
   const [isStickyMobileNav, setIsStickyMobileNav] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
 
   const mainNavRef = useRef<HTMLDivElement>(null);
   const desktopNavRef = useRef<HTMLDivElement>(null);
@@ -152,6 +151,8 @@ export function NavigationBar() {
     queryFn: getAuthUser,
     retry: false,
   });
+
+  const router = useRouter();
 
   useEffect(() => {
     setIsDesktop(window.innerWidth >= 990);
@@ -179,17 +180,17 @@ export function NavigationBar() {
 
   const navItems = [
     { name: "Home", href: "/" },
-    { name: "New Arrivals", href: "/apple-silicone-case" },
-    { name: "Offers", href: "/packing-materials" },
+    { name: "New Arrivals", href: "/new_arrivals" },
+    { name: "Offers", href: "/offers" },
     { name: "Contact", href: "/contact" },
-    { name: "About", href: "/track" },
+    { name: "About", href: "/about" },
     { name: "Track Order", href: "/blog", requiresAuth: true },
   ];
 
   const categories = [
     "Back Covers",
     "Tempered Glass",
-    "Car Chargers",
+    "Car Charger",
     "Earphones",
     "Smart Watches",
     "Cable & Charger",
@@ -210,6 +211,11 @@ export function NavigationBar() {
     "Gadgets",
   ];
 
+  const handleCategoryClick = (category: string) => {
+    const formatted = category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-');
+    router.push(`/products/${formatted}`);
+  };
+
   const handleDisabledClick = () => {
     window.location.href = "/login";
   };
@@ -217,7 +223,7 @@ export function NavigationBar() {
   return (
     <div className={isDesktop ? "flex flex-col mb-[-70px]" : "flex flex-col"}>
       {/* Top Announcement Bar */}
-      <div className="bg-blue-900 text-white flex items-center justify-between py-2 px-4 text-sm">
+      <div className="bg-slate-900 text-white flex items-center justify-between py-2 px-4 text-sm">
         <div className="hidden sm:flex space-x-3">
           <Link href="https://facebook.com">
             <Facebook className="h-4 w-4" />
@@ -285,7 +291,7 @@ export function NavigationBar() {
                     variant={activeTab === 'menu' ? 'default' : 'outline'}
                     className={`flex-1 py-2 text-sm ${
                       activeTab === 'menu'
-                        ? 'border-b-2 border-blue-900 text-black bg-transparent rounded-none'
+                        ? 'border-b-2 border-slate-900 text-black bg-transparent rounded-none'
                         : 'text-gray-700 border-none shadow-none'
                     }`}
                     onClick={() => setActiveTab('menu')}
@@ -296,7 +302,7 @@ export function NavigationBar() {
                     variant={activeTab === 'categories' ? 'default' : 'outline'}
                     className={`flex-1 py-2 text-sm ${
                       activeTab === 'categories'
-                        ? 'border-b-2 border-blue-900 text-black bg-transparent rounded-none'
+                        ? 'border-b-2 border-slate-900 text-black bg-transparent rounded-none'
                         : 'text-gray-700 border-none shadow-none'
                     }`}
                     onClick={() => setActiveTab('categories')}
@@ -320,7 +326,7 @@ export function NavigationBar() {
                           ) : (
                             <Link
                               href={item.href}
-                              className="block px-3 py-2 text-gray-700 hover:bg-blue-900/10 hover:text-blue-700 rounded-md font-medium"
+                              className="block px-3 py-2 text-gray-700 hover:bg-slate-900/10 hover:text-slate-700 rounded-md font-medium"
                             >
                               {item.name}
                             </Link>
@@ -332,15 +338,13 @@ export function NavigationBar() {
                     <>
                       {categories.map((category) => (
                         <SheetClose asChild key={category}>
-                          <Link
-                            href={`/category/${category
-                              .toLowerCase()
-                              .replace(/ & /g, '-')
-                              .replace(/ /g, '-')}`}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-900/10 hover:text-blue-700"
+                          <button
+                            type="button"
+                            onClick={() => handleCategoryClick(category)}
+                            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-slate-900/10 hover:text-slate-700"
                           >
                             {category}
-                          </Link>
+                          </button>
                         </SheetClose>
                       ))}
                     </>
@@ -352,7 +356,7 @@ export function NavigationBar() {
                     <div className="relative">
                       <UserCog />
                       {user && (
-                        <Badge className="absolute -top-1 -right-1 h-4 w-4 text-white bg-blue-800 rounded-full p-0.5" />
+                        <Badge className="absolute -top-1 -right-1 h-4 w-4 text-white bg-slate-800 rounded-full p-0.5" />
                       )}
                     </div>
                     <span>My Account</span>
@@ -363,10 +367,10 @@ export function NavigationBar() {
 
                   <SheetClose asChild>
                     {user ? (
-                      <Link href="/cart" className="flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-blue-900/10 hover:text-blue-700 rounded-md mt-2">
+                      <Link href="/cart" className="flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-slate-900/10 hover:text-slate-700 rounded-md mt-2">
                         <ShoppingCart className="h-5 w-5" />
                         <span>Cart</span>
-                        <span className="bg-blue-900 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                        <span className="bg-slate-900 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                           0
                         </span>
                       </Link>
@@ -387,7 +391,7 @@ export function NavigationBar() {
                   <SheetClose asChild>
                     <Button
                       variant="default"
-                      className="w-full mt-2 bg-blue-900 text-white hover:bg-blue-700 h-10 text-sm"
+                      className="w-full mt-2 bg-slate-900 text-white hover:bg-slate-700 h-10 text-sm"
                     >
                       <Link href="/login">
                         <User className="h-4 w-4 mr-2" /> {user ? "View Profile" : "Log in"}
@@ -399,13 +403,7 @@ export function NavigationBar() {
             </Sheet>
           </div>
           <div className="hidden xl:block w-full">
-            <div className="relative w-full max-w-xs">
-              <Input
-                placeholder="Search our store"
-                className="w-full pr-10 rounded-none focus:border-none border-gray-900 focus-visible:outline-none shadow-none border-1 text-lg h-12 font-normal text-gray-900"
-              />
-              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 scale-100 text-gray-900" />
-            </div>
+            <SearchProductsBox products={sampleProducts} placeholder="Search our store" />
           </div>
         </div>
 
@@ -420,7 +418,7 @@ export function NavigationBar() {
             variant="ghost"
             size="icon"
             onClick={() => setIsSearchOpen(!isSearchOpen)}
-            className="xl:hidden text-gray-600 hover:text-blue-700"
+            className="xl:hidden text-gray-600 hover:text-slate-700"
           >
             <Search className="scale-150" />
           </Button>
@@ -486,11 +484,7 @@ export function NavigationBar() {
       {isSearchOpen && (
         <div className="xl:hidden bg-white border-b border-gray-200 px-4 py-3 animate-slide-down">
           <div className="relative">
-            <Input
-              placeholder="Search our store"
-              className="w-full pr-10 border-gray-300 focus:border-blue-900 focus:ring-blue-900 h-10 text-sm"
-              autoFocus
-            />
+            <SearchProductsBox products={sampleProducts} placeholder="Search our store" />
             <Button
               variant="ghost"
               size="icon"
@@ -513,7 +507,7 @@ export function NavigationBar() {
             }`}
           >
             <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8" style={{ width: '100%' }}>
-              <DesktopNavContent navItems={navItems} categories={categories} user={user} />
+              <DesktopNavContent navItems={navItems} categories={categories} user={user} handleCategoryClick={handleCategoryClick} />
             </div>
           </div>
 
@@ -528,7 +522,7 @@ export function NavigationBar() {
             }}
           >
             <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8" style={{ width: '100%' }}>
-              <DesktopNavContent navItems={navItems} categories={categories} user={user} />
+              <DesktopNavContent navItems={navItems} categories={categories} user={user} handleCategoryClick={handleCategoryClick} />
             </div>
           </nav>
         </>

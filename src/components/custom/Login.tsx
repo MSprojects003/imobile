@@ -44,7 +44,7 @@ export default function Auth() {
       try {
         const user = await getAuthUser();
         console.log("Current user:", user);
-      } catch (error) {
+      } catch {
         console.log("No user logged in");
       }
     };
@@ -90,7 +90,7 @@ export default function Auth() {
         throw new Error("An unexpected error occurred. Please try again.");
       }
     },
-    onSuccess: async (data) => {
+    onSuccess: async () => {
       toast.success("Account created successfully! Please check your email to verify your account.");
       resetSignUp();
       setActiveTab("signin");
@@ -105,24 +105,18 @@ export default function Auth() {
   // Add sign in mutation
   const signInMutation = useMutation({
     mutationFn: async (data: SignInFormData) => {
-      const { data: authData, error } = await supabase.auth.signInWithPassword({
+      const { data: authData } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password,
       });
 
-      if (error) {
-        if (error.message.includes("Invalid login credentials")) {
-          throw new Error("Invalid email or password. Please try again.");
-        }
+      if (authData) {
+        toast.success("Signed in successfully!");
+        await queryClient.invalidateQueries({ queryKey: ["auth-user"] });
+        router.push("/");
+      } else {
         throw new Error("Failed to sign in. Please try again.");
       }
-
-      return authData;
-    },
-    onSuccess: async () => {
-      toast.success("Signed in successfully!");
-      await queryClient.invalidateQueries({ queryKey: ["auth-user"] });
-      router.push("/");
     },
     onError: (error: Error) => {
       toast.error(error.message);
@@ -188,7 +182,7 @@ export default function Auth() {
           <div className="text-white max-w-md">
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">Astro</h1>
             <p className="text-xl lg:text-2xl mb-2 leading-relaxed">Exploring new frontiers, one step at a time.</p>
-            <p className="text-blue-200 text-sm lg:text-base">Beyond Earth's grasp</p>
+            <p className="text-blue-200 text-sm lg:text-base">Beyond Earth&apos;s grasp</p>
           </div>
         </div>
       </div>
@@ -406,7 +400,7 @@ export default function Auth() {
 
             <div className="mt-6 text-center">
               <p className="text-blue-600 text-sm">
-                {activeTab === "signup" ? "Already have an account?" : "Don't have an account?"}{" "}
+                {activeTab === "signup" ? "Already have an account?" : "Don&apos;t have an account?"}{" "}
                 <button
                   type="button"
                   onClick={() => setActiveTab(activeTab === "signup" ? "signin" : "signup")}
