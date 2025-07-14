@@ -7,6 +7,7 @@ import { Award, Heart, Star, Users } from "lucide-react"
 import founder from "../../pictures/profiles/founder.jpg"
 import bgImage from "../../pictures/background/contact.jpeg" // Import your background image
 import OurBrands from "@/components/custom/OurBrands"
+import store from "../../pictures/background/WhatsApp Image 2025-07-14 at 13.02.15_472a455d.jpg"
 
 export default function AboutPage() {
   return (
@@ -43,7 +44,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
               <Image
-                src="/placeholder.svg?height=400&width=600"
+                src={store}
                 alt="Store image"
                 width={600}
                 height={400}
@@ -94,6 +95,43 @@ export default function AboutPage() {
                 </p>
               </div>
             </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Delivery Partner Section */}
+      <section className="py-12">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Card className="bg-white shadow-lg max-w-3xl mx-auto">
+            <div className="flex flex-col items-center p-8">
+              <Image
+                src="http://deliverypartner.lk/public/images/default/logo.png"
+                alt="DeliveryPartner.lk Logo"
+                width={220}
+                height={220}
+                className="rounded-lg object-contain bg-gray-100 p-2 border border-gray-200 shadow-sm mb-4"
+              />
+              <a
+                href="https://deliverypartner.lk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-2xl font-extrabold text-blue-700 hover:underline block text-center mb-2 tracking-tight"
+                style={{ fontFamily: 'Inter, sans-serif' }}
+              >
+                DeliveryPartner.lk
+              </a>
+              <p className="text-gray-600 text-left text-base mt-2 mb-4 w-full">
+                We are proud to partner with DeliveryPartner.lk, a trusted logistics provider ensuring fast and secure delivery for all your orders. Delivery charges are affordable: just 250 Rupees within Colombo and 400 Rupees for outstation deliveries. Experience reliable service and real-time tracking with every shipment.
+              </p>
+              <div className="mt-2 w-full flex flex-col items-start gap-1">
+                <div className="text-base font-semibold text-gray-700" style={{ fontFamily: 'Fira Mono, monospace' }}>
+                  In Colombo: <span className="text-green-700 font-bold">250 Rupees</span>
+                </div>
+                <div className="text-base font-semibold text-gray-700" style={{ fontFamily: 'Fira Mono, monospace' }}>
+                  Out of Colombo: <span className="text-red-700 font-bold">400 Rupees</span>
+                </div>
+              </div>
+            </div>
           </Card>
         </div>
       </section>

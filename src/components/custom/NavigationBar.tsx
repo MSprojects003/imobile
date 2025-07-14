@@ -45,6 +45,7 @@ import { getAuthUser } from "@/lib/db/user";
 import { useRouter } from "next/navigation";
 import SearchProductsBox from "@/components/custom/SearchProductsBox";
 import { sampleProducts } from "@/app/data/products";
+import { getCartCountByUserId } from "@/lib/db/cart";
 
 // Basic VisuallyHidden utility for accessibility title
 const VisuallyHidden = ({ children }: { children: React.ReactNode }) => {
@@ -152,6 +153,13 @@ export function NavigationBar() {
     retry: false,
   });
 
+  // Fetch cart count for the user
+  const { data: cartCount, isLoading: cartCountLoading, isError: cartCountError } = useQuery({
+    queryKey: ["cart-count", user?.id],
+    queryFn: () => (user ? getCartCountByUserId(user.id) : Promise.resolve(0)),
+    enabled: !!user,
+  });
+
   const router = useRouter();
 
   useEffect(() => {
@@ -184,7 +192,7 @@ export function NavigationBar() {
     { name: "Offers", href: "/offers" },
     { name: "Contact", href: "/contact" },
     { name: "About", href: "/about" },
-    { name: "Track Order", href: "/blog", requiresAuth: true },
+    { name: "Track Order", href: "/track", requiresAuth: true },
   ];
 
   const categories = [
@@ -403,7 +411,7 @@ export function NavigationBar() {
             </Sheet>
           </div>
           <div className="hidden xl:block w-full">
-            <SearchProductsBox products={sampleProducts} placeholder="Search our store" />
+            <SearchProductsBox placeholder="Search our store" />
           </div>
         </div>
 
@@ -427,7 +435,7 @@ export function NavigationBar() {
             <Link href="/cart" className="relative">
               <ShoppingCart className="scale-125 text-gray-900 hover:text-blue-700" />
               <span className="absolute -top-1 -right-1 bg-blue-900 text-white text-[9px] rounded-full h-4 w-4 flex items-center justify-center">
-                0
+                {cartCountLoading ? '' : cartCountError ? 0 : cartCount}
               </span>
             </Link>
           ) : (
@@ -484,7 +492,7 @@ export function NavigationBar() {
       {isSearchOpen && (
         <div className="xl:hidden bg-white border-b border-gray-200 px-4 py-3 animate-slide-down">
           <div className="relative">
-            <SearchProductsBox products={sampleProducts} placeholder="Search our store" />
+            <SearchProductsBox placeholder="Search our store" />
             <Button
               variant="ghost"
               size="icon"

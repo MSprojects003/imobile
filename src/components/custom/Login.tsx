@@ -24,6 +24,8 @@ interface SignInFormData {
 }
 
 interface SignUpFormData {
+  fullName: string; // Added full name
+  city: string;     // Added city
   email: string;
   phoneNumber: string;
   address: string;
@@ -71,6 +73,8 @@ export default function Auth() {
         // Then create the user record in the database
         const userData = {
           id: authData.user?.id || "7f029cb9-a85c-4061-80f4-2572250f9e8b",
+          full_name: data.fullName, // Save full name
+          city: data.city,          // Save city
           email: data.email,
           phone_number: data.phoneNumber,
           address: data.address,
@@ -105,12 +109,16 @@ export default function Auth() {
   // Add sign in mutation
   const signInMutation = useMutation({
     mutationFn: async (data: SignInFormData) => {
-      const { data: authData } = await supabase.auth.signInWithPassword({
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password,
       });
 
-      if (authData) {
+      if (authError) {
+        throw new Error("Incorrect credentials");
+      }
+
+      if (authData && authData.user) {
         toast.success("Signed in successfully!");
         await queryClient.invalidateQueries({ queryKey: ["auth-user"] });
         router.push("/");
@@ -167,6 +175,23 @@ export default function Auth() {
       resetSignIn();
     }
   }, [activeTab, resetSignIn, resetSignUp]);
+
+  const cityOptions = [
+    "Negombo",
+    "Kandy",
+    "Galle",
+    "Jaffna",
+    "Trincomalee",
+    "Bentota",
+    "Vavuniya",
+    "Kalmunai",
+    "Katunayake",
+    "Dambulla",
+    "Bandarawela",
+    "Akkaraipattu",
+    "Polonnaruwa",
+    ...Array.from({ length: 13 }, (_, i) => `Colombo ${i + 1}`),
+  ];
 
   return (
     <div className="min-h-screen flex">
@@ -277,6 +302,46 @@ export default function Auth() {
                     <div className="text-red-500 text-sm text-center">{signupError}</div>
                   )}
                   <form onSubmit={handleSubmitSignUp(onSignUpSubmit)} className="space-y-4">
+                    {/* Full Name */}
+                    <div className="space-y-2">
+                      <Label htmlFor="fullName" className="text-blue-900 font-medium">
+                        Full Name
+                      </Label>
+                      <Input
+                        id="fullName"
+                        type="text"
+                        placeholder="Enter your full name"
+                        className="border-blue-200 focus:border-blue-900 focus:ring-blue-900"
+                        {...registerSignUp("fullName", { required: "Full name is required" })}
+                      />
+                      {errorsSignUp.fullName && (
+                        <p className="text-red-500 text-sm">{errorsSignUp.fullName.message as string}</p>
+                      )}
+                    </div>
+                    {/* City Selector */}
+                    <div className="space-y-2">
+                      <Label htmlFor="city" className="text-blue-900 font-medium">
+                        City
+                      </Label>
+                      <select
+                        id="city"
+                        className="border border-blue-200 rounded px-3 py-2 w-full focus:border-blue-900 focus:ring-blue-900"
+                        {...registerSignUp("city", { required: "City is required" })}
+                        defaultValue=""
+                      >
+                        <option value="" disabled>
+                          Select your city
+                        </option>
+                        {cityOptions.map((city) => (
+                          <option key={city} value={city}>
+                            {city}
+                          </option>
+                        ))}
+                      </select>
+                      {errorsSignUp.city && (
+                        <p className="text-red-500 text-sm">{errorsSignUp.city.message as string}</p>
+                      )}
+                    </div>
                     <div className="space-y-2">
                       <Label htmlFor="signup-email" className="text-blue-900 font-medium">
                         Email or Phone No.

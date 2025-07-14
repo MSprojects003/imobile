@@ -12,42 +12,34 @@ import {
   CarouselNext,
 } from '@/components/ui/carousel';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { getAllBanners } from '@/lib/db/banner';
 
-// Dummy data for banner images
-const bannerImages = [
-  {
-    imageUrl: 'https://picsum.photos/1200/400?random=1',
-    href: '/banner-offer-1',
-  },
-  {
-    imageUrl: 'https://picsum.photos/1200/400?random=2',
-    href: '/banner-offer-2',
-  },
-  {
-    imageUrl: 'https://picsum.photos/1200/400?random=3',
-    href: '/banner-offer-3',
-  },
-  {
-    imageUrl: 'https://picsum.photos/1200/400?random=4',
-    href: '/banner-offer-4',
-  },
-];
 
 export function HomeBanner() {
   const [isHovered, setIsHovered] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // useQuery must be called inside the component
+  const { data: banners, isLoading, isError } = useQuery({
+    queryKey: ["hero"],
+    queryFn: getAllBanners,
+  });
+
   // Auto-play functionality
   useEffect(() => {
-    if (!isHovered) {
+    if (!isHovered && banners && banners.length > 0) {
       const interval = setInterval(() => {
         setCurrentIndex((prevIndex) =>
-          prevIndex === bannerImages.length - 1 ? 0 : prevIndex + 1
+          prevIndex === banners.length - 1 ? 0 : prevIndex + 1
         );
       }, 5000); // Auto-play every 5 seconds
       return () => clearInterval(interval);
     }
-  }, [isHovered]);
+  }, [isHovered, banners]);
+
+  if (isLoading) return <div>Loading banners...</div>;
+  if (isError || !banners || banners.length === 0) return <div>No banners found.</div>;
 
   return (
     <div
@@ -66,16 +58,16 @@ export function HomeBanner() {
         }}
       >
         <CarouselContent>
-          {bannerImages.map((banner, index) => (
-            <CarouselItem key={index}>
-              <Link href={banner.href} className="block w-full">
+          {banners.map((banner, index) => (
+            <CarouselItem key={banner.id || index}>
+              <Link href={banner.link_url || "#"} className="block w-full">
                 <div className="relative w-full h-[250px] sm:h-[250px] md:h-[461px]">
                   <Image
-                    src={banner.imageUrl}
-                    alt={`Banner ${index + 1}`}
+                    src={banner.image_url}
+                    alt={banner.title || `Banner ${index + 1}`}
                     fill
                     className="object-cover"
-                    priority={index === 0} // Prioritize the first image for faster loading
+                    priority={index === 0}
                   />
                 </div>
               </Link>
@@ -86,7 +78,7 @@ export function HomeBanner() {
         {/* Previous Button */}
         <CarouselPrevious
           className={`absolute top-1/2 -translate-y-1/2 bg-slate-900 shadow-sm shadow-black text-white rounded-full border-none p-6 transition-all duration-300 ease-in-out ${
-            isHovered ? 'left-[5%] opacity-100' : 'left-[0%] opacity-0'
+            isHovered ? 'left-[5%] opacity-100' : 'left-[-10%] opacity-0'
           }`}
           aria-label="Previous Slide"
         >
@@ -95,8 +87,8 @@ export function HomeBanner() {
 
         {/* Next Button */}
         <CarouselNext
-          className={`absolute top-1/2 -translate-y-1/2 bg-slatee-900 shadow-sm shadow-black text-white rounded-full border-none p-6 transition-all duration-300 ease-in-out ${
-            isHovered ? 'right-[5%] opacity-100' : 'right-[0%] opacity-0'
+          className={`absolute top-1/2 -translate-y-1/2 bg-slate-900 shadow-sm shadow-black text-white rounded-full border-none p-6 transition-all duration-300 ease-in-out ${
+            isHovered ? 'right-[5%] opacity-100' : 'right-[-10%] opacity-0'
           }`}
           aria-label="Next Slide"
         >

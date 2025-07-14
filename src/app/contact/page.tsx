@@ -7,16 +7,74 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Mail, Phone, MapPin, Send } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import { useState, useRef } from "react"
+ 
 
 // Import the background image correctly
 import bgImage from "../../pictures/background/about-us.jpg"
+import { toast } from "sonner"
 
 export default function ContactPage() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formStatus, setFormStatus] = useState<"idle" | "success" | "error">("idle")
+  const formRef = useRef<HTMLFormElement>(null)
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setIsSubmitting(true)
+    setFormStatus("idle")
+
+    const formData = new FormData(event.currentTarget)
+    formData.append("access_key", "1b842695-6401-42c8-a8c2-ee918ee8aa7e")
+    formData.append("subject", "New Contact Form Submission from EliteShop")
+    formData.append("to", "mbaasatheef@gmail.com")
+
+    const object = Object.fromEntries(formData)
+    const json = JSON.stringify(object)
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: json,
+      })
+
+      console.log("Response Status:", response.status)
+      const result = await response.json()
+      console.log("Response Body:", result)
+
+      if (response.ok && result.success === true) {
+        setFormStatus("success")
+        toast.success("Message sent successfully!")
+        if (formRef.current) {
+          formRef.current.reset()
+        }
+      } else {
+        setFormStatus("error")
+        toast.error(`Failed to send message: ${result.message || "Unknown error"}`)
+      }
+    } catch (error) {
+      console.error("Submission Error:", error)
+      setFormStatus("error")
+      toast.error("An error occurred while sending the message. Please try again later.")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200">
+      {/* Header with Free Delivery */}
+      <div className="bg-slate-900 text-white text-center py-2">
+        <p className="text-sm">Free Delivery for orders above Rs. 1999</p>
+      </div>
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-cover bg-center relative">
-        {/* Background Image with Next.js Image component */}
         <div className="absolute inset-0 w-full h-full">
           <Image
             src={bgImage}
@@ -34,7 +92,7 @@ export default function ContactPage() {
               Get in Touch
             </h1>
             <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
-              We&apos;re here to assist you! Whether you have questions, feedback, or need support, reach out to us and we&apos;ll respond promptly.
+              We're here to assist you! Whether you have questions, feedback, or need support, reach out to us and we'll respond promptly.
             </p>
           </div>
         </div>
@@ -52,55 +110,68 @@ export default function ContactPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="name" className="text-sm font-medium text-gray-700">
-                      Name
-                    </Label>
-                    <Input
-                      id="name"
-                      type="text"
-                      placeholder="Enter your name"
-                      className="mt-1"
-                    />
+                <form ref={formRef} onSubmit={handleSubmit}>
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="name" className="text-sm font-medium text-gray-700">
+                        Name
+                      </Label>
+                      <Input
+                        id="name"
+                        name="name"
+                        type="text"
+                        placeholder="full name"
+                        className="mt-1"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+                        Email
+                      </Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="email"
+                        className="mt-1"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="phone" className="text-sm font-medium text-gray-700">
+                        Phone Number
+                      </Label>
+                      <Input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        placeholder="phone number"
+                        className="mt-1"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="message" className="text-sm font-medium text-gray-700">
+                        Message
+                      </Label>
+                      <Textarea
+                        id="message"
+                        name="message"
+                        placeholder="Your message"
+                        className="mt-1 h-32"
+                        required
+                      />
+                    </div>
+                    <Button
+                      type="submit"
+                      className="w-full bg-slate-900 hover:bg-slate-800 text-white py-3"
+                      disabled={isSubmitting}
+                    >
+                      <Send className="h-5 w-5 mr-2" />
+                      {isSubmitting ? "Sending..." : "Send Message"}
+                    </Button>
                   </div>
-                  <div>
-                    <Label htmlFor="email" className="text-sm font-medium text-gray-700">
-                      Email
-                    </Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="Enter your email"
-                      className="mt-1"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="phone" className="text-sm font-medium text-gray-700">
-                      Phone Number
-                    </Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder="Enter your phone number"
-                      className="mt-1"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="message" className="text-sm font-medium text-gray-700">
-                      Message
-                    </Label>
-                    <Textarea
-                      id="message"
-                      placeholder="Your message"
-                      className="mt-1 h-32"
-                    />
-                  </div>
-                </div>
-                <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white py-3">
-                  <Send className="h-5 w-5 mr-2" />
-                  Send Message
-                </Button>
+                </form>
               </CardContent>
             </Card>
 
@@ -129,7 +200,7 @@ export default function ContactPage() {
           <div className="text-center mb-12 space-y-4">
             <h2 className="text-3xl font-semibold text-gray-900">Contact Information</h2>
             <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Reach out to us through your preferred method. We&apos;re always here to help.
+              Reach out to us through your preferred method. We're always here to help.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -145,7 +216,7 @@ export default function ContactPage() {
               <CardContent className="p-6 text-center space-y-4">
                 <Mail className="h-10 w-10 text-slate-900 mx-auto" />
                 <h3 className="text-lg font-semibold text-gray-900">Email</h3>
-                <p className="text-gray-600">support@datacellular.com</p>
+                <p className="text-gray-600">mbaasatheef@gmail.com</p>
                 <p className="text-gray-600">24/7 Support</p>
               </CardContent>
             </Card>
@@ -161,18 +232,73 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-16 bg-slate-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <h2 className="text-3xl font-semibold">Need Help? We&apos;re Here!</h2>
-          <p className="text-lg max-w-2xl mx-auto leading-relaxed">
-            Contact us anytime for assistance with your shopping needs or inquiries about our products.
-          </p>
-          <Button className="bg-white text-slate-900 hover:bg-gray-100 px-6 py-3 text-base">
-            Shop Now
-          </Button>
+      {/* Footer */}
+      <footer className="bg-slate-900 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Brand */}
+            <div>
+              <h3 className="text-xl font-bold">EliteShop</h3>
+              <p className="mt-4 text-gray-400">Crafted with excellence.</p>
+              <p className="mt-2 text-gray-400">Free Delivery for orders above Rs. 1999</p>
+            </div>
+
+            {/* Shop Links */}
+            <div>
+              <h4 className="text-lg font-semibold">Shop</h4>
+              <ul className="mt-4 space-y-2">
+                <li><Link href="/new-arrivals" className="text-gray-400 hover:text-white">New Arrivals</Link></li>
+                <li><Link href="/best-sellers" className="text-gray-400 hover:text-white">Best Sellers</Link></li>
+                <li><Link href="/sale" className="text-gray-400 hover:text-white">Sale Items</Link></li>
+                <li><Link href="/categories" className="text-gray-400 hover:text-white">Categories</Link></li>
+              </ul>
+            </div>
+
+            {/* Support Links */}
+            <div>
+              <h4 className="text-lg font-semibold">Support</h4>
+              <ul className="mt-4 space-y-2">
+                <li><Link href="/contact" className="text-gray-400 hover:text-white">Contact Us</Link></li>
+                <li><Link href="/help" className="text-gray-400 hover:text-white">Help Center</Link></li>
+                <li><Link href="/shipping" className="text-gray-400 hover:text-white">Shipping</Link></li>
+                <li><Link href="/returns" className="text-gray-400 hover:text-white">Returns</Link></li>
+              </ul>
+            </div>
+
+            {/* Newsletter and Contact */}
+            <div>
+              <h4 className="text-lg font-semibold">Newsletter</h4>
+              <form className="mt-4">
+                <Input
+                  type="email"
+                  placeholder="Your email"
+                  className="mt-2 text-gray-900"
+                />
+                <Button className="mt-2 bg-white text-slate-900 hover:bg-gray-100">
+                  Subscribe
+                </Button>
+              </form>
+              <div className="mt-4">
+                <h4 className="text-lg font-semibold">Visit Our Store</h4>
+                <p className="text-gray-400">123 Commerce Plaza, NY 10001</p>
+                <h4 className="mt-4 text-lg font-semibold">Call Us</h4>
+                <p className="text-gray-400">+1 (555) 123-4567</p>
+                <h4 className="mt-4 text-lg font-semibold">Email Support</h4>
+                <p className="text-gray-400">hello@eliteshop.com</p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 border-t border-gray-700 pt-6 text-center">
+            <p className="text-gray-400">© 2025 EliteShop. All rights reserved.</p>
+            <div className="mt-2 flex justify-center space-x-4">
+              <Link href="/privacy" className="text-gray-400 hover:text-white">Privacy Policy</Link>
+              <Link href="/terms" className="text-gray-400 hover:text-white">Terms of Service</Link>
+              <Link href="/cookies" className="text-gray-400 hover:text-white">Cookie Policy</Link>
+              <Link href="/accessibility" className="text-gray-400 hover:text-white">Accessibility</Link>
+            </div>
+          </div>
         </div>
-      </section>
+      </footer>
     </div>
   )
 }

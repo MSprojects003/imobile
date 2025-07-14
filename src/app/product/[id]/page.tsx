@@ -7,7 +7,7 @@ const page = () => {
     <>
       <ViewProduct />
       <div className="my-8 border-t border-gray-300 w-full" />
-      <ProductReviews />
+       
     </>
   )
 }

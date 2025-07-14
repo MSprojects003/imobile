@@ -7,41 +7,52 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import { StaticImageData } from "next/image"
 import { PackageSearch } from "lucide-react"
 
-// Define the Product interface to match ProductCard's expected product shape
+// Define the Product interface to match database structure
 interface Product {
   id: string
   brand: string
   name: string
-  frontImage: string | StaticImageData
-  backImage: string | StaticImageData
+  image: string
+  back_image: string | null
   price: number
-  discountPrice?: number
+  discounted_price?: number | null
+  discount_added?: boolean
   category?: string | null
+  quantity?: number
 }
 
 interface ProductListProps {
   products: Product[]
   category?: string | null
+  brand?: string | null
   title?: string
+  hideTitle?: boolean
+  hideSort?: boolean
 }
 
-export default function ProductList({ products, category, title }: ProductListProps) {
+export default function ProductList({ products, category, brand, title, hideTitle = false, hideSort = false }: ProductListProps) {
   const [sortOption, setSortOption] = useState("all")
   const [currentPage, setCurrentPage] = useState(1)
   const productsPerPage = 8 // 4 rows of 2 on mobile, 2 rows of 4 on desktop
   const maxVisiblePages = 5 // Maximum page buttons to show
 
-  // Filter products by category if provided
-  const filteredProducts = category
-    ? products.filter(p => p.category && p.category.toLowerCase() === category.toLowerCase())
-    : products
+  // Filter products by category and brand if provided
+  let filteredProducts = products
+  
+  if (category) {
+    filteredProducts = filteredProducts.filter(p => p.category && p.category.toLowerCase() === category.toLowerCase())
+  }
+  
+  if (brand) {
+    filteredProducts = filteredProducts.filter(p => p.brand && p.brand.toLowerCase() === brand.toLowerCase())
+  }
 
   // Handle sorting
   const sortedProducts = [...filteredProducts]
   if (sortOption === "price-low-high") {
-    sortedProducts.sort((a, b) => (a.discountPrice || a.price) - (b.discountPrice || b.price))
+    sortedProducts.sort((a, b) => (a.discounted_price || a.price) - (b.discounted_price || b.price))
   } else if (sortOption === "price-high-low") {
-    sortedProducts.sort((a, b) => (b.discountPrice || b.price) - (a.discountPrice || a.price))
+    sortedProducts.sort((a, b) => (b.discounted_price || b.price) - (a.discounted_price || b.price))
   }
 
   // Calculate pagination
@@ -70,22 +81,24 @@ export default function ProductList({ products, category, title }: ProductListPr
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
           {title || "Products"}
         </h1>
-        <Select onValueChange={setSortOption} defaultValue="all">
-          <SelectTrigger className="w-[180px] bg-white border-gray-300 text-gray-700 hover:bg-gray-100">
-            <SelectValue placeholder="Filter & Sort" />
-          </SelectTrigger>
-          <SelectContent className="bg-white border-gray-200 rounded-lg shadow-xl">
-            {[
-              { value: "all", label: "All Products" },
-              { value: "price-low-high", label: "Price: Low to High" },
-              { value: "price-high-low", label: "Price: High to Low" },
-            ].map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-gray-700 hover:bg-gray-100">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        {!hideSort && (
+          <Select onValueChange={setSortOption} defaultValue="all">
+            <SelectTrigger className="w-[180px] bg-white border-gray-300 text-gray-700 hover:bg-gray-100">
+              <SelectValue placeholder="Filter & Sort" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border-gray-200 rounded-lg shadow-xl">
+              {[
+                { value: "all", label: "All Products" },
+                { value: "price-low-high", label: "Price: Low to High" },
+                { value: "price-high-low", label: "Price: High to Low" },
+              ].map((option) => (
+                <SelectItem key={option.value} value={option.value} className="text-gray-700 hover:bg-gray-100">
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
       </div>
 
       {/* Product Grid */}
@@ -93,7 +106,21 @@ export default function ProductList({ products, category, title }: ProductListPr
         {currentProducts.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {currentProducts.map((product, index) => (
-              <ProductCard key={index} product={product} />
+              <ProductCard 
+                key={index} 
+                product={{
+                  id: product.id,
+                  brand: product.brand,
+                  name: product.name,
+                  frontImage: product.image,
+                  backImage: product.back_image || product.image,
+                  price: product.price,
+                  discountPrice: product.discounted_price || undefined,
+                  discountAdded: product.discount_added,
+                  quantity: product.quantity
+                }}
+                hideTitle={hideTitle}
+              />
             ))}
           </div>
         ) : (

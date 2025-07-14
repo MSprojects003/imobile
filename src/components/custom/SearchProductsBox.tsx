@@ -1,40 +1,102 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import Image from "next/image";
-import { Product } from "@/app/data/products";
 import { PackageSearch } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { getAllProductList } from "@/lib/db/products";
+
+// Interface matching your database schema
+interface DatabaseProduct {
+  id: string
+  name: string
+  price: number
+  description: string
+  quantity: number
+  category: string
+  brand: string
+  models: string[]
+  colors: string[]
+  image: string
+  back_image: string | null
+  discount: number | null
+  created_at: string | null
+  updated_at: string | null
+  is_deleted: boolean
+  discount_added: boolean
+  discounted_price: number | null
+}
+
+// Interface for search results
+interface SearchProduct {
+  id: string
+  brand: string
+  name: string
+  frontImage: string
+  backImage: string
+  price: number
+  discountPrice?: number
+  discountAdded?: boolean
+  category: string
+}
 
 interface SearchProductsBoxProps {
-  products: Product[];
   placeholder?: string;
-  onSelectProduct?: (product: Product) => void;
+  onSelectProduct?: (product: SearchProduct) => void;
 }
 
 export default function SearchProductsBox({
-  products,
   placeholder = "Search products...",
   onSelectProduct,
 }: SearchProductsBoxProps) {
   const [query, setQuery] = useState("");
-  const [filtered, setFiltered] = useState<Product[]>([]);
+  const [filtered, setFiltered] = useState<SearchProduct[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  useEffect(() => {
-    if (query.trim() === "") {
-      setFiltered([]);
-      setShowDropdown(false);
-      return;
+  // Fetch products from database
+  const { data: databaseProducts, isLoading } = useQuery({
+    queryKey: ['search-products'],
+    queryFn: getAllProductList,
+  });
+
+  // Transform database products to search format - memoized to prevent infinite re-renders
+  const products = useMemo(() => {
+    if (!databaseProducts) return [];
+    
+    return databaseProducts.map((product: DatabaseProduct) => ({
+      id: product.id,
+      brand: product.brand,
+      name: product.name,
+      frontImage: product.image,
+      backImage: product.back_image || product.image,
+      price: product.price,
+      discountPrice: product.discounted_price || undefined,
+      discountAdded: product.discount_added,
+      category: product.category,
+    }));
+  }, [databaseProducts]);
+
+  // Search logic - memoized to prevent unnecessary recalculations
+  const searchResults = useMemo(() => {
+    if (query.trim() === "" || !products.length) {
+      return [];
     }
+    
     const q = query.toLowerCase();
-    const matches = products.filter((p) =>
-      p.name.toLowerCase().startsWith(q)
+    return products.filter((p) =>
+      (p.name?.toLowerCase() || "").includes(q) ||
+      (p.brand?.toLowerCase() || "").includes(q) ||
+      (p.category?.toLowerCase() || "").includes(q)
     );
-    setFiltered(matches);
-    setShowDropdown(matches.length > 0);
   }, [query, products]);
+
+  // Update filtered results and dropdown visibility
+  useEffect(() => {
+    setFiltered(searchResults);
+    setShowDropdown(searchResults.length > 0);
+  }, [searchResults]);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -58,11 +120,12 @@ export default function SearchProductsBox({
         ref={inputRef}
         type="text"
         className="w-full border border-gray-900 px-4 py-2 pr-12 text-md focus:outline-none placeholder:text-gray-500"
-        placeholder={placeholder}
+        placeholder={isLoading ? "Loading products..." : placeholder}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onFocus={() => query && filtered.length > 0 && setShowDropdown(true)}
         style={{ borderRadius: 0 }}
+        disabled={isLoading}
       />
       <span className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111827" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
@@ -92,7 +155,7 @@ export default function SearchProductsBox({
               >
                 <div className="w-12 h-12 flex-shrink-0 relative">
                   <Image
-                    src={typeof product.frontImage === "string" ? product.frontImage : product.frontImage.src}
+                    src={product.frontImage}
                     alt={product.name}
                     fill
                     className="object-contain rounded"
@@ -103,7 +166,7 @@ export default function SearchProductsBox({
                     {product.name}
                   </div>
                   <div className="text-sm text-gray-700 mt-1">
-                    Rs {product.discountPrice ? (
+                    {product.discountPrice && product.discountAdded ? (
                       <>
                         <span className="line-through text-gray-400 mr-2">Rs {product.price.toLocaleString()}</span>
                         <span className="text-green-700 font-bold">Rs {product.discountPrice.toLocaleString()}</span>

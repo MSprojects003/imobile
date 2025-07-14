@@ -31,7 +31,7 @@ function getInitial(name: string) {
 
 function ProductReviews() {
   return (
-    <div className="w-full p-4">
+    <div className="w-full px-8 p-4 pb-6">
       <h2 className="text-2xl font-bold mb-6 text-gray-900 tracking-tight text-left">Product Reviews</h2>
       {reviews.length === 0 ? (
         <div className="flex flex-col items-start justify-center py-12 border border-gray-200 rounded-md bg-white w-full">

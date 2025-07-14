@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image"
-import img2 from "../../pictures/products/nike-shoe-back.jpg"
-import img1 from "../../pictures/products/nike-shoe-font.webp"
+import img2 from "../../pictures/products/nike-shoe-back.webp"
+import img1 from "../../pictures/products/nike-shoe-font.jpg"
 // Define the Product interface
 export interface Product {
   id: string

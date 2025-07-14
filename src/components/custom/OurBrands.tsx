@@ -4,12 +4,21 @@ import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import Image, { StaticImageData } from "next/image"
-import amazonLogo from "../../pictures/brands/amazon.png"
-import huwavei from "../../pictures/brands/huawei.jpeg"
-import marshell from "../../pictures/brands/Marshall-Logo.png"
-import bose from "../../pictures/brands/bose.png"
-import sony from "../../pictures/brands/sony.png"
-import apple from "../../pictures/brands/apple.png"
+import akg from "../../pictures/brands/akg.png"
+import anker from "../../pictures/brands/anker.png"
+import remax from "../../pictures/brands/remax.png"
+import jccom from "../../pictures/brands/jccom.png"
+import joyroom from "../../pictures/brands/joyrrom.png"
+import denmen from "../../pictures/brands/denmen.png"
+import jbl from "../../pictures/brands/jbl.png"
+import belkin from "../../pictures/brands/belkin.png"
+import kingston from "../../pictures/brands/kingston.png"
+import kaiyue from "../../pictures/brands/kaiue.png"
+import mtb from "../../pictures/brands/mtb.png"
+import basues from "../../pictures/brands/basues.png"
+import spigen from "../../pictures/brands/spigen.png"
+ 
+ 
 
 interface Brand {
   id: string
@@ -20,41 +29,83 @@ interface Brand {
 
 const brands: Brand[] = [
   {
-    id: "amazon",
-    name: "Amazon",
-    logo: amazonLogo,
-    href: "/brands/amazon",
+    id: "akg",
+    name: "akg",
+    logo: akg,
+    href: "/brand/akg",
   },
   {
-    id: "sony",
-    name: "sony",
-    logo: sony,
-    href: "/brands/sony",
+    id: "denmen",
+    name: "denmen",
+    logo: denmen,
+    href: "/brand/denmen",
   },
   {
-    id: "marshall",
-    name: "Marshall",
-    logo: marshell,
-    href: "/brands/marshall",
+    id: "anker",
+    name: "anker",
+    logo: anker,
+    href: "/brand/anker",
   },
   {
-    id: "huawei",
-    name: "Huawei",
-    logo: huwavei,
-    href: "/brands/huawei",
+    id: "jbl",
+    name: "jbl",
+    logo: jbl,
+    href: "/brand/jbl",
   },
   {
-    id: "bose",
-    name: "Bose",
-    logo: bose,
-    href: "/brands/bose",
+    id: "belkin",
+    name: "belkin",
+    logo: belkin,
+    href: "/brand/belkin",
   },
   {
-    id: "apple",
-    name: "Apple",
-logo: apple,
-    href: "/brands/apple",
+    id: "basues",
+    name: "basues",
+logo: basues,
+    href: "/brand/baseus",
   },
+   {
+    id: "jccom",
+    name: "jccom",
+logo: jccom,
+    href: "/brand/jccom",
+  },
+   {
+    id: "joyroom",
+    name: "joyroom",
+logo: joyroom,
+    href: "/brand/joyroom",
+  },
+   {
+    id: "kingston",
+    name: "kingston",
+logo: kingston,
+    href: "/brand/kingston",
+  },
+   {
+    id: "mtb",
+    name: "mtb",
+logo: mtb,
+    href: "/brand/mtb",
+  },
+   {
+    id: "remax",
+    name: "remax",
+logo: remax,
+    href: "/brand/remax",
+  },
+   {
+    id: "spigen",
+    name: "spigen",
+logo: spigen,
+    href: "/brand/spigen",
+  }, {
+    id: "kaiyue",
+    name: "kaiyue",
+logo: kaiyue,
+    href: "/brand/kaiyue",
+  },
+  
 ]
 
 export default function OurBrands() {
