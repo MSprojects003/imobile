@@ -1,5 +1,5 @@
 import { supabase } from "../supabase/client";
-import { PostgrestError } from "@supabase/supabase-js";
+ 
 
 // Database schema interface matching the table structure
 export interface Product {
