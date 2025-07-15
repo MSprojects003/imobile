@@ -15,30 +15,35 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { getAllBanners } from '@/lib/db/banner';
 
-
 export function HomeBanner() {
   const [isHovered, setIsHovered] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // useQuery must be called inside the component
   const { data: banners, isLoading, isError } = useQuery({
-    queryKey: ["hero"],
+    queryKey: ['hero'],
     queryFn: getAllBanners,
   });
 
-  // Auto-play functionality
   useEffect(() => {
     if (!isHovered && banners && banners.length > 0) {
       const interval = setInterval(() => {
         setCurrentIndex((prevIndex) =>
           prevIndex === banners.length - 1 ? 0 : prevIndex + 1
         );
-      }, 5000); // Auto-play every 5 seconds
+      }, 5000);
       return () => clearInterval(interval);
     }
   }, [isHovered, banners]);
 
-  if (isLoading) return <div>Loading banners...</div>;
+  if (isLoading) {
+    return (
+      <div className="relative w-full mt-0 pt-0 h-[250px] sm:h-[250px] md:h-[461px] bg-gray-300 animate-pulse">
+        {/* Skeleton placeholder */}
+        <div className="w-full h-full bg-gray-400 opacity-50"></div>
+      </div>
+    );
+  }
+
   if (isError || !banners || banners.length === 0) return <div>No banners found.</div>;
 
   return (
@@ -60,7 +65,7 @@ export function HomeBanner() {
         <CarouselContent>
           {banners.map((banner, index) => (
             <CarouselItem key={banner.id || index}>
-              <Link href={banner.link_url || "#"} className="block w-full">
+              <Link href={banner.link_url || '#'} className="block w-full">
                 <div className="relative w-full h-[250px] sm:h-[250px] md:h-[461px]">
                   <Image
                     src={banner.image_url}
@@ -77,9 +82,9 @@ export function HomeBanner() {
 
         {/* Previous Button */}
         <CarouselPrevious
-          className={`absolute top-1/2 -translate-y-1/2 bg-slate-900 shadow-sm shadow-black text-white rounded-full border-none p-6 transition-all duration-300 ease-in-out ${
-            isHovered ? 'left-[5%] opacity-100' : 'left-[-10%] opacity-0'
-          }`}
+          className={`absolute top-1/2 -translate-y-1/2 bg-slate-900 shadow-sm shadow-black text-white rounded-full border-none p-6 ${
+            isHovered && !isMobileView() ? 'left-[5%] opacity-100' : 'left-0 opacity-100'
+          } ${isMobileView() ? 'block' : 'hidden md:block'}`}
           aria-label="Previous Slide"
         >
           <ChevronLeft />
@@ -87,9 +92,9 @@ export function HomeBanner() {
 
         {/* Next Button */}
         <CarouselNext
-          className={`absolute top-1/2 -translate-y-1/2 bg-slate-900 shadow-sm shadow-black text-white rounded-full border-none p-6 transition-all duration-300 ease-in-out ${
-            isHovered ? 'right-[5%] opacity-100' : 'right-[-10%] opacity-0'
-          }`}
+          className={`absolute top-1/2 -translate-y-1/2 bg-slate-900 shadow-sm shadow-black text-white rounded-full border-none p-6 ${
+            isHovered && !isMobileView() ? 'right-[5%] opacity-100' : 'right-0 opacity-100'
+          } ${isMobileView() ? 'block' : 'hidden md:block'}`}
           aria-label="Next Slide"
         >
           <ChevronRight />
@@ -97,4 +102,9 @@ export function HomeBanner() {
       </Carousel>
     </div>
   );
+}
+
+// Helper function to detect mobile view
+function isMobileView() {
+  return window.innerWidth < 768; // Adjust breakpoint as needed
 }

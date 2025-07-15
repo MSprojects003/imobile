@@ -400,7 +400,9 @@ export default function ViewProduct() {
           <div className="space-y-4">
             {/* Product Title */}
             <div>
-              <h1 className="text-2xl sm:text-3xl font-semibold text-gray-900 capitalize">{product.name}</h1>
+             <h1 className="text-2xl sm:text-3xl font-semibold text-gray-900 capitalize break-words">
+    {product.name}
+  </h1>
               <p className="text-sm text-gray-500 mt-1 capitalize flex items-center gap-2">
                 <span>
                   Brand: <span className="font-medium text-gray-700">{product.brand}</span>
