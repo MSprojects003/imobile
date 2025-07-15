@@ -82,6 +82,7 @@ export async function getProductsByCategoryAndBrand(category: string, brand: str
   return data;
 }
 
+
 export async function getRelatedProducts(category: string, brand: string, excludeProductId?: string, limit: number = 4) {
   // 1. Try to get products matching both category and brand
   const { data: both, error } = await supabase
