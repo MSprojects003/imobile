@@ -3,15 +3,14 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Minus, Plus, ShoppingBag, Wifi, WifiOff, Info, Truck, Clock, ShieldCheck } from "lucide-react";
+import { Minus, Plus, ShoppingBag, Wifi, WifiOff, Info, Clock } from "lucide-react";
 import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getAuthUser } from "@/lib/db/user";
 import { getProductById } from "@/lib/db/products";
-import { getCartByUserId, insertCartItem } from "@/lib/db/cart";
+import { getCartByUserId } from "@/lib/db/cart";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
-import { supabase } from "@/lib/supabase/client";
 import { updateOrInsertCartBYArgumants } from "@/lib/db/update-or-insert-cart-by-arguments";
 import RelatedProducts from './RelatedProducts';
 
@@ -361,7 +360,7 @@ export default function ViewProduct() {
           </div>
           <h3 className="text-xl font-semibold text-gray-900 mb-2">Product Not Found</h3>
           <p className="text-sm text-gray-600 text-center max-w-md">
-            The product you're looking for doesn't exist or has been removed.
+            The product you&apos;re looking for doesn&apos;t exist or has been removed.
           </p>
         </div>
       </div>

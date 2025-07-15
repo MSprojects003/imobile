@@ -1,120 +1,12 @@
 'use client';
 import React from 'react';
-import { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import img1 from '../../pictures/products/nike-shoe-font.jpg';
 import img2 from '../../pictures/products/nike-shoe-back.webp';
 import { useQuery } from '@tanstack/react-query';
 import { getAuthUser } from '@/lib/db/user';
 import { getAllordersByUserID } from '@/lib/db/orders';
-
-// Define the Product interface
-export interface Product {
-  id: string;
-  brand: string;
-  name: string;
-  frontImage: string | StaticImageData;
-  backImage: string | StaticImageData;
-  price: number;
-  discountPrice?: number;
-  sku: string;
-  colors: { code: string; name: string; stock: number }[];
-  models: string[];
-  category: string;
-}
-
-export const sampleProducts: Product[] = [
-  {
-    id: '1',
-    brand: 'Brand A',
-    name: 'Wireless Headphones',
-    frontImage: img1,
-    backImage: img2,
-    price: 100,
-    discountPrice: 80,
-    sku: 'AS-111-Pro-1',
-    colors: [
-      { code: '#000000', name: 'Matte Black', stock: 1 },
-      { code: '#FFFFFF', name: 'White', stock: 5 },
-      { code: '#FF0000', name: 'Red', stock: 3 },
-    ],
-    models: ['Model A', 'Model B', 'Model C'],
-    category: 'wireless-headphones',
-  },
-  {
-    id: '2',
-    brand: 'Brand B',
-    name: 'Smartphone Charger',
-    frontImage: '/images/charger-front.jpg',
-    backImage: '/images/charger-back.jpg',
-    price: 150,
-    sku: 'AS-111-Pro-2',
-    colors: [
-      { code: '#000000', name: 'Matte Black', stock: 2 },
-      { code: '#FFFFFF', name: 'White', stock: 6 },
-      { code: '#FF0000', name: 'Red', stock: 4 },
-      { code: '#00FF00', name: 'Green', stock: 3 },
-      { code: '#0000FF', name: 'Blue', stock: 5 },
-      { code: '#FFA500', name: 'Orange', stock: 2 },
-      { code: '#800080', name: 'Purple', stock: 4 },
-    ],
-    models: ['Model X', 'Model Y', 'Model Z', 'Model W'],
-    category: 'smartphone-charger',
-  },
-  {
-    id: '11',
-    brand: 'Nike',
-    name: 'Air Max 270 React Running Shoes for Men',
-    frontImage: img1,
-    backImage: img2,
-    price: 12999,
-    discountPrice: 9999,
-    sku: 'AS-111-Pro-9',
-    colors: [],
-    models: [],
-    category: 'shoes',
-  },
-];
-
-// Dummy order data
-const orders = [
-  {
-    orderId: '#ORD123456',
-    productId: '1',
-    quantity: 2,
-    status: 'Pending',
-    orderPlacedDate: '2025-07-01 10:00 AM +0530',
-  },
-  {
-    orderId: '#ORD123457',
-    productId: '2',
-    quantity: 1,
-    status: 'Accepted',
-    trackId: 'TRK789101',
-    orderPlacedDate: '2025-07-02 11:30 AM +0530',
-  },
-  {
-    orderId: '#ORD123458',
-    productId: '11',
-    quantity: 3,
-    status: 'Accepted',
-    orderPlacedDate: '2025-07-03 02:15 PM +0530',
-  },
-];
-
-// Function to calculate estimated date (7 days after order placed)
-const calculateEstimatedDate = (orderPlacedDate: string) => {
-  const date = new Date(orderPlacedDate);
-  date.setDate(date.getDate() + 7);
-  return date.toLocaleString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    timeZoneName: 'short',
-  });
-};
 
 function Orders() {
   const { data: user } = useQuery({
@@ -168,7 +60,7 @@ function Orders() {
               </svg>
             </div>
             <h3 className="text-xl font-semibold text-gray-800 mb-2">No Tracking Orders Found!</h3>
-            <p className="text-gray-600 mb-6">You haven't placed any orders yet. Start shopping to track your orders here.</p>
+            <p className="text-gray-600 mb-6">You haven&apos;t placed any orders yet. Start shopping to track your orders here.</p>
             <Link href="/" className="inline-flex items-center px-6 py-3 bg-slate-800 text-white font-medium rounded-lg hover:bg-slate-700 transition-colors duration-200">
               Continue Shopping
               <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -210,11 +102,16 @@ function Orders() {
             className="border-2 border-slate-800 p-4 mb-4 flex items-center shadow-sm"
             style={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
           >
-            <img
-              src={order.order_items[0]?.products?.image || '/placeholder-image.jpg'}
-              alt={order.order_items[0]?.products?.name || 'Product'}
-              className="w-20 h-20 object-cover mr-4"
-            />
+            <div className="w-20 h-20 relative mr-4">
+              <Image
+                src={order.order_items[0]?.products?.image || '/placeholder-image.jpg'}
+                alt={order.order_items[0]?.products?.name || 'Product'}
+                fill
+                className="object-cover rounded"
+                sizes="80px"
+                priority={index === 0}
+              />
+            </div>
             <div className="flex-1">
               <p className="text-sm font-semibold">Order #{order.id.slice(-8).toUpperCase()}</p>
               <p className="text-xs text-gray-600">Total Items: {order.order_items.length}</p>

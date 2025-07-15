@@ -14,8 +14,8 @@ export async function insertCartItem(
         user_id,
         product_id,
         quantity,
-        colors: colors as any, // Supabase expects array for text[]
-        models: models as any, // Supabase expects array for text[]
+        colors: colors as string[], // Explicitly cast to string[]
+        models: models as string[], // Explicitly cast to string[]
       },
     ])
     .select();
@@ -53,14 +53,6 @@ export async function deleteCartItemsByIds(ids: string[]) {
   return data;
 }
 
-type TablesInsert = {
-  id: string;
-  productid: string;
-  userid: string;
-  quantity: string;
-  colors: string;
-  models?: boolean;
-};
 export async function getCartByUserId(userId: string) {
   const { data, error } = await supabase
     .from("cart")

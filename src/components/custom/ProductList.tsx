@@ -4,7 +4,6 @@ import { useState } from "react"
 import ProductCard from "./ProductCard"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext } from "@/components/ui/pagination"
-import { StaticImageData } from "next/image"
 import { PackageSearch } from "lucide-react"
 
 // Define the Product interface to match database structure

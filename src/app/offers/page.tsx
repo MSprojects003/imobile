@@ -114,7 +114,7 @@ export default function OffersPage() {
           </div>
           <h3 className="text-xl font-semibold text-gray-700 mb-2">No Offers Found</h3>
           <p className="text-gray-500 text-center max-w-md">
-            We don't have any active offers at the moment. Check back soon for amazing deals and discounts!
+            We don&apos;t have any active offers at the moment. Check back soon for amazing deals and discounts!
           </p>
         </div>
       </div>

@@ -50,7 +50,7 @@ export async function UserDetialsByID(userid:string) {
   const { data, error } = await supabase
     .from('users')
     .select('*')
-    
+    .eq('id',userid)
     .single();
   if (error) throw error;
   return data;

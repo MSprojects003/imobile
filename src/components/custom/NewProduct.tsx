@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ChevronRight, PackageSearch, TrendingUp, Clock } from "lucide-react"
+import { ChevronRight, TrendingUp, Clock } from "lucide-react"
 import ProductCard from "./ProductCard"
 import { getAllProductList } from "@/lib/db/products"
 import { useQuery } from "@tanstack/react-query"
@@ -139,7 +139,7 @@ export default function NewProducts({ products, limit }: NewProductsProps) {
             <div className="text-center max-w-md">
               <h3 className="text-2xl font-bold text-gray-800 mb-3">No New Arrivals</h3>
               <p className="text-gray-600 text-lg mb-6 leading-relaxed">
-                We're carefully curating fresh products for you. 
+                We&apos;re carefully curating fresh products for you. 
                 Check back soon for exciting new arrivals and latest additions!
               </p>
               <div className="flex items-center justify-center gap-2 text-sm text-gray-500">

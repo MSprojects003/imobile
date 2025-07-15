@@ -1,7 +1,6 @@
 'use client';
 import ProductList from '@/components/custom/ProductList'
 import React from 'react'
-import { sampleProducts } from '../../data/products'
 import { getAuthUser } from '@/lib/db/user';
 import { useQuery } from '@tanstack/react-query';
 import { getAllProductList } from '@/lib/db/products';
@@ -19,7 +18,7 @@ export default function Page({ params }: { params: Promise<{ category: string }>
       retry: false,
     });
   
-    const { data: allproducts, isLoading: userLoading } = useQuery({
+    const { data: allproducts } = useQuery({
       queryKey: ["user", user?.id],
       queryFn: () => (user ? getAllProductList( ) : Promise.resolve(null)),
       enabled: !!user,

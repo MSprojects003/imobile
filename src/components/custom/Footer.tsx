@@ -1,8 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import {
   Facebook,
@@ -14,6 +12,7 @@ import {
   MapPin,
   Phone,
 } from "lucide-react"
+import Image from "next/image"
 
 export function Footer() {
   return (
@@ -158,9 +157,11 @@ export function Footer() {
           <div className="space-y-6">
             <h3 className="text-lg font-semibold text-white">Powered by</h3>
             <Link href="/" className="flex justify-center">
-              <img
+              <Image
                 src="https://amss.vercel.app/assets/logo2-DtFAk1Wv.png"
                 alt="Developer Logo"
+                width={96}
+                height={96}
                 className="h-24 w-auto rounded-none"
               />
             </Link>

@@ -45,25 +45,18 @@ interface CustomerDetails {
 }
 
 interface CartSummaryProps {
-  items?: CartItem[]
   customerDetails?: CustomerDetails
   onUpdateQuantity?: (id: string, quantity: number) => void
-  onRemoveItem?: (id: string) => void
   onUpdateCustomerDetails?: (details: CustomerDetails) => void
-  onContinueShopping?: () => void
   onPlaceOrder?: () => void
 }
 
 export default function CartSummary({
-  items,
   customerDetails = { phone: "", address: "" },
   onUpdateQuantity,
-  onRemoveItem,
   onUpdateCustomerDetails,
-  onContinueShopping,
   onPlaceOrder,
 }: CartSummaryProps) {
-  const router = useRouter()
   const [localCustomerDetails, setLocalCustomerDetails] = useState<CustomerDetails>(customerDetails)
   const [isClient, setIsClient] = useState(false)
 
@@ -75,12 +68,6 @@ export default function CartSummary({
     if (newQuantity < 1) return
     setLocalCart((prevCart) => prevCart.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item)))
     onUpdateQuantity?.(id, newQuantity)
-  }
-
-  const handleCustomerDetailsChange = (field: keyof CustomerDetails, value: string) => {
-    const updatedDetails = { ...localCustomerDetails, [field]: value }
-    setLocalCustomerDetails(updatedDetails)
-    onUpdateCustomerDetails?.(updatedDetails)
   }
 
   // Helper to format phone number for react-phone-input-2
@@ -112,6 +99,7 @@ export default function CartSummary({
   const [localCart, setLocalCart] = useState<CartItem[]>([])
 
   // Sync localCart with fetched cart data
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (JSON.stringify(cart) !== JSON.stringify(localCart)) {
       setLocalCart(cart)
@@ -227,7 +215,7 @@ export default function CartSummary({
                       className="ml-2 px-4 py-2 text-sm font-medium"
                       disabled={clearAllMutation.isPending}
                       onClick={() => {
-                        const ids = localCart.map((item: any) => item.id)
+                        const ids = localCart.map((item: CartItem) => item.id)
                         clearAllMutation.mutate(ids)
                       }}
                     >
@@ -435,7 +423,7 @@ export default function CartSummary({
                                 ) : item.products && item.quantity > (item.products?.quantity ?? 0) ? (
                                   <div className="text-orange-600 text-sm font-medium flex items-center gap-2">
                                     <X className="w-4 h-4" />
-                                    Can't order this product with this quantity. Available stock is {item.products?.quantity ?? 0}. Please decrease the ordering quantity.
+                                    Can&apos;t order this product with this quantity. Available stock is {item.products?.quantity ?? 0}. Please decrease the ordering quantity.
                                   </div>
                                 ) : null}
                               </div>
@@ -551,7 +539,7 @@ export default function CartSummary({
                                     ) : item.products && item.quantity > (item.products?.quantity ?? 0) ? (
                                       <div className="text-orange-600 text-sm font-medium flex items-center gap-2">
                                         <X className="w-4 h-4" />
-                                        Can't order this product with this quantity. Available stock is {item.products?.quantity ?? 0}. Please decrease the ordering quantity.
+                                        Can&apos;t order this product with this quantity. Available stock is {item.products?.quantity ?? 0}. Please decrease the ordering quantity.
                                       </div>
                                     ) : null}
                                   </div>

@@ -44,7 +44,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getAuthUser } from "@/lib/db/user";
 import { useRouter } from "next/navigation";
 import SearchProductsBox from "@/components/custom/SearchProductsBox";
-import { sampleProducts } from "@/app/data/products";
 import { getCartCountByUserId } from "@/lib/db/cart";
 
 // Basic VisuallyHidden utility for accessibility title

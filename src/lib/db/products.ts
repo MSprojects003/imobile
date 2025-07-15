@@ -84,7 +84,7 @@ export async function getProductsByCategoryAndBrand(category: string, brand: str
 
 export async function getRelatedProducts(category: string, brand: string, excludeProductId?: string, limit: number = 4) {
   // 1. Try to get products matching both category and brand
-  let { data: both, error } = await supabase
+  const { data: both, error } = await supabase
     .from('products')
     .select('*')
     .eq('category', category)
@@ -98,7 +98,7 @@ export async function getRelatedProducts(category: string, brand: string, exclud
 
   // 2. If not enough, get products matching only category or only brand
   const ids = both ? both.map(p => p.id) : [];
-  let { data: either, error: error2 } = await supabase
+  const { data: either, error: error2 } = await supabase
     .from('products')
     .select('*')
     .or(`category.eq.${category},brand.eq.${brand}`)

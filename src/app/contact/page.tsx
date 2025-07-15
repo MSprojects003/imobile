@@ -17,13 +17,11 @@ import { toast } from "sonner"
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [formStatus, setFormStatus] = useState<"idle" | "success" | "error">("idle")
   const formRef = useRef<HTMLFormElement>(null)
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setIsSubmitting(true)
-    setFormStatus("idle")
 
     const formData = new FormData(event.currentTarget)
     formData.append("access_key", "1b842695-6401-42c8-a8c2-ee918ee8aa7e")
@@ -48,18 +46,15 @@ export default function ContactPage() {
       console.log("Response Body:", result)
 
       if (response.ok && result.success === true) {
-        setFormStatus("success")
         toast.success("Message sent successfully!")
         if (formRef.current) {
           formRef.current.reset()
         }
       } else {
-        setFormStatus("error")
         toast.error(`Failed to send message: ${result.message || "Unknown error"}`)
       }
     } catch (error) {
       console.error("Submission Error:", error)
-      setFormStatus("error")
       toast.error("An error occurred while sending the message. Please try again later.")
     } finally {
       setIsSubmitting(false)
@@ -92,7 +87,7 @@ export default function ContactPage() {
               Get in Touch
             </h1>
             <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
-              We're here to assist you! Whether you have questions, feedback, or need support, reach out to us and we'll respond promptly.
+              We&apos;re here to assist you! Whether you have questions, feedback, or need support, reach out to us and we&apos;ll respond promptly.
             </p>
           </div>
         </div>
@@ -200,7 +195,7 @@ export default function ContactPage() {
           <div className="text-center mb-12 space-y-4">
             <h2 className="text-3xl font-semibold text-gray-900">Contact Information</h2>
             <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Reach out to us through your preferred method. We're always here to help.
+              Reach out to us through your preferred method. We&apos;re always here to help.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">

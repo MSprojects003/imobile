@@ -14,12 +14,33 @@ interface CreateOrderWithItemsParams {
   items: OrderItemInput[];
 }
 
+interface Order {
+  id: string;
+  customer_id: string;
+  total_amount: number;
+  track_id: string;
+  status: boolean;
+  created_at?: string;
+  // Add other fields as needed
+}
+
+interface OrderItem {
+  id: string;
+  order_id: string;
+  product_id: string;
+  price: number;
+  quantity: number;
+  colors: string[];
+  models: string[];
+  // Add other fields as needed
+}
+
 /**
  * Inserts a new order and its items into the database.
  * @param {CreateOrderWithItemsParams} params
- * @returns {Promise<{ order: any, order_items: any[] }>} The inserted order and order_items
+ * @returns {Promise<{ order: Order, order_items: OrderItem[] }>} The inserted order and order_items
  */
-export async function createOrderWithItems({ user_id, total_amount, items }: CreateOrderWithItemsParams): Promise<{ order: any, order_items: any[] }> {
+export async function createOrderWithItems({ user_id, total_amount, items }: CreateOrderWithItemsParams): Promise<{ order: Order, order_items: OrderItem[] }> {
   // Insert into orders table
   const { data: order, error: orderError } = await supabase
     .from('orders')

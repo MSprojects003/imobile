@@ -1,5 +1,4 @@
 import ViewProduct from '@/components/custom/ProductDetails'
-import ProductReviews from '@/components/custom/ProductReviews'
 import React from 'react'
 
 const page = () => {

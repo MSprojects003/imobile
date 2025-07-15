@@ -19,7 +19,7 @@ export default function BrandPage({ params }: { params: Promise<{ brand: string 
     retry: false,
   });
 
-  const { data: allproducts, isLoading: userLoading } = useQuery({
+  const { data: allproducts } = useQuery({
     queryKey: ["user", user?.id],
     queryFn: () => (user ? getAllProductList() : Promise.resolve(null)),
     enabled: !!user,
