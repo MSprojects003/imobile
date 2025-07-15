@@ -76,6 +76,7 @@ export async function getProductsByCategoryAndBrand(category: string, brand: str
   if (excludeProductId) {
     query = query.neq('id', excludeProductId);
   }
+  
 
   const { data, error } = await query;
   if (error) throw error;
