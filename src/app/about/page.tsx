@@ -4,10 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Award, Heart, Star, Users } from "lucide-react"
-import founder from "../../pictures/profiles/founder.jpg"
-import bgImage from "../../pictures/background/contact.jpeg" // Import your background image
 import OurBrands from "@/components/custom/OurBrands"
-import store from "../../pictures/background/WhatsApp Image 2025-07-14 at 13.02.15_472a455d.jpg"
 
 export default function AboutPage() {
   return (
@@ -17,7 +14,7 @@ export default function AboutPage() {
         {/* Background Image with Next.js Image component */}
         <div className="absolute inset-0 w-full h-full">
           <Image
-            src={bgImage}
+            src="/pictures/background/contact.jpeg"
             alt="About Us Background"
             layout="fill"
             objectFit="cover"
@@ -44,7 +41,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
               <Image
-                src={store}
+                src="/pictures/background/WhatsApp Image 2025-07-14 at 13.02.15_472a455d.jpg"
                 alt="Store image"
                 width={600}
                 height={400}
@@ -81,7 +78,7 @@ export default function AboutPage() {
           <Card className="max-w-3xl mx-auto bg-white shadow-lg">
             <CardContent className="p-8 flex flex-col md:flex-row items-center gap-8">
               <Image
-                src={founder}
+                src="/pictures/profiles/founder.jpg"
                 alt="Founder"
                 width={200}
                 height={200}

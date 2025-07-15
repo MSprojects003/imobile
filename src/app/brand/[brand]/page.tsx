@@ -5,11 +5,9 @@ import { getAuthUser } from '@/lib/db/user';
 import { useQuery } from '@tanstack/react-query';
 import { getAllProductList } from '@/lib/db/products';
 
-export default function BrandPage({ params }: { params: Promise<{ brand: string }> }) {
-  const resolvedParams = React.use(params);
-  
+export default function BrandPage({ params }: { params: { brand: string } }) {
   // Format the brand name for display
-  const displayBrand = resolvedParams.brand
+  const displayBrand = params.brand
     .replace(/-/g, ' ')
     .replace(/\b\w/g, l => l.toUpperCase())
 
@@ -29,7 +27,7 @@ export default function BrandPage({ params }: { params: Promise<{ brand: string 
     <div className="max-w-7xl bg-gray-50 mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <ProductList 
         products={allproducts || []} 
-        brand={resolvedParams.brand} 
+        brand={params.brand} 
         title={`${displayBrand} Products`} 
       />
     </div>
