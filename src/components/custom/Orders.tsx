@@ -2,8 +2,8 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import img1 from '../../pictures/products/nike-shoe-font.jpg';
-import img2 from '../../pictures/products/nike-shoe-back.webp';
+ 
+ 
 import { useQuery } from '@tanstack/react-query';
 import { getAuthUser } from '@/lib/db/user';
 import { getAllordersByUserID } from '@/lib/db/orders';

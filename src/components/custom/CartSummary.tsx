@@ -10,7 +10,6 @@ import { useQuery } from "@tanstack/react-query"
 import { getAuthUser, UserDetialsByID } from "@/lib/db/user"
 import { getCartByUserId, deleteCartItemById, deleteCartItemsByIds } from "@/lib/db/cart"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
 import PhoneInput from "react-phone-input-2"
 import "react-phone-input-2/lib/style.css"
 import Link from "next/link"
@@ -47,17 +46,14 @@ interface CustomerDetails {
 interface CartSummaryProps {
   customerDetails?: CustomerDetails
   onUpdateQuantity?: (id: string, quantity: number) => void
-  onUpdateCustomerDetails?: (details: CustomerDetails) => void
   onPlaceOrder?: () => void
 }
 
 export default function CartSummary({
   customerDetails = { phone: "", address: "" },
   onUpdateQuantity,
-  onUpdateCustomerDetails,
   onPlaceOrder,
 }: CartSummaryProps) {
-  const [localCustomerDetails, setLocalCustomerDetails] = useState<CustomerDetails>(customerDetails)
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
@@ -99,7 +95,6 @@ export default function CartSummary({
   const [localCart, setLocalCart] = useState<CartItem[]>([])
 
   // Sync localCart with fetched cart data
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (JSON.stringify(cart) !== JSON.stringify(localCart)) {
       setLocalCart(cart)
