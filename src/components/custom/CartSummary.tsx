@@ -44,13 +44,11 @@ interface CustomerDetails {
 }
 
 interface CartSummaryProps {
-  customerDetails?: CustomerDetails
   onUpdateQuantity?: (id: string, quantity: number) => void
   onPlaceOrder?: () => void
 }
 
 export default function CartSummary({
-  customerDetails = { phone: "", address: "" },
   onUpdateQuantity,
   onPlaceOrder,
 }: CartSummaryProps) {
@@ -95,6 +93,7 @@ export default function CartSummary({
   const [localCart, setLocalCart] = useState<CartItem[]>([])
 
   // Sync localCart with fetched cart data
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (JSON.stringify(cart) !== JSON.stringify(localCart)) {
       setLocalCart(cart)

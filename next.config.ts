@@ -8,7 +8,8 @@ const nextConfig: NextConfig = {
       "images.unsplash.com", 
       "source.unsplash.com",
       "ydofhfpabcorhdnjhfcj.supabase.co",
-      "deliverypartner.lk"
+      "deliverypartner.lk",
+      "amss.vercel.app"
     ],
   },
 };
