@@ -15,6 +15,8 @@ import { createUser, getAuthUser } from "@/lib/db/user";
 import { supabase } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import image1 from "../../pictures/background/loginpage.avif"
+
 
 
 // Define types for our form data
@@ -199,7 +201,7 @@ export default function Auth() {
       {/* Left Side - Image (Desktop Only) */}
       <div className="hidden lg:flex lg:w-1/2 relative">
         <Image
-          src="../../pictures/background/login page.avif"
+          src= {image1}
           alt="Space Exploration"
           fill
           className="object-cover"
@@ -446,18 +448,7 @@ export default function Auth() {
               </TabsContent>
             </Tabs>
 
-            <div className="mt-6 text-center">
-              <p className="text-blue-600 text-sm">
-                {activeTab === "signup" ? "Already have an account?" : "Don&apos;t have an account?"}{" "}
-                <button
-                  type="button"
-                  onClick={() => setActiveTab(activeTab === "signup" ? "signin" : "signup")}
-                  className="text-blue-900 hover:text-blue-700 font-medium"
-                >
-                  {activeTab === "signup" ? "Sign in" : "Sign up"}
-                </button>
-              </p>
-            </div>
+            
           </CardContent>
         </Card>
       </div>
