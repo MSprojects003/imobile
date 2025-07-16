@@ -6,13 +6,14 @@ import {
   Facebook,
   Instagram,
   Twitter,
-  Linkedin,
+  
   Youtube,
   Mail,
   MapPin,
   Phone,
 } from "lucide-react"
 import Image from "next/image"
+import { FaTiktok } from "react-icons/fa"
 
 export function Footer() {
   return (
@@ -49,8 +50,9 @@ export function Footer() {
                   </div>
                 </Link>
                 <Link href="#" className="group">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 transition-colors group-hover:bg-blue-700">
-                    <Linkedin size={18} />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 transition-colors group-hover:bg-pink-900">
+                    <FaTiktok size={18} />
+                    
                   </div>
                 </Link>
                 <Link href="#" className="group">
@@ -152,6 +154,20 @@ export function Footer() {
               </li>
             </ul>
           </div>
+
+          {/* Powered by */}
+          <div className="space-y-2 flex flex-col items-center justify-center">
+            <Link href="https://amss.vercel.app/" className="flex justify-center">
+              <Image
+                src="https://amss.vercel.app/assets/logo2-DtFAk1Wv.png"
+                alt="Developer Logo"
+                width={96}
+                height={96}
+                className="h-24 w-auto rounded-none"
+              />
+            </Link>
+            <h3 className="text-lg font-semibold text-white mt-2 text-center">Powered by</h3>
+          </div>
         </div>
 
         {/* Contact Information */}
@@ -207,20 +223,6 @@ export function Footer() {
               Accessibility
             </Link>
           </div>
-        </div>
-
-        {/* Powered by at the bottom */}
-        <div className="flex flex-col items-center justify-center mb-8">
-          <h3 className="text-lg font-semibold text-white mb-2">Powered by</h3>
-          <Link href="https://amss.vercel.app/" className="flex justify-center">
-            <Image
-              src="https://amss.vercel.app/assets/logo2-DtFAk1Wv.png"
-              alt="Developer Logo"
-              width={96}
-              height={96}
-              className="h-24 w-auto rounded-none"
-            />
-          </Link>
         </div>
       </div>
     </footer>
