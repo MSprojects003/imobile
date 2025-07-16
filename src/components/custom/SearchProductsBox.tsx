@@ -132,6 +132,7 @@ export default function SearchProductsBox({
       </span>
       {showDropdown && (
         <div
+        
           ref={dropdownRef}
           className="absolute left-0 mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg z-50 max-h-80 overflow-y-auto"
         >
