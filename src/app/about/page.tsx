@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Award, Heart, Star, Users } from "lucide-react"
 import OurBrands from "@/components/custom/OurBrands"
-import img from 
-
+ 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-white">
