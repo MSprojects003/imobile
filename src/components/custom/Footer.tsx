@@ -212,7 +212,7 @@ export function Footer() {
         {/* Powered by at the bottom */}
         <div className="flex flex-col items-center justify-center mb-8">
           <h3 className="text-lg font-semibold text-white mb-2">Powered by</h3>
-          <Link href="/" className="flex justify-center">
+          <Link href="https://amss.vercel.app/" className="flex justify-center">
             <Image
               src="https://amss.vercel.app/assets/logo2-DtFAk1Wv.png"
               alt="Developer Logo"

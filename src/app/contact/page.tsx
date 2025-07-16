@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Mail, Phone, MapPin, Send } from "lucide-react"
 import Image from "next/image"
-import Link from "next/link"
+ 
 import { useState, useRef } from "react"
  
 
