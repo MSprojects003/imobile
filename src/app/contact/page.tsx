@@ -169,12 +169,12 @@ export default function ContactPage() {
                 </form>
               </CardContent>
             </Card>
-
+ 
             {/* Map */}
             <Card className="bg-white shadow-lg">
               <CardContent className="p-0">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509374!2d144.95373631531676!3d-37.81627927975175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf0727e4d1a7f1c8!2s123%20Collins%20St%2C%20Melbourne%20VIC%203000%2C%20Australia!5e0!3m2!1sen!2sus!4v1698791234567!5m2!1sen!2sus"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1291.8121532046882!2d79.87186981893996!3d6.947121472952352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae258f8c59590b3%3A0xb47671009176ad36!2s58%20Samagipura%20Ln%2C%20Colombo%2001400!5e1!3m2!1sen!2slk!4v1752673606684!5m2!1sen!2slk"
                   width="100%"
                   height="450"
                   style={{ border: 0 }}

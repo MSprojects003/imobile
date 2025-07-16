@@ -16,7 +16,7 @@ import {
   X,
   Facebook,
   Instagram,
-  Youtube,
+   
   Search,
   User,
   Percent,
@@ -45,6 +45,7 @@ import { getAuthUser } from "@/lib/db/user";
 import { useRouter } from "next/navigation";
 import SearchProductsBox from "@/components/custom/SearchProductsBox";
 import { getCartCountByUserId } from "@/lib/db/cart";
+ 
 
 // Basic VisuallyHidden utility for accessibility title
 const VisuallyHidden = ({ children }: { children: React.ReactNode }) => {
@@ -232,15 +233,13 @@ export function NavigationBar() {
       {/* Top Announcement Bar */}
       <div className="bg-slate-900 text-white flex items-center justify-between py-2 px-4 text-sm">
         <div className="hidden sm:flex space-x-3">
-          <Link href="https://facebook.com">
+          <Link href="https://www.facebook.com/share/1QZjUvowjH/?mibextid=wwXIfr">
             <Facebook className="h-4 w-4" />
           </Link>
-          <Link href="https://instagram.com">
+          <Link href="https://www.instagram.com/data__cellular?igsh=bDB1d3J1bG0ydWp1&utm_source=qr">
             <Instagram className="h-4 w-4" />
           </Link>
-          <Link href="https://youtube.com">
-            <Youtube className="h-4 w-4" />
-          </Link>
+           
         </div>
         <div className="flex items-center space-x-2">
           <span>Cash on  Delivery</span>

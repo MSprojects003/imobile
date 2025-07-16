@@ -33,12 +33,12 @@ export function Footer() {
             </p>
             <div className="space-y-4">
               <div className="flex space-x-4">
-                <Link href="#" className="group">
+                <Link href="https://www.facebook.com/share/1QZjUvowjH/?mibextid=wwXIfr" className="group">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 transition-colors group-hover:bg-blue-600">
                     <Facebook size={18} />
                   </div>
                 </Link>
-                <Link href="#" className="group">
+                <Link href="https://www.instagram.com/data__cellular?igsh=bDB1d3J1bG0ydWp1&utm_source=qr" className="group">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 transition-colors group-hover:bg-pink-600">
                     <Instagram size={18} />
                   </div>
@@ -162,7 +162,7 @@ export function Footer() {
             </div>
             <div>
               <div className="font-medium">Visit Our Store</div>
-              <div className="text-slate-400">123 Commerce Plaza, NY 10001</div>
+              <div className="text-slate-400">No.58 samagipura lane grandpass colombo 14</div>
             </div>
           </div>
           <div className="flex items-center space-x-3 text-sm">
@@ -171,7 +171,7 @@ export function Footer() {
             </div>
             <div>
               <div className="font-medium">Call Us</div>
-              <div className="text-slate-400">+94 (78) 147-6200</div>
+              <div className="text-slate-400">+94 (76) 6623624</div>
             </div>
           </div>
           <div className="flex items-center space-x-3 text-sm">
@@ -180,7 +180,7 @@ export function Footer() {
             </div>
             <div>
               <div className="font-medium">Email Support</div>
-              <div className="text-slate-400">mbaasatheef@gmail.com</div>
+              <div className="text-slate-400">milhaaninternational352@gmail.com</div>
             </div>
           </div>
         </div>
