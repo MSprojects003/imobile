@@ -49,7 +49,7 @@ export function Footer() {
                     <Twitter size={18} />
                   </div>
                 </Link>
-                <Link href="#" className="group">
+                <Link href="https://www.tiktok.com/@data_cellular?_t=ZS-8y4toO1KivQ&_r=1" className="group">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 transition-colors group-hover:bg-pink-900">
                     <FaTiktok size={18} />
                     
