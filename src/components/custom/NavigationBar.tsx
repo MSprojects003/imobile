@@ -130,7 +130,7 @@ const DesktopNavContent: React.FC<DesktopNavContentProps> = ({
 
       <div className="flex items-center space-x-2 text-red-600 font-medium ml-auto">
         <Percent className="h-5 w-5" />
-        <span>Special up to 60% Off all item</span>
+        <span>No Special Offers Available</span>
       </div>
     </div>
   );
@@ -224,7 +224,7 @@ export function NavigationBar() {
   };
 
   const handleDisabledClick = () => {
-    window.location.href = "/login";
+    router.push("/login");
   };
 
   return (
@@ -243,7 +243,7 @@ export function NavigationBar() {
           </Link>
         </div>
         <div className="flex items-center space-x-2">
-          <span>Free Delivery for orders above Rs. 1999</span>
+          <span>Cash on  Delivery</span>
         </div>
       </div>
 

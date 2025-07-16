@@ -16,6 +16,7 @@ import { supabase } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
+
 // Define types for our form data
 interface SignInFormData {
   email: string;
@@ -198,16 +199,16 @@ export default function Auth() {
       {/* Left Side - Image (Desktop Only) */}
       <div className="hidden lg:flex lg:w-1/2 relative">
         <Image
-          src="https://images.unsplash.com/photo-1543726969-6c0e2a17b2a7?q=80&w=2070&auto=format&fit=crop"
+          src="../../pictures/background/login page.avif"
           alt="Space Exploration"
           fill
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-blue-800/50 flex items-center p-8 lg:p-12">
           <div className="text-white max-w-md">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-4">Astro</h1>
-            <p className="text-xl lg:text-2xl mb-2 leading-relaxed">Exploring new frontiers, one step at a time.</p>
-            <p className="text-blue-200 text-sm lg:text-base">Beyond Earth&apos;s grasp</p>
+            <h1 className="text-4xl lg:text-5xl font-bold mb-4">.DataCellular</h1>
+            <p className="text-xl lg:text-2xl mb-2 leading-relaxed">Exploring new products, one step at a time.</p>
+            <p className="text-blue-200 text-sm lg:text-base">Beyond Earths grasp</p>
           </div>
         </div>
       </div>
@@ -280,14 +281,7 @@ export default function Auth() {
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between text-sm">
-                    <label className="flex items-center space-x-2 text-blue-700">
-                      <span>Remember me</span>
-                    </label>
-                    <a href="#" className="text-blue-900 hover:text-blue-700 font-medium">
-                      Forgot password?
-                    </a>
-                  </div>
+                  
 
                   <Button type="submit" className="w-full bg-blue-900 hover:bg-blue-800 text-white h-11 font-medium">
                     Sign In
@@ -438,18 +432,7 @@ export default function Auth() {
                       )}
                     </div>
 
-                    <div className="flex items-start space-x-2 text-sm">
-                      <span className="text-blue-700">
-                        I agree to the{" "}
-                        <a href="#" className="text-blue-900 hover:text-blue-700 font-medium">
-                          Terms of Service
-                        </a>{" "}
-                        and{" "}
-                        <a href="#" className="text-blue-900 hover:text-blue-700 font-medium">
-                          Privacy Policy
-                        </a>
-                      </span>
-                    </div>
+                     
 
                     <Button 
                       type="submit" 

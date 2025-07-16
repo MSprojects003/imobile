@@ -152,20 +152,6 @@ export function Footer() {
               </li>
             </ul>
           </div>
-
-          {/* Powered by */}
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-white">Powered by</h3>
-            <Link href="/" className="flex justify-center">
-              <Image
-                src="https://amss.vercel.app/assets/logo2-DtFAk1Wv.png"
-                alt="Developer Logo"
-                width={96}
-                height={96}
-                className="h-24 w-auto rounded-none"
-              />
-            </Link>
-          </div>
         </div>
 
         {/* Contact Information */}
@@ -221,6 +207,20 @@ export function Footer() {
               Accessibility
             </Link>
           </div>
+        </div>
+
+        {/* Powered by at the bottom */}
+        <div className="flex flex-col items-center justify-center mb-8">
+          <h3 className="text-lg font-semibold text-white mb-2">Powered by</h3>
+          <Link href="/" className="flex justify-center">
+            <Image
+              src="https://amss.vercel.app/assets/logo2-DtFAk1Wv.png"
+              alt="Developer Logo"
+              width={96}
+              height={96}
+              className="h-24 w-auto rounded-none"
+            />
+          </Link>
         </div>
       </div>
     </footer>

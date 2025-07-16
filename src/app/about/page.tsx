@@ -85,7 +85,7 @@ export default function AboutPage() {
                 className="rounded-full object-cover"
               />
               <div className="text-center md:text-left space-y-4">
-                <h3 className="text-2xl font-semibold text-gray-900">Mohamed Khaliq</h3>
+                <h3 className="text-2xl font-semibold text-gray-900">Mohamed Naliq</h3>
                 <p className="text-gray-500 italic">Founder & CEO</p>
                 <p className="text-gray-600 leading-relaxed">
                   Mohamed Khaliq is a passionate entrepreneur with over 10 years of experience in e-commerce and technology. Her vision for DataCellular was to create a platform that offers premium products while fostering a community of conscious consumers. Under her leadership, DataCellular has become a leader in innovative online retail.
