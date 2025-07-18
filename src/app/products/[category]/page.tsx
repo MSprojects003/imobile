@@ -1,7 +1,6 @@
 'use client';
 import ProductList from '@/components/custom/ProductList'
 import React from 'react'
-import { getAuthUser } from '@/lib/db/user';
 import { useQuery } from '@tanstack/react-query';
 import { getAllProductList, Product } from '@/lib/db/products';
 
@@ -20,36 +19,25 @@ export default function Page({ params }: { params: Promise<{ category: string }>
   console.log('Original category:', resolvedParams.category);
   console.log('Normalized category:', normalizedCategory);
 
-  const { data: user } = useQuery({
-    queryKey: ["auth-user"],
-    queryFn: getAuthUser,
-    retry: false,
-  });
-
+  // Remove user dependency for fetching products
   const { data: allproducts } = useQuery({
     queryKey: ["all-products"],
     queryFn: getAllProductList,
-    enabled: !!user,
   });
 
   // Filter products by category
   const filteredProducts = React.useMemo(() => {
     if (!allproducts) return [];
-    // Normalize category for comparison
-    const normalizedCategory = resolvedParams.category.replace(/-/g, ' ').toLowerCase();
+    // Always use 'earphones' as the category for filtering (or use normalizedCategory if you want dynamic)
     return allproducts.filter((product: Product) =>
-      (product.category || '').replace(/-/g, ' ').toLowerCase() === normalizedCategory
+      (product.category || '').replace(/-/g, ' ').toLowerCase() === 'earphones'
     );
-  }, [allproducts, resolvedParams.category]);
+  }, [allproducts]);
 
   return (
     <div className="max-w-7xl bg-gray-50 mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Debug info: show category and normalized value */}
-      <div className="mb-4 p-2 bg-yellow-100 text-yellow-800 rounded">
-        <div><strong>Original category:</strong> {resolvedParams.category}</div>
-        <div><strong>Normalized category:</strong> {normalizedCategory}</div>
-      </div>
-      <ProductList products={filteredProducts} category={normalizedCategory} title={displayCategory} />
+      
+      <ProductList products={filteredProducts} category="earphones" title={displayCategory} />
     </div>
   );
 }

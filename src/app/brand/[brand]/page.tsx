@@ -1,7 +1,7 @@
 'use client';
 import ProductList from '@/components/custom/ProductList'
 import React from 'react'
-import { getAuthUser } from '@/lib/db/user';
+import { Product } from '@/lib/db/products';
 import { useQuery } from '@tanstack/react-query';
 import { getAllProductList } from '@/lib/db/products';
 
@@ -16,25 +16,24 @@ export default function BrandPage({ params }: { params: Promise<{ brand: string 
   // Normalize brand for filtering
   const normalizedBrand = resolvedParams.brand.replace(/-/g, ' ').toLowerCase();
 
-  const { data: user } = useQuery({
-    queryKey: ["auth-user"],
-    queryFn: getAuthUser,
-    retry: false,
+  // Remove user dependency for fetching products
+  const { data: allproducts } = useQuery({
+    queryKey: ["all-products"],
+    queryFn: getAllProductList,
   });
 
-  const { data: allproducts } = useQuery({
-    queryKey: ["user", user?.id],
-    queryFn: () => (user ? getAllProductList() : Promise.resolve(null)),
-    enabled: !!user,
-  });
+  // Filter products by brand
+  const filteredProducts = React.useMemo(() => {
+    if (!allproducts) return [];
+    // Always use normalizedBrand for filtering
+    return allproducts.filter((product: Product) =>
+      (product.brand || '').replace(/-/g, ' ').toLowerCase() === normalizedBrand
+    );
+  }, [allproducts, normalizedBrand]);
 
   return (
     <div className="max-w-7xl bg-gray-50 mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <ProductList 
-        products={allproducts || []} 
-        brand={normalizedBrand} 
-        title={`${displayBrand} Products`} 
-      />
+      <ProductList products={filteredProducts} brand={normalizedBrand} title={`${displayBrand} Products`} />
     </div>
   )
 }
