@@ -13,6 +13,9 @@ export default function Page({ params }: { params: Promise<{ category: string }>
     .replace(/-/g, ' ')
     .replace(/\b\w/g, l => l.toUpperCase());
 
+  // Normalize category for filtering
+  const normalizedCategory = resolvedParams.category.replace(/-/g, ' ').toLowerCase();
+
   const { data: user } = useQuery({
     queryKey: ["auth-user"],
     queryFn: getAuthUser,
@@ -37,7 +40,7 @@ export default function Page({ params }: { params: Promise<{ category: string }>
 
   return (
     <div className="max-w-7xl bg-gray-50 mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <ProductList products={filteredProducts} category={resolvedParams.category} title={displayCategory} />
+      <ProductList products={filteredProducts} category={normalizedCategory} title={displayCategory} />
     </div>
   );
 }

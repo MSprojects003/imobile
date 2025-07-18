@@ -13,6 +13,9 @@ export default function BrandPage({ params }: { params: Promise<{ brand: string 
     .replace(/-/g, ' ')
     .replace(/\b\w/g, l => l.toUpperCase())
 
+  // Normalize brand for filtering
+  const normalizedBrand = resolvedParams.brand.replace(/-/g, ' ').toLowerCase();
+
   const { data: user } = useQuery({
     queryKey: ["auth-user"],
     queryFn: getAuthUser,
@@ -29,7 +32,7 @@ export default function BrandPage({ params }: { params: Promise<{ brand: string 
     <div className="max-w-7xl bg-gray-50 mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <ProductList 
         products={allproducts || []} 
-        brand={resolvedParams.brand} 
+        brand={normalizedBrand} 
         title={`${displayBrand} Products`} 
       />
     </div>
