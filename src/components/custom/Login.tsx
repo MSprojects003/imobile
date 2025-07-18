@@ -180,20 +180,24 @@ export default function Auth() {
   }, [activeTab, resetSignIn, resetSignUp]);
 
   const cityOptions = [
-    "Negombo",
+    "Gampaha",
+    "Kalutara",
     "Kandy",
+    "Matale",
+    "Nuwara Eliya",
     "Galle",
+    "Matara",
+    "Hambantota",
     "Jaffna",
-    "Trincomalee",
-    "Bentota",
+    "Kilinochchi",
+    "Mannar",
     "Vavuniya",
-    "Kalmunai",
-    "Katunayake",
-    "Dambulla",
-    "Bandarawela",
-    "Akkaraipattu",
-    "Polonnaruwa",
-    ...Array.from({ length: 13 }, (_, i) => `Colombo ${i + 1}`),
+    "Mullaitivu",
+    "Batticaloa",
+    "Ampara",
+    "Trincomalee",
+    "Kurunegala",
+    ...Array.from({ length: 15 }, (_, i) => `Colombo ${i + 1}`),
   ];
 
   return (

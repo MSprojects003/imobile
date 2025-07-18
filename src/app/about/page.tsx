@@ -9,7 +9,7 @@ import OurBrands from "@/components/custom/OurBrands"
 import store from "../../pictures/background/WhatsApp Image 2025-07-14 at 13.02.15_472a455d.jpg"
 import founder from "../../pictures/profiles/founder.jpg"
 
-import bgImage from "../../pictures/background/contact.jpeg"
+import bgImage from "../../pictures/background/about-us.jpg"
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-white">
