@@ -201,15 +201,15 @@ export default function ContactPage() {
               <CardContent className="p-6 text-center space-y-4">
                 <Phone className="h-10 w-10 text-slate-900 mx-auto" />
                 <h3 className="text-lg font-semibold text-gray-900">Phone</h3>
-                <p className="text-gray-600">+1 (123) 456-7890</p>
-                <p className="text-gray-600">Mon-Fri, 9AM-5PM</p>
+                <p className="text-gray-600">+94 (76) 6623624</p>
+                <p className="text-gray-600">Mon-Sun, 24 Hrs</p>
               </CardContent>
             </Card>
             <Card className="bg-white shadow-lg">
               <CardContent className="p-6 text-center space-y-4">
                 <Mail className="h-10 w-10 text-slate-900 mx-auto" />
                 <h3 className="text-lg font-semibold text-gray-900">Email</h3>
-                <p className="text-gray-600">mbaasatheef@gmail.com</p>
+                <p className="text-gray-600">milhaaninternational352@gmail.com</p>
                 <p className="text-gray-600">24/7 Support</p>
               </CardContent>
             </Card>
@@ -217,8 +217,8 @@ export default function ContactPage() {
               <CardContent className="p-6 text-center space-y-4">
                 <MapPin className="h-10 w-10 text-slate-900 mx-auto" />
                 <h3 className="text-lg font-semibold text-gray-900">Address</h3>
-                <p className="text-gray-600">123 Commerce Street</p>
-                <p className="text-gray-600">Melbourne, VIC 3000</p>
+                <p className="text-gray-600">No.58 samagipura lane </p>
+                <p className="text-gray-600">grandpass, colombo 14</p>
               </CardContent>
             </Card>
           </div>
