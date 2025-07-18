@@ -199,7 +199,7 @@ export function NavigationBar() {
     "Back Covers",
     "Tempered Glass",
     "Car Charger",
-    "Earphones",
+    "earphones",
     "Smart Watches",
     "Cable & Charger",
     "Car Holder",

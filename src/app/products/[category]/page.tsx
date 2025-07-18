@@ -16,6 +16,10 @@ export default function Page({ params }: { params: Promise<{ category: string }>
   // Normalize category for filtering
   const normalizedCategory = resolvedParams.category.replace(/-/g, ' ').toLowerCase();
 
+  // Debug: log category and normalized value
+  console.log('Original category:', resolvedParams.category);
+  console.log('Normalized category:', normalizedCategory);
+
   const { data: user } = useQuery({
     queryKey: ["auth-user"],
     queryFn: getAuthUser,
@@ -40,6 +44,11 @@ export default function Page({ params }: { params: Promise<{ category: string }>
 
   return (
     <div className="max-w-7xl bg-gray-50 mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Debug info: show category and normalized value */}
+      <div className="mb-4 p-2 bg-yellow-100 text-yellow-800 rounded">
+        <div><strong>Original category:</strong> {resolvedParams.category}</div>
+        <div><strong>Normalized category:</strong> {normalizedCategory}</div>
+      </div>
       <ProductList products={filteredProducts} category={normalizedCategory} title={displayCategory} />
     </div>
   );
