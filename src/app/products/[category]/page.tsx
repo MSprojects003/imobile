@@ -33,6 +33,7 @@ export default function Page({ params }: { params: Promise<{ category: string }>
       (product.category || '').replace(/-/g, ' ').toLowerCase() === 'earphones'
     );
   }, [allproducts]);
+  
 
   return (
     <div className="max-w-7xl bg-gray-50 mx-auto px-4 sm:px-6 lg:px-8 py-8">
