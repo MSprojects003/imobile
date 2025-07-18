@@ -39,11 +39,17 @@ export default function ProductList({ products, category, brand, title, hideTitl
   let filteredProducts = products
   
   if (category) {
-    filteredProducts = filteredProducts.filter(p => p.category && p.category.toLowerCase() === category.toLowerCase())
+    const normalizedCategory = category.replace(/-/g, ' ').toLowerCase();
+    filteredProducts = filteredProducts.filter(
+      p => (p.category || '').replace(/-/g, ' ').toLowerCase() === normalizedCategory
+    );
   }
   
   if (brand) {
-    filteredProducts = filteredProducts.filter(p => p.brand && p.brand.toLowerCase() === brand.toLowerCase())
+    const normalizedBrand = brand.replace(/-/g, ' ').toLowerCase();
+    filteredProducts = filteredProducts.filter(
+      p => (p.brand || '').replace(/-/g, ' ').toLowerCase() === normalizedBrand
+    );
   }
 
   // Handle sorting
