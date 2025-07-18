@@ -12,7 +12,7 @@ import { useState, useRef } from "react"
  
 
 // Import the background image correctly
-import bgImage from "../../pictures/background/about-us.jpg"
+import bgImage from "../../pictures/background/contact.jpeg"
 import { toast } from "sonner"
 
 export default function ContactPage() {
@@ -26,7 +26,7 @@ export default function ContactPage() {
     const formData = new FormData(event.currentTarget)
     formData.append("access_key", "1b842695-6401-42c8-a8c2-ee918ee8aa7e")
     formData.append("subject", "New Contact Form Submission from EliteShop")
-    formData.append("to", "mbaasatheef@gmail.com")
+    formData.append("to", "Milhaaninternational352@gmail.com")
 
     const object = Object.fromEntries(formData)
     const json = JSON.stringify(object)
@@ -64,9 +64,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200">
       {/* Header with Free Delivery */}
-      <div className="bg-slate-900 text-white text-center py-2">
-        <p className="text-sm">Free Delivery for orders above Rs. 1999</p>
-      </div>
+     
 
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-cover bg-center relative">

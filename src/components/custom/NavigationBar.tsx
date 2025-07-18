@@ -471,7 +471,7 @@ export function NavigationBar() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link href={user ? "/profile" : "/login"} className="hidden xl:block relative">
+                <Link href={user ? "/" : "/login"} className="hidden xl:block relative">
                   <User className="scale-125 text-gray-900 hover:text-blue-900" />
                   {user && (
                     <Badge className="absolute -top-1 -right-1 h-4 w-4 text-white bg-blue-800 rounded-full p-0.5" />

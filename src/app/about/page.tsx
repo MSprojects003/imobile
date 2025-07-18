@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Award, Heart, Star, Users } from "lucide-react"
 import OurBrands from "@/components/custom/OurBrands"
-import aboutImage from "../../pictures/background/about-us.jpg"
+ 
 import store from "../../pictures/background/WhatsApp Image 2025-07-14 at 13.02.15_472a455d.jpg"
 import founder from "../../pictures/profiles/founder.jpg"
- 
+
+import bgImage from "../../pictures/background/contact.jpeg"
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-white">
@@ -17,7 +18,7 @@ export default function AboutPage() {
         {/* Background Image with Next.js Image component */}
         <div className="absolute inset-0 w-full h-full">
           <Image
-            src= {aboutImage}
+            src= {bgImage}
             alt="About Us Background"
             layout="fill"
             objectFit="cover"
