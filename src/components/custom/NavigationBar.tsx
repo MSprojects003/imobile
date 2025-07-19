@@ -40,7 +40,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAuthUser } from "@/lib/db/user";
 import { useRouter } from "next/navigation";
 import SearchProductsBox from "@/components/custom/SearchProductsBox";
@@ -152,6 +152,8 @@ export function NavigationBar() {
     queryFn: getAuthUser,
     retry: false,
   });
+
+  const queryClient = useQueryClient();
 
   // Fetch cart count for the user
   const { data: cartCount, isLoading: cartCountLoading, isError: cartCountError } = useQuery({
@@ -377,7 +379,7 @@ export function NavigationBar() {
                         <ShoppingCart className="h-5 w-5" />
                         <span>Cart</span>
                         <span className="bg-slate-900 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                          0
+                          {cartCountLoading ? '' : cartCountError ? 0 : cartCount}
                         </span>
                       </Link>
                     ) : (

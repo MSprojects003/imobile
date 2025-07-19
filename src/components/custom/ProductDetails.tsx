@@ -181,6 +181,7 @@ export default function ViewProduct() {
     }) => updateOrInsertCartBYArgumants(productId,userId, colors, models,  quantity),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart", user?.id] });
+      queryClient.invalidateQueries({ queryKey: ["cart-count", user?.id] });
       toast.success("Product added to cart successfully");
     },
     onError: (error) => {

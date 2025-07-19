@@ -46,6 +46,8 @@ export function HomeBanner() {
 
   if (isError || !banners || banners.length === 0) return <div>No banners found.</div>;
 
+  const showNavButtons = banners.length > 1;
+
   return (
     <div
       className="relative w-full mt-0 pt-0"
@@ -81,24 +83,28 @@ export function HomeBanner() {
         </CarouselContent>
 
         {/* Previous Button */}
-        <CarouselPrevious
-          className={`absolute top-1/2 -translate-y-1/2 bg-slate-900 shadow-sm shadow-black text-white rounded-full border-none p-6 ${
-            isHovered && !isMobileView() ? 'left-[5%] opacity-100' : 'left-0 opacity-100'
-          } ${isMobileView() ? 'block' : 'hidden md:block'}`}
-          aria-label="Previous Slide"
-        >
-          <ChevronLeft />
-        </CarouselPrevious>
+        {showNavButtons && (
+          <CarouselPrevious
+            className={`absolute top-1/2 -translate-y-1/2 bg-slate-900 text-center shadow-sm shadow-black text-white rounded-full border-none p-6 ${
+              isHovered && !isMobileView() ? 'left-[15%] opacity-100' : 'left-0 opacity-0'
+            } ${isMobileView() ? 'block' : 'hidden md:block'}`}
+            aria-label="Previous Slide"
+          >
+            <ChevronLeft className='text-center' />
+          </CarouselPrevious>
+        )}
 
         {/* Next Button */}
-        <CarouselNext
-          className={`absolute top-1/2 -translate-y-1/2 bg-slate-900 shadow-sm shadow-black text-white rounded-full border-none p-6 ${
-            isHovered && !isMobileView() ? 'right-[5%] opacity-100' : 'right-0 opacity-100'
-          } ${isMobileView() ? 'block' : 'hidden md:block'}`}
-          aria-label="Next Slide"
-        >
-          <ChevronRight />
-        </CarouselNext>
+        {showNavButtons && (
+          <CarouselNext
+            className={`absolute top-1/2 -translate-y-1/2 bg-slate-900 shadow-sm shadow-black text-white rounded-full border-none p-6 ${
+              isHovered && !isMobileView() ? 'right-[15%] opacity-100  ' : 'right-0 opacity-0'
+            } ${isMobileView() ? 'block' : 'hidden md:block'}`}
+            aria-label="Next Slide"
+          >
+            <ChevronRight className='text-center'/>
+          </CarouselNext>
+        )}
       </Carousel>
     </div>
   );

@@ -105,7 +105,8 @@ export default function CartSummary({
   const deleteCartMutation = useMutation({
     mutationFn: (id: string) => deleteCartItemById(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart", user?.id] })
+      queryClient.invalidateQueries({ queryKey: ["cart", user?.id] });
+      queryClient.invalidateQueries({ queryKey: ["cart-count", user?.id] });
     },
   })
 
@@ -113,7 +114,8 @@ export default function CartSummary({
   const clearAllMutation = useMutation({
     mutationFn: (ids: string[]) => deleteCartItemsByIds(ids),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart", user?.id] })
+      queryClient.invalidateQueries({ queryKey: ["cart", user?.id] });
+      queryClient.invalidateQueries({ queryKey: ["cart-count", user?.id] });
     },
   })
 
@@ -174,6 +176,7 @@ export default function CartSummary({
       const ids = localCart.map((item) => item.id);
       if (ids.length > 0) clearAllMutation.mutate(ids);
       if (onPlaceOrder) onPlaceOrder();
+      queryClient.invalidateQueries({ queryKey: ["cart-count", user?.id] });
     },
     onError: (error) => {
       console.error("Order placement failed:", error);

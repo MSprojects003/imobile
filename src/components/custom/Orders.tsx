@@ -124,16 +124,19 @@ function Orders() {
               <p className="text-xs text-gray-600">Placed: {orderDateString}</p>
             </div>
             <div className="text-right">
-              <p className={`text-sm font-medium ${order.status ? 'text-green-600' : 'text-yellow-600'}`}>
-                {order.status ? 'Accepted' : 'Pending'}
+              <p className={`text-sm font-medium ${order.status && order.track_id !== '' ? 'text-green-600' : order.track_id === '' ? 'text-red-600' : 'text-yellow-600'}`}>
+                {order.track_id === '' ? 'Cancelled' : (order.status ? 'Accepted' : 'Pending')}
               </p>
-              {order.status && order.track_id !== "0" && (
+              {order.status && order.track_id !== '' && order.track_id !== "0" && (
                 <>
                   <p className="text-xs text-gray-600">Track ID: {order.track_id}</p>
                   <p className="text-xs text-gray-600">Estimated Date: {estimatedDateString}</p>
                 </>
               )}
-              {!order.status && (
+              {order.track_id === '' && (
+                <p className="text-xs text-gray-600">This order was cancelled.</p>
+              )}
+              {!order.status && order.track_id !== '' && (
                 <p className="text-xs text-gray-600">Estimated Date: {estimatedDateString}</p>
               )}
             </div>
