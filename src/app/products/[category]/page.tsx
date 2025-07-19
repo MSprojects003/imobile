@@ -28,17 +28,17 @@ export default function Page({ params }: { params: Promise<{ category: string }>
   // Filter products by category
   const filteredProducts = React.useMemo(() => {
     if (!allproducts) return [];
-    // Always use 'earphones' as the category for filtering (or use normalizedCategory if you want dynamic)
+    // Use normalizedCategory for dynamic filtering based on URL
     return allproducts.filter((product: Product) =>
-      (product.category || '').replace(/-/g, ' ').toLowerCase() === 'earphones'
+      (product.category || '').replace(/-/g, ' ').toLowerCase() === normalizedCategory
     );
-  }, [allproducts]);
+  }, [allproducts, normalizedCategory]);
   
 
   return (
     <div className="max-w-7xl bg-gray-50 mx-auto px-4 sm:px-6 lg:px-8 py-8">
       
-      <ProductList products={filteredProducts} category="earphones" title={displayCategory} />
+      <ProductList products={filteredProducts} category={displayCategory} title={displayCategory} />
     </div>
   );
 }
