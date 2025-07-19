@@ -25,7 +25,7 @@ const businessLogicItems: BusinessLogicItem[] = [
   {
     icon: Truck,
     title: "We Do Delivery",
-    description: "Delivery Within 3 Days",
+    description: "Delivery Within 7 Days",
   },
   {
     icon: Briefcase,

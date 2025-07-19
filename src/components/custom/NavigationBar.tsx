@@ -40,7 +40,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getAuthUser } from "@/lib/db/user";
 import { useRouter } from "next/navigation";
 import SearchProductsBox from "@/components/custom/SearchProductsBox";
@@ -152,8 +152,6 @@ export function NavigationBar() {
     queryFn: getAuthUser,
     retry: false,
   });
-
-  const queryClient = useQueryClient();
 
   // Fetch cart count for the user
   const { data: cartCount, isLoading: cartCountLoading, isError: cartCountError } = useQuery({
