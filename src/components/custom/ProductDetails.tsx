@@ -13,6 +13,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { toast } from "sonner";
 import { updateOrInsertCartBYArgumants } from "@/lib/db/update-or-insert-cart-by-arguments";
 import RelatedProducts from './RelatedProducts';
+import { useRouter } from "next/navigation";
 
 // Interface for database product
 interface DatabaseProduct {
@@ -142,6 +143,7 @@ export default function ViewProduct() {
   const [mainImage, setMainImage] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   // Fetch user data
   const { data: user } = useQuery({
@@ -259,7 +261,7 @@ export default function ViewProduct() {
   // Add to Cart function
   const handleAddToCart = async () => {
     if (!user) {
-      toast.error("Please sign in to add to cart.");
+      router.push("/login");
       return;
     }
     if (selectedColors.length === 0 || selectedModels.length === 0) {
@@ -276,7 +278,6 @@ export default function ViewProduct() {
         models: selectedModels,
       };
       console.log("Add to Cart:", cartData);
-
       // Add cart item using mutation
       addCartItemMutation.mutate(cartData);
     } catch (err) {
@@ -543,14 +544,18 @@ export default function ViewProduct() {
                         <Button
                           className="w-full h-10 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                           onClick={handleAddToCart}
-                          disabled={!user}
+                          disabled={product.quantity === 0}
                         >
                           <ShoppingBag className="w-5 h-5 mr-2" />
                           Add to Cart
                         </Button>
                       </span>
                     </TooltipTrigger>
-                    {!user && <TooltipContent>Please sign in first</TooltipContent>}
+                    {product.quantity === 0 ? (
+                      <TooltipContent>Out of stock</TooltipContent>
+                    ) : !user ? (
+                      <TooltipContent>Please sign in first</TooltipContent>
+                    ) : null}
                   </Tooltip>
                 </TooltipProvider>
               </div>

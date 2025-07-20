@@ -21,8 +21,12 @@ export async function updateOrInsertCartBYArgumants(productID : string, userID: 
   });
 
   if (error) {
-    console.error("Error updateOrInsertCartBYArgumants:", error);
-    throw error;
+    // Log more details about the error
+    console.error("Error updateOrInsertCartBYArgumants:", error, error?.message, error?.stack, JSON.stringify(error));
+    // Always throw an Error object for consistency
+    throw error instanceof Error
+      ? error
+      : new Error(typeof error === "string" ? error : JSON.stringify(error));
   }
 
   console.log("Successful updateOrInsertCartBYArgumants:", result);

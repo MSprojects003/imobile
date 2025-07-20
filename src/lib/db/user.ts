@@ -55,3 +55,25 @@ export async function UserDetialsByID(userid:string) {
   if (error) throw error;
   return data;
 }
+
+// Function to update phone number, address, and city by userid
+export async function updateUserContactDetails({
+  userid,
+  phone_number,
+  address,
+  city,
+}: {
+  userid: string;
+  phone_number: string;
+  address: string;
+  city: string;
+}) {
+  const { data, error } = await supabase
+    .from('users')
+    .update({ phone_number, address, city })
+    .eq('id', userid)
+    .select('*')
+    .single();
+  if (error) throw error;
+  return data;
+}

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useQuery } from "@tanstack/react-query"
-import { getAuthUser, UserDetialsByID } from "@/lib/db/user"
+import { getAuthUser, UserDetialsByID, updateUserContactDetails } from "@/lib/db/user"
 import { getCartByUserId, deleteCartItemById, deleteCartItemsByIds } from "@/lib/db/cart"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import PhoneInput from "react-phone-input-2"
@@ -99,6 +99,75 @@ export default function CartSummary({
     queryFn: () => (user ? UserDetialsByID(user.id) : Promise.resolve(null)), // Changed to null for no user details
     enabled: !!user,
   })
+
+  // Add cityOptions from Login.tsx
+  const cityOptions = [
+    "Gampaha",
+    "Kalutara",
+    "Kandy",
+    "Matale",
+    "Nuwara Eliya",
+    "Galle",
+    "Matara",
+    "Hambantota",
+    "Jaffna",
+    "Kilinochchi",
+    "Mannar",
+    "Vavuniya",
+    "Mullaitivu",
+    "Batticaloa",
+    "Ampara",
+    "Trincomalee",
+    "Kurunegala",
+    ...Array.from({ length: 15 }, (_, i) => `Colombo ${i + 1}`),
+  ];
+
+  // Local state for editable customer details
+  const [editableCustomer, setEditableCustomer] = useState({
+    phone_number: customer?.phone_number || "",
+    address: customer?.address || "",
+    city: customer?.city || "",
+  });
+
+  // Mutation for updating customer details (auto-save)
+  const updateCustomerMutation = useMutation({
+    mutationFn: async (fields: { phone_number: string; address: string; city: string }) => {
+      if (!user?.id) return;
+      return updateUserContactDetails({
+        userid: user.id,
+        ...fields,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
+      toast.success("Customer details updated");
+    },
+    onError: (error) => {
+      toast.error("Failed to update customer details");
+      console.error("Update customer details error:", error);
+    },
+  });
+
+  // Helper to handle field change and auto-save on blur
+  const handleCustomerFieldChange = (field: "phone_number" | "address" | "city", value: string) => {
+    setEditableCustomer((prev) => ({ ...prev, [field]: value }));
+  };
+  const handleCustomerFieldBlur = () => {
+    updateCustomerMutation.mutate({
+      phone_number: editableCustomer.phone_number,
+      address: editableCustomer.address,
+      city: editableCustomer.city,
+    });
+  };
+
+  // Sync editableCustomer with fetched customer data
+  useEffect(() => {
+    setEditableCustomer({
+      phone_number: customer?.phone_number || "",
+      address: customer?.address || "",
+      city: customer?.city || "",
+    });
+  }, [customer]);
 
   
 
@@ -606,14 +675,16 @@ export default function CartSummary({
                     <PhoneInput
                       country="lk"
                       countryCodeEditable={false}
-                      value={formatPhoneNumber(customer?.phone_number)}
+                      value={formatPhoneNumber(editableCustomer.phone_number)}
                       inputClass="w-full max-w-[230px] border-blue-200 focus:border-blue-900 focus:ring-blue-900"
                       placeholder="Enter phone number"
                       inputProps={{
                         name: "phone",
-                        readOnly: true,
-                        disabled: true,
+                        readOnly: false,
+                        disabled: false,
                       }}
+                      onChange={(value) => handleCustomerFieldChange("phone_number", value)}
+                      onBlur={handleCustomerFieldBlur}
                     />
                   ) : (
                     <div className="h-10 bg-gray-100 rounded" />
@@ -629,10 +700,12 @@ export default function CartSummary({
                     <Input
                       id="address"
                       placeholder="Enter your address"
-                      value={customer?.address || ""}
-                      readOnly
-                      disabled
-                      className="mt-1 bg-gray-100 cursor-not-allowed"
+                      value={editableCustomer.address}
+                      readOnly={false}
+                      disabled={false}
+                      className="mt-1"
+                      onChange={(e) => handleCustomerFieldChange("address", e.target.value)}
+                      onBlur={handleCustomerFieldBlur}
                     />
                   )}
                 </div>
@@ -643,14 +716,18 @@ export default function CartSummary({
                   {userLoading ? (
                     <div className="h-10 bg-gray-200 rounded mt-1 animate-pulse" />
                   ) : (
-                    <Input
+                    <select
                       id="city"
-                      placeholder="City"
-                      value={customer?.city || ""}
-                      readOnly
-                      disabled
-                      className="mt-1 bg-gray-100 cursor-not-allowed"
-                    />
+                      value={editableCustomer.city}
+                      onChange={(e) => handleCustomerFieldChange("city", e.target.value)}
+                      onBlur={handleCustomerFieldBlur}
+                      className="mt-1 bg-white border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="">Select your city</option>
+                      {cityOptions.map((city) => (
+                        <option key={city} value={city}>{city}</option>
+                      ))}
+                    </select>
                   )}
                 </div>
               </CardContent>
