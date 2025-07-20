@@ -242,7 +242,7 @@ export function NavigationBar() {
            
         </div>
         <div className="flex items-center space-x-2">
-          <span>Cash on  Delivery</span>
+          <span>No.58 samagipura lane, grandpass ,colombo 14</span>
         </div>
       </div>
 
