@@ -89,10 +89,8 @@ export default function CartSummary({
 
   // Sync localCart with fetched cart data
   useEffect(() => {
-    if (JSON.stringify(cart) !== JSON.stringify(localCart)) {
-      setLocalCart(cart)
-    }
-  }, [cart, localCart])
+    setLocalCart(cart)
+  }, [cart])
 
   const { data: customer, isLoading: userLoading } = useQuery({
     queryKey: ["user", user?.id],
