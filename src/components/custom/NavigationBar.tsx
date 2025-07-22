@@ -395,12 +395,9 @@ export function NavigationBar() {
                   </SheetClose>
 
                   <SheetClose asChild>
-                    <Button
-                      variant="default"
-                      className="w-full mt-2 bg-slate-900 text-white hover:bg-slate-700 h-10 text-sm"
-                    >
+                    <Button asChild className="w-full mt-2 bg-slate-900 text-white hover:bg-slate-700 h-10 text-sm">
                       <Link href="/login">
-                        <User className="h-4 w-4 mr-2" /> {user ? "View Profile" : "Log in"}
+                        <User className="h-4 w-4 mr-2" /> Sign in 
                       </Link>
                     </Button>
                   </SheetClose>
