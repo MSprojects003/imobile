@@ -344,7 +344,7 @@ export default function Auth() {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="signup-email" className="text-blue-900 font-medium">
-                        Email or Phone No.
+                        Email
                       </Label>
                       <Input
                         id="signup-email"
