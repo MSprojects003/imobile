@@ -68,7 +68,7 @@ export function HomeBanner() {
           {banners.map((banner, index) => (
             <CarouselItem key={banner.id || index}>
               <Link href={banner.link_url || '#'} className="block w-full">
-                <div className="relative w-full h-auto">
+                <div className="relative w-full h-[250px] sm:h-[250px] md:h-[461px]">
                   <Image
                     src={banner.image_url}
                     alt={banner.title || `Banner ${index + 1}`}
