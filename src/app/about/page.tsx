@@ -7,7 +7,7 @@ import { Award, Heart, Star, Users } from "lucide-react"
 import OurBrands from "@/components/custom/OurBrands"
  
 import store from "../../pictures/background/WhatsApp Image 2025-07-14 at 13.02.15_472a455d.jpg"
-import founder from "../../pictures/profiles/founder.jpg"
+import founder from "../../pictures/profiles/founder.png"
 
 import bgImage from "../../pictures/background/about-us.jpg"
 export default function AboutPage() {
@@ -89,10 +89,10 @@ export default function AboutPage() {
                 className="rounded-full object-cover"
               />
               <div className="text-center md:text-left space-y-4">
-                <h3 className="text-2xl font-semibold text-gray-900">Mohamed Naliq</h3>
+                <h3 className="text-2xl font-semibold text-gray-900">Mohamed Shadeer Sadikeen</h3>
                 <p className="text-gray-500 italic">Founder & CEO</p>
                 <p className="text-gray-600 leading-relaxed">
-                  Mohamed Khaliq is a passionate entrepreneur with over 10 years of experience in e-commerce and technology. Her vision for DataCellular was to create a platform that offers premium products while fostering a community of conscious consumers. Under her leadership, DataCellular has become a leader in innovative online retail.
+                  Mohamed Shadeer Sadikeen is a passionate entrepreneur with over 10 years of experience in e-commerce and technology. Her vision for DataCellular was to create a platform that offers premium products while fostering a community of conscious consumers. Under her leadership, DataCellular has become a leader in innovative online retail.
                 </p>
               </div>
             </CardContent>

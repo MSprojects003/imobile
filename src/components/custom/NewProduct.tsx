@@ -162,7 +162,7 @@ export default function NewProducts({ products, limit }: NewProductsProps) {
           <h2 className="text-3xl font-bold text-gray-900">New Arrivals</h2>
           {hasMoreProducts && (
             <Link
-              href="/products/new-arrivals"
+              href="/new_arrivals"
               className="flex items-center gap-1 text-md font-medium text-gray-900 hover:text-gray-700 transition-colors duration-200 group"
             >
               See All
