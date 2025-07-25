@@ -67,6 +67,7 @@ const DesktopNavContent: React.FC<DesktopNavContentProps> = ({
 }) => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
 
+  
   return (
     <div className="flex items-center h-14">
       <DropdownMenu onOpenChange={(open) => setIsCategoriesOpen(open)}>
@@ -113,8 +114,8 @@ const DesktopNavContent: React.FC<DesktopNavContentProps> = ({
                 ) : (
                   <Link
                     href={item.href}
-                    className="text-gray-900 hover:text-gray-700 px-3 py-2 transition-all rounded-none hover:border-b-2 hover:font-medium border-black bg-transparent text-md font-normal"
-                  >
+                 className="text-gray-900 hover:text-gray-700 px-3 py-2 text-md font-normal relative group xl:block hidden after:content-[''] after:absolute after:left-0 after:bottom-[-3px] after:w-0 after:h-[2px] after:bg-black/90 after:transition-all after:duration-400 after:ease-in-out hover:after:w-full"
+ >
                     {item.name}
                   </Link>
                 )}
@@ -233,16 +234,16 @@ export function NavigationBar() {
       {/* Top Announcement Bar */}
       <div className="bg-slate-900 text-white flex items-center justify-between py-2 px-4 text-sm">
         <div className="hidden sm:flex space-x-3">
-          <Link href="https://www.facebook.com/share/1QZjUvowjH/?mibextid=wwXIfr">
+          <Link href="https://web.facebook.com/iMobileuniqueplaza/?_rdc=1&_rdr#">
             <Facebook className="h-4 w-4" />
           </Link>
-          <Link href="https://www.instagram.com/data__cellular?igsh=bDB1d3J1bG0ydWp1&utm_source=qr">
+          <Link href="https://www.instagram.com/_abdul_laah_/">
             <Instagram className="h-4 w-4" />
           </Link>
            
         </div>
         <div className="flex items-center space-x-2">
-          <span>No.58 samagipura lane, grandpass ,colombo 14</span>
+          <span>Unique Complex, 200 1/1 Main St, Colombo</span>
         </div>
       </div>
 
@@ -428,8 +429,8 @@ export function NavigationBar() {
 
           {user ? (
             <Link href="/cart" className="relative">
-              <ShoppingCart className="scale-125 text-gray-900 hover:text-blue-700" />
-              <span className="absolute -top-1 -right-1 bg-blue-900 text-white text-[9px] rounded-full h-4 w-4 flex items-center justify-center">
+              <ShoppingCart className="scale-125 text-gray-900 hover:text-red-700" />
+              <span className="absolute -top-1 -right-1 bg-red-900 text-white text-[9px] rounded-full h-4 w-4 flex items-center justify-center">
                 {cartCountLoading ? '' : cartCountError ? 0 : cartCount}
               </span>
             </Link>
@@ -469,9 +470,9 @@ export function NavigationBar() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link href={user ? "/" : "/login"} className="hidden xl:block relative">
-                  <User className="scale-125 text-gray-900 hover:text-blue-900" />
+                  <User className="scale-125 text-gray-900 hover:text-red-900" />
                   {user && (
-                    <Badge className="absolute -top-1 -right-1 h-4 w-4 text-white bg-blue-800 rounded-full p-0.5" />
+                    <Badge className="absolute -top-1 -right-1 h-4 w-4 text-white bg-red-800 rounded-full p-0.5" />
                   )}
                 </Link>
               </TooltipTrigger>

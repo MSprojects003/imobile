@@ -6,7 +6,6 @@ import {
   Facebook,
   Instagram,
   Twitter,
-  
   Youtube,
   Mail,
   MapPin,
@@ -14,6 +13,9 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import { FaTiktok } from "react-icons/fa"
+import logo from "../../pictures/whitelogo.png"
+
+
 
 export function Footer() {
   return (
@@ -24,22 +26,25 @@ export function Footer() {
           {/* Brand Section - Takes 2 columns on large screens */}
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="flex items-center space-x-3">
-              
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                .DataCellular
-              </span>
+              <Image
+                src={logo}// Replace with the actual path to your logo image
+                alt="DataCellular Logo"
+                width={150}
+                height={50}
+                className="h-24 w-auto"
+              />
             </Link>
             <p className="text-slate-300 leading-relaxed">
               Premium e-commerce platform delivering exceptional products worldwide. Experience luxury shopping with unmatched quality and service excellence.
             </p>
             <div className="space-y-4">
               <div className="flex space-x-4">
-                <Link href="https://www.facebook.com/share/1QZjUvowjH/?mibextid=wwXIfr" className="group">
+                <Link href="https://web.facebook.com/iMobileuniqueplaza/?_rdc=1&_rdr#" className="group">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 transition-colors group-hover:bg-blue-600">
                     <Facebook size={18} />
                   </div>
                 </Link>
-                <Link href="https://www.instagram.com/data__cellular?igsh=bDB1d3J1bG0ydWp1&utm_source=qr" className="group">
+                <Link href="https://www.instagram.com/_abdul_laah_/" className="group">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 transition-colors group-hover:bg-pink-600">
                     <Instagram size={18} />
                   </div>
@@ -49,10 +54,9 @@ export function Footer() {
                     <Twitter size={18} />
                   </div>
                 </Link>
-                <Link href="https://www.tiktok.com/@data_cellular?_t=ZS-8y4toO1KivQ&_r=1" className="group">
+                <Link href="https://www.tiktok.com/@imobile.lk_" className="group">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 transition-colors group-hover:bg-pink-900">
                     <FaTiktok size={18} />
-                    
                   </div>
                 </Link>
                 <Link href="#" className="group">
@@ -65,7 +69,7 @@ export function Footer() {
           </div>
 
           {/* Shop */}
-          <div className="space-y-6">
+          <div className="space-y-6 lg:col-span-1">
             <h3 className="text-lg font-semibold text-white">Shop</h3>
             <ul className="space-y-3">
               <li>
@@ -89,7 +93,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/products/brands" className="text-slate-300 transition-colors hover:text-white">
+                <Link href="/#brands" className="text-slate-300 transition-colors hover:text-white">
                   Premium Brands
                 </Link>
               </li>
@@ -97,11 +101,11 @@ export function Footer() {
           </div>
 
           {/* Customer Care */}
-          <div className="space-y-6">
+          <div className="space-y-6 lg:col-span-1">
             <h3 className="text-lg font-semibold text-white">Customer Care</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/help/contact" className="text-slate-300 transition-colors hover:text-white">
+                <Link href="/contact" className="text-slate-300 transition-colors hover:text-white">
                   Contact Support
                 </Link>
               </li>
@@ -111,7 +115,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/help/shipping" className="text-slate-300 transition-colors hover:text-white">
+                <Link href="/about/#shipping" className="text-slate-300 transition-colors hover:text-white">
                   Shipping Info
                 </Link>
               </li>
@@ -121,7 +125,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/help/track-order" className="text-slate-300 transition-colors hover:text-white">
+                <Link href="/track" className="text-slate-300 transition-colors hover:text-white">
                   Order Tracking
                 </Link>
               </li>
@@ -129,7 +133,7 @@ export function Footer() {
           </div>
 
           {/* Categories */}
-          <div className="space-y-6">
+          <div className="space-y-6 lg:col-span-1">
             <h3 className="text-lg font-semibold text-white">Categories</h3>
             <ul className="space-y-3">
               <li>
@@ -156,7 +160,7 @@ export function Footer() {
           </div>
 
           {/* Powered by */}
-          <div className="space-y-2 flex flex-col items-center justify-center">
+          <div className="space-y-2 flex flex-col items-center justify-center lg:col-span-1">
             <Link href="https://amss.vercel.app/" className="flex justify-center">
               <Image
                 src="https://amss.vercel.app/assets/logo2-DtFAk1Wv.png"
@@ -178,7 +182,7 @@ export function Footer() {
             </div>
             <div>
               <div className="font-medium">Visit Our Store</div>
-              <div className="text-slate-400">No.58 samagipura lane grandpass colombo 14</div>
+              <div className="text-slate-400">Unique Complex, 200 1/1 Main St, Colombo</div>
             </div>
           </div>
           <div className="flex items-center space-x-3 text-sm">
@@ -187,7 +191,7 @@ export function Footer() {
             </div>
             <div>
               <div className="font-medium">Call Us</div>
-              <div className="text-slate-400">+94 (76) 6623624</div>
+              <div className="text-slate-400">(+94) 76 613 8363</div>
             </div>
           </div>
           <div className="flex items-center space-x-3 text-sm">
@@ -196,7 +200,7 @@ export function Footer() {
             </div>
             <div>
               <div className="font-medium">Email Support</div>
-              <div className="text-slate-400">milhaaninternational352@gmail.com</div>
+              <div className="text-slate-400">support@imobiles.lk</div>
             </div>
           </div>
         </div>
@@ -206,7 +210,7 @@ export function Footer() {
         {/* Bottom Footer */}
         <div className="flex flex-col items-center justify-between space-y-4 text-sm text-slate-400 md:flex-row md:space-y-0">
           <div className="flex items-center space-x-2">
-            <span>© {new Date().getFullYear()} .DataCellular.</span>
+            <span>© {new Date().getFullYear()} .imobile.</span>
             <span>Crafted with excellence.</span>
           </div>
           <div className="flex flex-wrap justify-center gap-6 md:justify-end">

@@ -210,11 +210,11 @@ export default function Auth() {
           fill
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-blue-800/50 flex items-center p-8 lg:p-12">
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-600/90 to-gray-800/50 flex items-center p-8 lg:p-12">
           <div className="text-white max-w-md">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-4">.DataCellular</h1>
+            <h1 className="text-4xl lg:text-5xl font-bold mb-4">.imobile</h1>
             <p className="text-xl lg:text-2xl mb-2 leading-relaxed">Exploring new products, one step at a time.</p>
-            <p className="text-blue-200 text-sm lg:text-base">Beyond Earths grasp</p>
+            <p className="text-blue-200 text-sm lg:text-base ">Beyond Earths grasp</p>
           </div>
         </div>
       </div>
@@ -223,10 +223,10 @@ export default function Auth() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-blue-50 via-white to-blue-50">
         <Card className="w-full max-w-md shadow-xl border-0 bg-white/80 backdrop-blur-sm">
           <CardHeader className="text-center pb-4">
-            <CardTitle className="text-2xl font-bold text-blue-900">
+            <CardTitle className="text-2xl font-bold text-red-900">
               {activeTab === "signup" ? "Create Account" : "Welcome Back"}
             </CardTitle>
-            <p className="text-blue-600 text-sm mt-1">
+            <p className="text-red-600 text-sm mt-1">
               {activeTab === "signup" ? "Join us today" : "Sign in to your account"}
             </p>
           </CardHeader>
@@ -235,13 +235,13 @@ export default function Auth() {
               <TabsList className="grid w-full grid-cols-2 bg-blue-100 p-1">
                 <TabsTrigger
                   value="signin"
-                  className="data-[state=active]:bg-blue-900 data-[state=active]:text-white text-blue-700"
+                  className="data-[state=active]:bg-red-700 data-[state=active]:text-white text-red-700"
                 >
                   Sign In
                 </TabsTrigger>
                 <TabsTrigger
                   value="signup"
-                  className="data-[state=active]:bg-blue-900 data-[state=active]:text-white text-blue-700"
+                  className="data-[state=active]:bg-red-700 data-[state=active]:text-white text-red-700"
                 >
                   Sign Up
                 </TabsTrigger>
@@ -250,14 +250,14 @@ export default function Auth() {
               <TabsContent value="signin" className="mt-6">
                 <form onSubmit={handleSubmitSignIn(onSignInSubmit)} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="signin-email" className="text-blue-900 font-medium">
+                    <Label htmlFor="signin-email" className="text-red-900 font-medium">
                       Email
                     </Label>
                     <Input
                       id="signin-email"
                       type="email"
                       placeholder="Enter your email"
-                      className="border-blue-200 focus:border-blue-900 focus:ring-blue-900"
+                      className="border-blue-200 focus:border-red-900 focus:ring-red-900"
                       {...registerSignIn("email", {
                         required: "Email is required",
                         pattern: {
@@ -272,14 +272,14 @@ export default function Auth() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="signin-password" className="text-blue-900 font-medium">
+                    <Label htmlFor="signin-password" className="text-red-900 font-medium">
                       Password
                     </Label>
                     <Input
                       id="signin-password"
                       type="password"
                       placeholder="Enter your password"
-                      className="border-blue-200 focus:border-blue-900 focus:ring-blue-900"
+                      className="border-blue-200 focus:border-red-900 focus:ring-red-900"
                       {...registerSignIn("password", { required: "Password is required" })}
                     />
                     {errorsSignIn.password && (
@@ -289,7 +289,7 @@ export default function Auth() {
 
                   
 
-                  <Button type="submit" className="w-full bg-blue-900 hover:bg-blue-800 text-white h-11 font-medium">
+                  <Button type="submit" className="w-full bg-red-700 hover:bg-red-800 text-white h-11 font-medium rounded-none">
                     Sign In
                   </Button>
                 </form>
@@ -297,21 +297,21 @@ export default function Auth() {
 
               <TabsContent value="signup" className="mt-6">
                 <div className="space-y-4">
-                  <div className="text-center text-blue-600 text-sm">Create your account below</div>
+                  <div className="text-center text-red-600 text-sm">Create your account below</div>
                   {signupError && (
                     <div className="text-red-500 text-sm text-center">{signupError}</div>
                   )}
                   <form onSubmit={handleSubmitSignUp(onSignUpSubmit)} className="space-y-4">
                     {/* Full Name */}
                     <div className="space-y-2">
-                      <Label htmlFor="fullName" className="text-blue-900 font-medium">
+                      <Label htmlFor="fullName" className="text-red-900 font-medium">
                         Full Name
                       </Label>
                       <Input
                         id="fullName"
                         type="text"
                         placeholder="Enter your full name"
-                        className="border-blue-200 focus:border-blue-900 focus:ring-blue-900"
+                        className="border-blue-200 focus:border-red-900 focus:ring-red-900"
                         {...registerSignUp("fullName", { required: "Full name is required" })}
                       />
                       {errorsSignUp.fullName && (
@@ -320,12 +320,12 @@ export default function Auth() {
                     </div>
                     {/* City Selector */}
                     <div className="space-y-2">
-                      <Label htmlFor="city" className="text-blue-900 font-medium">
+                      <Label htmlFor="city" className="text-red-900 font-medium">
                         City
                       </Label>
                       <select
                         id="city"
-                        className="border border-blue-200 rounded px-3 py-2 w-full focus:border-blue-900 focus:ring-blue-900"
+                        className="border border-blue-200 rounded px-3 py-2 w-full focus:border-red-900 focus:ring-red-900"
                         {...registerSignUp("city", { required: "City is required" })}
                         defaultValue=""
                       >
@@ -343,14 +343,14 @@ export default function Auth() {
                       )}
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="signup-email" className="text-blue-900 font-medium">
+                      <Label htmlFor="signup-email" className="text-red-900 font-medium">
                         Email
                       </Label>
                       <Input
                         id="signup-email"
                         type="text"
                         placeholder="Enter your email or phone number"
-                        className="border-blue-200 focus:border-blue-900 focus:ring-blue-900"
+                        className="border-blue-200 focus:border-red-900 focus:ring-red-900"
                         {...registerSignUp("email", {
                           required: "Email or Phone is required",
                           pattern: {
@@ -365,7 +365,7 @@ export default function Auth() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="phoneNumber" className="text-blue-900 font-medium">
+                      <Label htmlFor="phoneNumber" className="text-red-900 font-medium">
                         Phone Number
                       </Label>
                       <PhoneInput
@@ -373,7 +373,7 @@ export default function Auth() {
                         countryCodeEditable={false}
                         value={watchSignUp("phoneNumber") || ""}
                         onChange={(phone) => setValueSignUp("phoneNumber", phone)}
-                        inputClass="border-blue-200 focus:border-blue-900 focus:ring-blue-900 w-full"
+                        inputClass="border-red-200 focus:border-red-900 focus:ring-red-900 w-full"
                         placeholder="Enter phone number"
                       />
                       {errorsSignUp.phoneNumber && (
@@ -382,14 +382,14 @@ export default function Auth() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="address" className="text-blue-900 font-medium">
+                      <Label htmlFor="address" className="text-red-900 font-medium">
                         Address
                       </Label>
                       <Input
                         id="address"
                         type="text"
                         placeholder="Enter your address"
-                        className="border-blue-200 focus:border-blue-900 focus:ring-blue-900"
+                        className="border-red-200 focus:border-red-900 focus:ring-red-900"
                         {...registerSignUp("address", { required: "Address is required" })}
                       />
                       {errorsSignUp.address && (
@@ -398,14 +398,14 @@ export default function Auth() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="signup-password" className="text-blue-900 font-medium">
+                      <Label htmlFor="signup-password" className="text-red-900 font-medium">
                         Password
                       </Label>
                       <Input
                         id="signup-password"
                         type="password"
                         placeholder="Enter your password"
-                        className="border-blue-200 focus:border-blue-900 focus:ring-blue-900"
+                        className="border-blue-200 focus:border-red-900 focus:ring-red-900"
                         {...registerSignUp("password", {
                           required: "Password is required",
                           minLength: {
@@ -420,14 +420,14 @@ export default function Auth() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="confirmPassword" className="text-blue-900 font-medium">
+                      <Label htmlFor="confirmPassword" className="text-red-900 font-medium">
                         Confirm Password
                       </Label>
                       <Input
                         id="confirmPassword"
                         type="password"
                         placeholder="Confirm your password"
-                        className="border-blue-200 focus:border-blue-900 focus:ring-blue-900"
+                        className="border-red-200 focus:border-red-900 focus:ring-red-900"
                         {...registerSignUp("confirmPassword", {
                           required: "Please confirm your password",
                           validate: (value) => value === signUpPassword || "Passwords do not match",
@@ -442,7 +442,7 @@ export default function Auth() {
 
                     <Button 
                       type="submit" 
-                      className="w-full bg-blue-900 hover:bg-blue-800 text-white h-11 font-medium"
+                      className="w-full bg-red-900 hover:bg-red-800 text-white h-11 font-medium rounded-none"
                       disabled={createUserMutation.isPending}
                     >
                       {createUserMutation.isPending ? "Creating Account..." : "Create Account"}

@@ -83,7 +83,7 @@ export default function ProductList({ products, category, brand, title, hideTitl
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       {/* Title and Filter Row */}
       <div className="max-w-7xl mx-auto flex flex-row justify-between items-center mb-8 gap-4">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+        <h1 className="text-2xl sm:text-3xl font-medium text-gray-900">
           {title || "Products"}
         </h1>
         {!hideSort && (
@@ -131,7 +131,7 @@ export default function ProductList({ products, category, brand, title, hideTitl
         ) : (
           <div className="flex flex-col items-center justify-center py-20">
             <PackageSearch className="w-20 h-20 text-gray-300 mb-4" />
-            <p className="text-2xl font-semibold text-gray-700 mb-2">No Products Found</p>
+            <p className="text-2xl font-medium text-gray-700 mb-2">No Products Found</p>
             <p className="text-gray-500 text-base">Sorry, we couldn&apos;t find any products matching your search.</p>
           </div>
         )}

@@ -85,7 +85,7 @@ export default function NewProducts({ products, limit }: NewProductsProps) {
       <section className="w-full py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">New Arrivals</h2>
+            <h2 className="text-3xl font-medium text-gray-900">New Arrivals</h2>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
             {[...Array(4)].map((_, index) => (
@@ -109,7 +109,7 @@ export default function NewProducts({ products, limit }: NewProductsProps) {
       <section className="w-full py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">New Arrivals</h2>
+            <h2 className="text-3xl font-medium text-gray-900 mb-4">New Arrivals</h2>
             <p className="text-gray-600">Failed to load products. Please try again later.</p>
           </div>
         </div>
@@ -123,7 +123,7 @@ export default function NewProducts({ products, limit }: NewProductsProps) {
       <section className="w-full py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">New Arrivals</h2>
+            <h2 className="text-3xl font-medium text-gray-900">New Arrivals</h2>
           </div>
           <div className="flex flex-col items-center justify-center py-20 px-4">
             <div className="relative mb-8">
@@ -137,7 +137,7 @@ export default function NewProducts({ products, limit }: NewProductsProps) {
               </div>
             </div>
             <div className="text-center max-w-md">
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">No New Arrivals</h3>
+              <h3 className="text-2xl font-medium text-gray-800 mb-3">No New Arrivals</h3>
               <p className="text-gray-600 text-lg mb-6 leading-relaxed">
                 We&apos;re carefully curating fresh products for you. 
                 Check back soon for exciting new arrivals and latest additions!
@@ -159,7 +159,7 @@ export default function NewProducts({ products, limit }: NewProductsProps) {
       <div className="container mx-auto px-4">
         {/* Header with title and see all link */}
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold text-gray-900">New Arrivals</h2>
+          <h2 className="text-3xl font-medium text-gray-900">New Arrivals</h2>
           {hasMoreProducts && (
             <Link
               href="/new_arrivals"
@@ -178,7 +178,7 @@ export default function NewProducts({ products, limit }: NewProductsProps) {
           ))}
         </div>
 
-        {/* Mobile See All Button - only show if hasMoreProducts and on mobile */}
+        {/* Mobile See All Button - only show if hasMoreProducts and on mobile
         {hasMoreProducts && (
           <div className="flex justify-center mt-8 sm:hidden">
             <Link
@@ -189,7 +189,7 @@ export default function NewProducts({ products, limit }: NewProductsProps) {
               <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
-        )}
+        )} */}
       </div>
     </section>
   )

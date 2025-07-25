@@ -25,7 +25,7 @@ export default function ContactPage() {
 
     const formData = new FormData(event.currentTarget)
     formData.append("access_key", "7d037a13-6feb-4687-918c-5627f3ffb6a9")
-    formData.append("subject", "New Contact Form Submission from DataCellular")
+    formData.append("subject", "New Contact Form Submission from imobile")
     formData.append("to", "Milhaaninternational352@gmail.com")
 
     const object = Object.fromEntries(formData)
@@ -172,7 +172,7 @@ export default function ContactPage() {
             <Card className="bg-white shadow-lg">
               <CardContent className="p-0">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1291.8121532046882!2d79.87186981893996!3d6.947121472952352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae258f8c59590b3%3A0xb47671009176ad36!2s58%20Samagipura%20Ln%2C%20Colombo%2001400!5e1!3m2!1sen!2slk!4v1752673606684!5m2!1sen!2slk"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d82677.57942935391!2d79.7081001433594!3d6.938006199999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25922fc4ba89f%3A0xbed257c544a4827e!2siMobile.lk!5e1!3m2!1sen!2slk!4v1753471060886!5m2!1sen!2slk"
                   width="100%"
                   height="450"
                   style={{ border: 0 }}
@@ -201,7 +201,7 @@ export default function ContactPage() {
               <CardContent className="p-6 text-center space-y-4">
                 <Phone className="h-10 w-10 text-slate-900 mx-auto" />
                 <h3 className="text-lg font-semibold text-gray-900">Phone</h3>
-                <p className="text-gray-600">+94 (76) 6623624</p>
+                <p className="text-gray-600">(+94) 76 613 8363</p>
                 <p className="text-gray-600">Mon-Sun, 24 Hrs</p>
               </CardContent>
             </Card>
@@ -209,7 +209,7 @@ export default function ContactPage() {
               <CardContent className="p-6 text-center space-y-4">
                 <Mail className="h-10 w-10 text-slate-900 mx-auto" />
                 <h3 className="text-lg font-semibold text-gray-900">Email</h3>
-                <p className="text-gray-600">milhaaninternational352@gmail.com</p>
+                <p className="text-gray-600">support@imobiles.lk</p>
                 <p className="text-gray-600">24/7 Support</p>
               </CardContent>
             </Card>
@@ -217,8 +217,8 @@ export default function ContactPage() {
               <CardContent className="p-6 text-center space-y-4">
                 <MapPin className="h-10 w-10 text-slate-900 mx-auto" />
                 <h3 className="text-lg font-semibold text-gray-900">Address</h3>
-                <p className="text-gray-600">No.58 samagipura lane </p>
-                <p className="text-gray-600">grandpass, colombo 14</p>
+                <p className="text-gray-600">Unique Complex, </p>
+                <p className="text-gray-600">200 1/1 Main St, Colombo 00100 </p>
               </CardContent>
             </Card>
           </div>

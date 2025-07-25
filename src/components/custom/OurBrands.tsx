@@ -110,8 +110,9 @@ logo: kaiyue,
 
 export default function OurBrands() {
   return (
-    <section className="w-full py-12">
-      <div className="container mx-auto px-4">
+    <div id="brands">
+    <section className="w-full py-12" >
+      <div className="container mx-auto px-4" >
         <Carousel
           opts={{
             align: "start",
@@ -120,8 +121,8 @@ export default function OurBrands() {
           className="w-full"
         >
           {/* Header with title and navigation buttons */}
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">Our Brands</h2>
+          <div className="flex items-center justify-between mb-8" >
+            <h2 className="text-3xl font-medium text-gray-900" >Our Brands</h2>
             <div className="flex items-center gap-2">
               <CarouselPrevious className="static translate-y-0 bg-white border shadow-sm hover:bg-gray-50 h-10 w-10" />
               <CarouselNext className="static translate-y-0 bg-white border shadow-sm hover:bg-gray-50 h-10 w-10" />
@@ -153,5 +154,6 @@ export default function OurBrands() {
         </Carousel>
       </div>
     </section>
+    </div>
   )
 }

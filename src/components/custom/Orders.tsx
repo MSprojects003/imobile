@@ -25,7 +25,7 @@ function Orders() {
   if (userLoading) {
     return (
       <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold text-slate-800 mb-6">Track My Orders</h1>
+        <h1 className="text-2xl font-medium text-slate-800 mb-6">Track My Orders</h1>
         <div className="space-y-4">
           {[1, 2, 3].map((index) => (
             <div key={index} className="border-2 border-slate-800 p-4 mb-4 flex items-center shadow-sm animate-pulse">
