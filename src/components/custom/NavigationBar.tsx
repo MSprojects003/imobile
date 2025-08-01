@@ -232,7 +232,7 @@ export function NavigationBar() {
   return (
     <div className={isDesktop ? "flex flex-col mb-[-70px]" : "flex flex-col"}>
       {/* Top Announcement Bar */}
-      <div className="bg-slate-900 text-white flex items-center justify-between py-2 px-4 text-sm">
+      <div className="bg-red-600 text-white flex items-center justify-between py-2 px-4 text-sm">
         <div className="hidden sm:flex space-x-3">
           <Link href="https://web.facebook.com/iMobileuniqueplaza/?_rdc=1&_rdr#">
             <Facebook className="h-4 w-4" />
