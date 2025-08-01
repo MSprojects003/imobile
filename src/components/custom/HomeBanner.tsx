@@ -43,7 +43,7 @@ export function HomeBanner() {
     );
   }
 
-  if (isError || !banners || banners.length === 0) return <div>No banners found.</div>;
+  if (isError || !banners || banners.length === 0) return <div></div>;
 
   const showNavButtons = banners.length > 1;
 
