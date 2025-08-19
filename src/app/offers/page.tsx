@@ -72,7 +72,7 @@ export default function OffersPage() {
     return (
       <div className="max-w-7xl bg-gray-50 mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Offers</h1>
+          <h1 className="text-3xl font-bold text-left text-gray-900">Clearance</h1>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           {[...Array(8)].map((_, index) => (
@@ -94,7 +94,7 @@ export default function OffersPage() {
     return (
       <div className="max-w-7xl bg-gray-50 mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Offers</h1>
+          <h1 className="text-3xl font-bold text-left text-gray-900 mb-4">Clearance</h1>
           <p className="text-gray-600">Failed to load offers. Please try again later.</p>
         </div>
       </div>
@@ -106,13 +106,13 @@ export default function OffersPage() {
     return (
       <div className="max-w-7xl bg-gray-50 mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Offers</h1>
+          <h1 className="text-3xl font-bold text-left text-gray-900">Clearance</h1>
         </div>
         <div className="flex flex-col items-center justify-center py-16 px-4">
           <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
             <PackageSearch className="w-12 h-12 text-gray-400" />
           </div>
-          <h3 className="text-xl font-semibold text-gray-700 mb-2">No Offers Found</h3>
+          <h3 className="text-xl font-semibold text-gray-700 mb-2">No Clearance Found</h3>
           <p className="text-gray-500 text-center max-w-md">
             We don&apos;t have any active offers at the moment. Check back soon for amazing deals and discounts!
           </p>

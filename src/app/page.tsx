@@ -9,7 +9,9 @@ export default function Home() {
     <div className="bg-gray-50  ">
       <HomeBanner />
       <BusinessLogicCarousel />
-      <NewProducts limit={4} />
+    
+        <NewProducts limit={4} />
+    
       <FeaturedCategories />
       <OurBrands  />
       

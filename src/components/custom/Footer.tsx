@@ -167,7 +167,7 @@ export function Footer() {
                 alt="Developer Logo"
                 width={96}
                 height={96}
-                className="h-24 w-auto rounded-none"
+                className="h-16 w-auto rounded-none"
               />
             </Link>
             <h3 className="text-lg font-semibold text-white mt-2 text-center">Powered by</h3>

@@ -10,7 +10,8 @@ const nextConfig: NextConfig = {
       "ydofhfpabcorhdnjhfcj.supabase.co",
       "deliverypartner.lk",
       "amss.vercel.app",
-      "koombiyodelivery.lk"
+      "koombiyodelivery.lk",
+      "lh3.googleusercontent.com"
     ],
   },
 };

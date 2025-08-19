@@ -1,24 +1,125 @@
-"use client"
+'use client';
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import Image from "next/image"
-import { Award, Heart, Star, Users } from "lucide-react"
-import OurBrands from "@/components/custom/OurBrands"
- 
-import store from "../../pictures/background/store.webp"
-import founder from "../../pictures/profiles/founder.png"
+import React, { useRef, useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import Image from "next/image";
+import { Award, Heart, Star, Users } from "lucide-react";
+import OurBrands from "@/components/custom/OurBrands";
+import Autoplay from "embla-carousel-autoplay";
 
-import bgImage from "../../pictures/background/about-us.jpg"
+import store1 from "../../pictures/background/store.webp";
+import bgImage from "../../pictures/background/about-us.jpg";
+
+// Placeholder team member data (replace with actual data)
+const teamMembers = [
+  {
+    name: "Mohamed Firdous Jalaldeen",
+    position: "Founder & CEO",
+    description: "Over 25 years in the mobile phone industry, driving iMobile’s vision and growth.",
+    image: "https://picsum.photos/200/200?random=1",
+  },
+  {
+    name: "Jane Smith",
+    position: "Head of Marketing",
+    description: "Jane leads our marketing efforts with innovative campaigns and a passion for branding.",
+    image: "https://picsum.photos/200/200?random=2",
+  },
+  {
+    name: "Alex Perera",
+    position: "Lead Developer",
+    description: "Alex builds cutting-edge solutions, ensuring our platform remains top-tier.",
+    image: "https://picsum.photos/200/200?random=3",
+  },
+];
+
+// Carousel component for the Our Story section with autoplay
+const ImageCarousel: React.FC = () => {
+  const carouselRef = useRef<HTMLDivElement>(null); // Ref for DOM element
+  const [emblaApi, setEmblaApi] = React.useState<CarouselApi | undefined>(undefined); // State for Embla API
+
+  // Optional: Use useEffect to access Embla API if needed
+  useEffect(() => {
+    if (emblaApi) {
+      console.log("Embla API initialized for ImageCarousel");
+    }
+  }, [emblaApi]);
+
+  const images = [
+    { src: store1, alt: "Store Image 1" },
+    {
+      src: "https://lh3.googleusercontent.com/p/AF1QipNF7S70TW5wmmVeh9ncFhjI08Id4BPO_H5DF3pY=s1360-w1360-h1020-rw",
+      alt: "Store Image 2",
+    },
+    {
+      src: "https://lh3.googleusercontent.com/p/AF1QipNsb4KbwrgpfFumPPNI2DtikVGwaD5gLtVNdfVK=s1360-w1360-h1020-rw",
+      alt: "Store Image 3",
+    },
+    {
+      src: "https://lh3.googleusercontent.com/p/AF1QipO2KYD9KolKibpWen88fnI2VTTk7qzsOMRE9aeM=s1360-w1360-h1020-rw",
+      alt: "Store Image 4",
+    },
+  ];
+
+  return (
+    <div className="relative w-full max-w-lg mx-auto">
+      <Carousel
+        ref={carouselRef}
+        setApi={setEmblaApi} // Pass the setter function
+        className="w-full"
+        opts={{
+          loop: true,
+        }}
+        plugins={[Autoplay({ delay: 3000 })]}
+      >
+        <CarouselContent>
+          {images.map((image, index) => (
+            <CarouselItem key={index}>
+              <div className="overflow-hidden rounded-lg shadow-lg">
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  width={600}
+                  height={400}
+                  className="object-cover w-full h-auto"
+                />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white/80 hover:bg-white" />
+        <CarouselNext className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white/80 hover:bg-white" />
+      </Carousel>
+    </div>
+  );
+};
+
 export default function AboutPage() {
+  const teamCarouselRef = useRef<HTMLDivElement>(null); // Ref for DOM element
+  const [teamEmblaApi, setTeamEmblaApi] = React.useState<CarouselApi | undefined>(undefined); // State for Embla API
+
+  // Optional: Use useEffect to access Embla API for team carousel if needed
+  useEffect(() => {
+    if (teamEmblaApi) {
+      console.log("Embla API initialized for Team Carousel");
+    }
+  }, [teamEmblaApi]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-white">
       {/* Hero Section with Background Image */}
       <section className="py-16 md:py-24 bg-cover bg-center relative">
-        {/* Background Image with Next.js Image component */}
         <div className="absolute inset-0 w-full h-full">
           <Image
-            src= {bgImage}
+            src={bgImage}
             alt="About Us Background"
             layout="fill"
             objectFit="cover"
@@ -44,13 +145,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
-              <Image
-                src={store}
-                alt="Store image"
-                width={600}
-                height={400}
-                className="rounded-lg shadow-lg object-cover w-full max-w-lg"
-              />
+              <ImageCarousel />
             </div>
             <div className="space-y-6 flex flex-col justify-center">
               <h2 className="text-3xl font-semibold text-gray-900">Our Story</h2>
@@ -58,7 +153,8 @@ export default function AboutPage() {
                 iMobile is a leading importer and wholesaler of high-quality mobile phones and accessories in Sri Lanka. With five branches across Colombo, we are committed to providing the latest products at competitive prices.
               </p>
               <p className="text-gray-600 leading-relaxed">
- Our wide range includes premium accessories and cutting-edge gadgets, catering to the needs of both retailers and individual customers. At iMobile, we combine innovation, reliability, and exceptional service to stay ahead in the mobile industry.              </p>
+                Our wide range includes premium accessories and cutting-edge gadgets, catering to the needs of both retailers and individual customers. At iMobile, we combine innovation, reliability, and exceptional service to stay ahead in the mobile industry.
+              </p>
               <div>
                 <Button className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 text-base">
                   Shop Now
@@ -69,38 +165,57 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Founder Information */}
+      {/* Meet Our Team Section */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 space-y-4">
-            <h2 className="text-3xl font-semibold text-gray-900">Meet Our Founder</h2>
+            <h2 className="text-3xl font-semibold text-gray-900">Meet Our Team</h2>
             <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              The visionary behind imobile, driving innovation and excellence.
+              Meet the dedicated professionals behind iMobile, driving innovation and excellence.
             </p>
           </div>
-          <Card className="max-w-3xl mx-auto bg-white shadow-lg">
-            <CardContent className="p-8 flex flex-col md:flex-row items-center gap-8">
-              <Image
-                src= {founder}
-                alt="Founder"
-                width={200}
-                height={200}
-                className="rounded-none object-cover"
-              />
-              <div className="text-center md:text-left space-y-4">
-                <h3 className="text-2xl font-semibold text-gray-900">Mohamed Shadeer Sadikeen</h3>
-                <p className="text-gray-500 italic">Founder & CEO</p>
-                <p className="text-gray-600 leading-relaxed">
-                  Over 25 years of mobile phone industry helping companies reach their financial and branding goals.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="relative w-full max-w-3xl mx-auto">
+            <Carousel
+              ref={teamCarouselRef}
+              setApi={setTeamEmblaApi} // Pass the setter function
+              className="w-full"
+              opts={{
+                loop: true,
+                align: "start",
+              }}
+              plugins={[Autoplay({ delay: 3000 })]}
+            >
+              <CarouselContent>
+                {teamMembers.map((member, index) => (
+                  <CarouselItem key={index}>
+                    <Card className="bg-white shadow-lg">
+                      <CardContent className="p-8 flex flex-col md:flex-row items-center gap-8">
+                        <Image
+                          src={member.image}
+                          alt={member.name}
+                          width={200}
+                          height={200}
+                          className="rounded-none object-cover"
+                        />
+                        <div className="text-center md:text-left space-y-4">
+                          <h3 className="text-2xl font-semibold text-gray-900">{member.name}</h3>
+                          <p className="text-gray-500 italic">{member.position}</p>
+                          <p className="text-gray-600 leading-relaxed">{member.description}</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white/80 hover:bg-white" />
+              <CarouselNext className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white/80 hover:bg-white" />
+            </Carousel>
+          </div>
         </div>
       </section>
 
-      {/* Delivery Partner Section */}
-      <section className="py-12" id="shipping">
+      {/* Delivery Partner Section (Commented Out) */}
+      {/* <section className="py-12" id="shipping">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <Card className="bg-white shadow-lg max-w-3xl mx-auto">
             <div className="flex flex-col items-center p-8">
@@ -134,7 +249,7 @@ export default function AboutPage() {
             </div>
           </Card>
         </div>
-      </section>
+      </section> */}
 
       {/* Acknowledgments Section */}
       <section className="py-16 bg-gray-50">
@@ -186,8 +301,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Call to Action
-      <section className="py-16 bg-slate-900 text-white">
+      {/* Call to Action (Commented Out) */}
+      {/* <section className="py-16 bg-slate-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <h2 className="text-3xl font-semibold">Join Our Community</h2>
           <p className="text-lg max-w-2xl mx-auto leading-relaxed">
@@ -199,7 +314,7 @@ export default function AboutPage() {
         </div>
       </section> */}
 
-       <OurBrands />
+      <OurBrands />
     </div>
-  )
+  );
 }
