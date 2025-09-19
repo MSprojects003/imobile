@@ -373,8 +373,9 @@ export default function Auth() {
                         countryCodeEditable={false}
                         value={watchSignUp("phoneNumber") || ""}
                         onChange={(phone) => setValueSignUp("phoneNumber", phone)}
-                        inputClass="border-red-200 focus:border-red-900 focus:ring-red-900 w-full"
+                        inputClass="border-red-200 focus:border-red-900 focus:ring-red-900"
                         placeholder="Enter phone number"
+                        inputStyle={{width:230}}
                       />
                       {errorsSignUp.phoneNumber && (
                         <p className="text-red-500 text-sm">{errorsSignUp.phoneNumber.message as string}</p>
