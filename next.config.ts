@@ -11,7 +11,8 @@ const nextConfig: NextConfig = {
       "deliverypartner.lk",
       "amss.vercel.app",
       "koombiyodelivery.lk",
-      "lh3.googleusercontent.com"
+      "lh3.googleusercontent.com",
+      "riltlhtzjxzogdspdpyx.supabase.co",
     ],
   },
 };
