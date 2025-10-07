@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,19 +12,66 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-import { Award, Heart, Star, Users } from "lucide-react";
+import { Award, Heart, Star, Store, Trophy, UsersIcon, ShoppingBag } from "lucide-react";
 import OurBrands from "@/components/custom/OurBrands";
 import Autoplay from "embla-carousel-autoplay";
 
 import store1 from "../../pictures/background/store.webp";
 import bgImage from "../../pictures/background/about-us.jpg";
 
+// Animated Counter Component
+const AnimatedCounter: React.FC<{ 
+  target: number; 
+  duration?: number;
+  prefix?: string;
+  suffix?: string;
+}> = ({ target, duration = 2000, prefix = "", suffix = "" }) => {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          let start = 0;
+          const increment = target / (duration / 16); // 60fps
+          
+          const timer = setInterval(() => {
+            start += increment;
+            if (start >= target) {
+              setCount(target);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(start));
+            }
+          }, 16);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    const element = document.getElementById(`counter-${target}`);
+    if (element) {
+      observer.observe(element);
+    }
+
+    return () => observer.disconnect();
+  }, [target, duration, hasAnimated]);
+
+  return (
+    <span id={`counter-${target}`} className="font-bold text-2xl text-slate-900">
+      {prefix}{count.toLocaleString()}{suffix}
+    </span>
+  );
+};
+
 // Placeholder team member data (replace with actual data)
 const teamMembers = [
   {
     name: "Mohamed Firdous Jalaldeen",
     position: "Founder & CEO",
-    description: "Over 25 years in the mobile phone industry, driving iMobile’s vision and growth.",
+    description: "Over 25 years in the mobile phone industry, driving iMobile&apos;s vision and growth.",
     image: "https://picsum.photos/200/200?random=1",
   },
   {
@@ -214,6 +261,125 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Updated Achievements Section with Real Data */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 space-y-4">
+            <h2 className="text-3xl font-semibold text-gray-900">Our Achievements</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Pioneering mobile retail in Sri Lanka with groundbreaking milestones and nationwide reach.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Sri Lanka&apos;s First Mobile Shop */}
+            <Card className="bg-white shadow-lg border-l-4 border-l-blue-500 hover:shadow-xl transition-shadow duration-300">
+              <CardContent className="p-6 text-center space-y-4">
+                <Trophy className="h-12 w-12 text-blue-500 mx-auto" />
+                <h3 className="text-lg font-semibold text-gray-900">Sri Lanka&apos;s First</h3>
+                <div className="space-y-2">
+                  <div className="text-2xl font-bold text-blue-600">
+                    <AnimatedCounter target={1000} suffix="+" />
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Subscribers Mobile Shop in YouTube - Leading the industry since inception
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Wholesale Customers */}
+            <Card className="bg-white shadow-lg border-l-4 border-l-green-500 hover:shadow-xl transition-shadow duration-300">
+              <CardContent className="p-6 text-center space-y-4">
+                <Store className="h-12 w-12 text-green-500 mx-auto" />
+                <h3 className="text-lg font-semibold text-gray-900">Wholesale Network</h3>
+                <div className="space-y-2">
+                  <div className="text-2xl font-bold text-green-600">
+                    <AnimatedCounter target={100} suffix="+" />
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Partner Shops Islandwide - Strongest wholesale distribution network
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Customer Base */}
+            <Card className="bg-white shadow-lg border-l-4 border-l-purple-500 hover:shadow-xl transition-shadow duration-300">
+              <CardContent className="p-6 text-center space-y-4">
+                <UsersIcon className="h-12 w-12 text-purple-500 mx-auto" />
+                <h3 className="text-lg font-semibold text-gray-900">Satisfied Customers</h3>
+                <div className="space-y-2">
+                  <div className="text-2xl font-bold text-purple-600">
+                    <AnimatedCounter target={50000} suffix="+" />
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Happy Customers - Trusted by thousands across Sri Lanka
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Products Delivered */}
+            <Card className="bg-white shadow-lg border-l-4 border-l-orange-500 hover:shadow-xl transition-shadow duration-300">
+              <CardContent className="p-6 text-center space-y-4">
+                <ShoppingBag className="h-12 w-12 text-orange-500 mx-auto" />
+                <h3 className="text-lg font-semibold text-gray-900">Products Delivered</h3>
+                <div className="space-y-2">
+                  <div className="text-2xl font-bold text-orange-600">
+                    <AnimatedCounter target={250000} suffix="+" />
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Mobile Devices & Accessories - Unmatched product delivery record
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Additional Achievement Stats Row */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardContent className="p-6 text-center space-y-3">
+                <div className="flex items-center justify-center space-x-2">
+                  <Award className="h-8 w-8 text-yellow-500" />
+                  <h4 className="text-md font-semibold text-gray-900">Years of Excellence</h4>
+                </div>
+                <div className="text-xl font-bold text-slate-900">
+                  <AnimatedCounter target={25} suffix="+" />
+                </div>
+                <p className="text-xs text-gray-600">Industry Experience</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardContent className="p-6 text-center space-y-3">
+                <div className="flex items-center justify-center space-x-2">
+                  <Star className="h-8 w-8 text-yellow-400" />
+                  <h4 className="text-md font-semibold text-gray-900">Branches</h4>
+                </div>
+                <div className="text-xl font-bold text-slate-900">
+                  <AnimatedCounter target={5} />
+                </div>
+                <p className="text-xs text-gray-600">Across Colombo</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardContent className="p-6 text-center space-y-3">
+                <div className="flex items-center justify-center space-x-2">
+                  <Heart className="h-8 w-8 text-red-500" />
+                  <h4 className="text-md font-semibold text-gray-900">Customer Rating</h4>
+                </div>
+                <div className="text-xl font-bold text-slate-900">
+                  <AnimatedCounter target={98} suffix="%" />
+                </div>
+                <p className="text-xs text-gray-600">Satisfaction Rate</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Delivery Partner Section (Commented Out) */}
       {/* <section className="py-12" id="shipping">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -250,56 +416,6 @@ export default function AboutPage() {
           </Card>
         </div>
       </section> */}
-
-      {/* Acknowledgments Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 space-y-4">
-            <h2 className="text-3xl font-semibold text-gray-900">Our Achievements</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              We&apos;re proud of the milestones we&apos;ve achieved and the recognition we&apos;ve earned.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="bg-white shadow-lg">
-              <CardContent className="p-6 text-center space-y-4">
-                <Award className="h-12 w-12 text-slate-900 mx-auto" />
-                <h3 className="text-lg font-semibold text-gray-900">Best E-Commerce Platform</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Awarded in 2024 for outstanding user experience and innovation.
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="bg-white shadow-lg">
-              <CardContent className="p-6 text-center space-y-4">
-                <Star className="h-12 w-12 text-slate-900 mx-auto" />
-                <h3 className="text-lg font-semibold text-gray-900">5-Star Customer Rating</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Consistently rated 5 stars by our valued customers.
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="bg-white shadow-lg">
-              <CardContent className="p-6 text-center space-y-4">
-                <Users className="h-12 w-12 text-slate-900 mx-auto" />
-                <h3 className="text-lg font-semibold text-gray-900">Global Community</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Serving customers in over 50 countries worldwide.
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="bg-white shadow-lg">
-              <CardContent className="p-6 text-center space-y-4">
-                <Heart className="h-12 w-12 text-slate-900 mx-auto" />
-                <h3 className="text-lg font-semibold text-gray-900">Sustainability Commitment</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Partnered with eco-friendly brands to promote sustainability.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
 
       {/* Call to Action (Commented Out) */}
       {/* <section className="py-16 bg-slate-900 text-white">
