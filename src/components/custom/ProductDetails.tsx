@@ -14,6 +14,11 @@ import { toast } from "sonner";
 import { updateOrInsertCartBYArgumants } from "@/lib/db/update-or-insert-cart-by-arguments";
 import RelatedProducts from './RelatedProducts';
 import { useRouter } from "next/navigation";
+ 
+import { EasyZoomOnHover } from "easy-magnify";
+ 
+
+
 
 // Interface for database product
 interface DatabaseProduct {
@@ -374,13 +379,49 @@ export default function ViewProduct() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Product Image */}
         <div className="w-full lg:w-1/2">
-          <div className="relative w-full h-80 sm:h-96 bg-gray-50 rounded-xl overflow-hidden shadow-lg">
+        <div className="relative w-full h-80 sm:block md:hidden sm:h-96 bg-gray-50 rounded-xl overflow-hidden shadow-lg">
+          {mainImage ? (
+           <Image
+      src={mainImage}
+      alt={product.name}
+      fill
+      className="object-contain p-2 shadow "
+      
+    />):null}
+    </div>
+
             {mainImage ? (
-              <Image src={mainImage} alt={product.name} fill className="object-contain p-4" />
+              <>  
+            
+    <div className="object-contain md:px-8 hidden z-0 md:block">
+    <EasyZoomOnHover
+      mainImage={{
+          src: mainImage,
+          width: 400,
+          height: 400,
+          
+          alt: "My Product",
+           
+      }}
+      zoomImage={{
+          src: mainImage,
+          width:1200,
+          height: 1200,
+          
+          alt: "My Product Zoom"
+      }}
+      zoomContainerWidth={400}
+      zoomLensScale={2}
+      zoomContainerHeight={400}
+       
+  />
+
+  </div>
+          </>
             ) : null}
-          </div>
+           
           {/* Thumbnail Images */}
-          <div className="flex gap-3 mt-4">
+          <div className="flex gap-3 mt-4 md:pl-8">
             <button
               onClick={() => handleThumbnailClick(product.frontImage)}
               className="relative w-20 h-20 bg-gray-50 Rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
@@ -438,17 +479,17 @@ export default function ViewProduct() {
             </div>
 
             {/* Variants Section */}
-            <div className="space-y-3 border-t py-2">
+            <div className="space-y-3 border-t py-2 z-0">
               <h3 className="text-sm font-semibold text-gray-500">Variants</h3>
               {/* Color Selector */}
-              <div>
+              <div className="z-50">
                 {product.colors.length > 0 ? (
                   <div className="flex gap-3 flex-wrap">
                     {product.colors.map((color) => (
                       <button
                         key={color.code}
                         onClick={() => handleColorChange(color.code)}
-                        className={`w-8 h-8 rounded border-2 transition-all duration-200 relative focus:outline-none flex items-center justify-center
+                        className={`w-8 h-8 rounded border-2 transition-all duration-200   focus:outline-none flex items-center justify-center
                           ${selectedColors.includes(color.code)
                             ? "border-blue-600 ring-2 ring-blue-600 ring-offset-2"
                             : "border-gray-200 hover:border-gray-400"}

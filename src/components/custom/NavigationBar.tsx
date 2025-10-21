@@ -30,6 +30,7 @@ import {
   
   UserCog,
   Badge,
+  Youtube,
 } from "lucide-react";
 
 import logo from "../../pictures/logo.png"; // Adjust path if needed
@@ -55,6 +56,7 @@ import SearchProductsBox from "@/components/custom/SearchProductsBox";
 import { getCartCountByUserId } from "@/lib/db/cart";
 import { cn } from "@/lib/utils";
 import OwnBrand from "./OwnBrand";
+import { FaGoogle , FaTiktok, FaWhatsapp } from "react-icons/fa";
 
 // Basic VisuallyHidden utility for accessibility title
 const VisuallyHidden = ({ children }: { children: React.ReactNode }) => {
@@ -296,13 +298,15 @@ export function NavigationBar() {
 
   const handleBrandClick = (brand: string) => {
     const formatted = brand.toLowerCase().replace(/ /g, '-');
-    router.push(`/brands/${formatted}`);
+    router.push(`/brand/${formatted}`);
   };
 
   const handleDisabledClick = () => {
     router.push("/login");
   };
-
+const phoneNumber = "+94 77 581 1775" // Your WhatsApp number
+  const message = encodeURIComponent("Hello, I have a Discussion from imobile ")
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`
   return (
     <div className={isDesktop ? "flex flex-col mb-[-70px]" : "flex flex-col"}>
       {/* Top Announcement Bar */}
@@ -314,6 +318,19 @@ export function NavigationBar() {
           <Link href="https://www.instagram.com/_abdul_laah_/">
             <Instagram className="h-4 w-4" />
           </Link>
+           <Link href="http://www.youtube.com/@Imobile_lk">
+            <Youtube className="h-4 w-4" />
+          </Link>
+          <Link href="https://www.tiktok.com/@imobile.lk_">
+            <FaTiktok className="h-4 w-4" />
+          </Link>
+           <Link href={whatsappUrl}>
+            <FaWhatsapp className="h-4 w-4" />
+          </Link>
+          <Link href="https://share.google/Rv2Dug43KHRvPxAJ8">
+            <FaGoogle className="h-4 w-4" />
+          </Link>
+        
         </div>
         <div className="flex items-center space-x-2 text-center">
           <span>Unique Complex, 200 1/1 Main St, Colombo</span>

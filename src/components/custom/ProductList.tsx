@@ -4,7 +4,9 @@ import { useState } from "react"
 import ProductCard from "./ProductCard"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext } from "@/components/ui/pagination"
-import { PackageSearch } from "lucide-react"
+
+import Image from "next/image"
+import noProducts from "@/pictures/background/no_products.png"
 
 // Define the Product interface to match database structure
 interface Product {
@@ -130,7 +132,7 @@ export default function ProductList({ products, category, brand, title, hideTitl
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center py-20">
-            <PackageSearch className="w-20 h-20 text-gray-300 mb-4" />
+           <Image src={noProducts} alt="no products found" width={150} height={150} className="w-36 h-36 md:w-48 md:h-48 mb-6" />
             <p className="text-2xl font-medium text-gray-700 mb-2">No Products Found</p>
             <p className="text-gray-500 text-base">Sorry, we couldn&apos;t find any products matching your search.</p>
           </div>

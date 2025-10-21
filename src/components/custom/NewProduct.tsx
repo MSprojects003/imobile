@@ -1,10 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import { ChevronRight, TrendingUp, Clock } from "lucide-react"
+import { ChevronRight} from "lucide-react"
 import ProductCard from "./ProductCard"
 import { getAllProductList } from "@/lib/db/products"
 import { useQuery } from "@tanstack/react-query"
+import Image from "next/image"
+import noProducts from "@/pictures/background/no_products.png"
 
 // Interface matching your database schema
 interface DatabaseProduct {
@@ -127,14 +129,8 @@ export default function NewProducts({ products, limit }: NewProductsProps) {
           </div>
           <div className="flex flex-col items-center justify-center py-20 px-4">
             <div className="relative mb-8">
-              <div className="w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center shadow-lg">
-                <div className="w-24 h-24 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full flex items-center justify-center">
-                  <TrendingUp className="w-12 h-12 text-blue-600" />
-                </div>
-              </div>
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
-                <Clock className="w-4 h-4 text-white" />
-              </div>
+               
+            <Image src={noProducts} alt="no products" width={150} height={150} className="w-36 h-36 md:w-48 md:h-48" />
             </div>
             <div className="text-center max-w-md">
               <h3 className="text-2xl font-medium text-gray-800 mb-3">No New Arrivals</h3>
@@ -142,11 +138,7 @@ export default function NewProducts({ products, limit }: NewProductsProps) {
                 We&apos;re carefully curating fresh products for you. 
                 Check back soon for exciting new arrivals and latest additions!
               </p>
-              <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                <span>New arrivals coming soon</span>
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-              </div>
+              
             </div>
           </div>
         </div>

@@ -62,7 +62,7 @@ export function FeaturedCategories() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
         {/* First three cards - equal width on large screens */}
         {categories.slice(0, 3).map((category, index) => {
-          const formattedCategory = category.title.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-');
+          const formattedCategory = category.alt.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-');
           return (
             <Card key={index} className="relative overflow-hidden group cursor-pointer h-64 md:h-72">
               {/* Background Image */}
@@ -120,7 +120,7 @@ export function FeaturedCategories() {
             </div>
 
             <div className="flex justify-end">
-              <Link href={`/products/${categories[3].title.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}>
+              <Link href={`/products/${categories[3].alt}`}>
                 <Button variant="secondary" className="bg-white/90 text-gray-900 hover:bg-white transition-colors">
                   {categories[3].buttonText}
                 </Button>
@@ -149,7 +149,7 @@ export function FeaturedCategories() {
             </div>
 
             <div className="flex justify-end">
-              <Link href={`/products/${categories[4].title.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}>
+              <Link href={`/products/${categories[4].alt}`}>
                 <Button variant="secondary" className="bg-white/90 text-gray-900 hover:bg-white transition-colors">
                   {categories[4].buttonText}
                 </Button>

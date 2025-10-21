@@ -59,7 +59,7 @@ export function Footer() {
                     <FaTiktok size={18} />
                   </div>
                 </Link>
-                <Link href="#" className="group">
+                <Link href="http://www.youtube.com/@Imobile_lk" className="group">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 transition-colors group-hover:bg-red-600">
                     <Youtube size={18} />
                   </div>
@@ -78,7 +78,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/products/best-sellers" className="text-slate-300 transition-colors hover:text-white">
+                <Link href="/products/best-sellers" className="text-slate-300 transition-colors hover:text-white ">
                   Best Sellers
                 </Link>
               </li>
@@ -214,10 +214,10 @@ export function Footer() {
             <span>Crafted with excellence.</span>
           </div>
           <div className="flex flex-wrap justify-center gap-6 md:justify-end">
-            <Link href="/privacy" className="transition-colors hover:text-white">
+            <Link href="/privacy_policy" className="transition-colors hover:text-white">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="transition-colors hover:text-white">
+            <Link href="/terms_conditions" className="transition-colors hover:text-white">
               Terms of Service
             </Link>
             <Link href="/cookies" className="transition-colors hover:text-white">

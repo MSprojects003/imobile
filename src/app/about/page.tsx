@@ -15,9 +15,11 @@ import Image from "next/image";
 import { Award, Heart, Star, Store, Trophy, UsersIcon, ShoppingBag } from "lucide-react";
 import OurBrands from "@/components/custom/OurBrands";
 import Autoplay from "embla-carousel-autoplay";
-
+import founder   from "@/pictures/profiles/founder.png";
+import abdullah  from "@/pictures/profiles/abdullah.png";
 import store1 from "../../pictures/background/store.webp";
 import bgImage from "../../pictures/background/about-us.jpg";
+import atheef from "@/pictures/profiles/Mohamed Atheef.jpg";
 
 // Animated Counter Component
 const AnimatedCounter: React.FC<{ 
@@ -72,19 +74,19 @@ const teamMembers = [
     name: "Mohamed Firdous Jalaldeen",
     position: "Founder & CEO",
     description: "Over 25 years in the mobile phone industry, driving iMobile&apos;s vision and growth.",
-    image: "https://picsum.photos/200/200?random=1",
+    image:  founder,
   },
   {
-    name: "Jane Smith",
+    name: "Abdullah Firdous",
     position: "Head of Marketing",
-    description: "Jane leads our marketing efforts with innovative campaigns and a passion for branding.",
-    image: "https://picsum.photos/200/200?random=2",
+    description: "Abdullah leads our marketing efforts with innovative campaigns and a passion for branding.",
+    image: abdullah,
   },
   {
-    name: "Alex Perera",
+    name: "Mohamed Atheef",
     position: "Lead Developer",
-    description: "Alex builds cutting-edge solutions, ensuring our platform remains top-tier.",
-    image: "https://picsum.photos/200/200?random=3",
+    description: "Atheef builds cutting-edge solutions, ensuring our platform remains top-tier.",
+    image: atheef,
   },
 ];
 
@@ -272,12 +274,12 @@ export default function AboutPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Sri Lanka&apos;s First Mobile Shop */}
-            <Card className="bg-white shadow-lg border-l-4 border-l-blue-500 hover:shadow-xl transition-shadow duration-300">
+            <Card className="bg-white shadow-lg border-l-4 border-l-red-700 hover:shadow-xl transition-shadow duration-300">
               <CardContent className="p-6 text-center space-y-4">
-                <Trophy className="h-12 w-12 text-blue-500 mx-auto" />
+                <Trophy className="h-12 w-12 text-red-700 mx-auto" />
                 <h3 className="text-lg font-semibold text-gray-900">Sri Lanka&apos;s First</h3>
                 <div className="space-y-2">
-                  <div className="text-2xl font-bold text-blue-600">
+                  <div className="text-2xl font-bold text-red-700">
                     <AnimatedCounter target={1000} suffix="+" />
                   </div>
                   <p className="text-sm text-gray-600 leading-relaxed">
@@ -288,12 +290,12 @@ export default function AboutPage() {
             </Card>
 
             {/* Wholesale Customers */}
-            <Card className="bg-white shadow-lg border-l-4 border-l-green-500 hover:shadow-xl transition-shadow duration-300">
+            <Card className="bg-white shadow-lg border-l-4 border-l-red-700 hover:shadow-xl transition-shadow duration-300">
               <CardContent className="p-6 text-center space-y-4">
-                <Store className="h-12 w-12 text-green-500 mx-auto" />
+                <Store className="h-12 w-12 text-red-700 mx-auto" />
                 <h3 className="text-lg font-semibold text-gray-900">Wholesale Network</h3>
                 <div className="space-y-2">
-                  <div className="text-2xl font-bold text-green-600">
+                  <div className="text-2xl font-bold text-red-700">
                     <AnimatedCounter target={100} suffix="+" />
                   </div>
                   <p className="text-sm text-gray-600 leading-relaxed">
@@ -304,12 +306,12 @@ export default function AboutPage() {
             </Card>
 
             {/* Customer Base */}
-            <Card className="bg-white shadow-lg border-l-4 border-l-purple-500 hover:shadow-xl transition-shadow duration-300">
+            <Card className="bg-white shadow-lg border-l-4 border-l-red-700 hover:shadow-xl transition-shadow duration-300">
               <CardContent className="p-6 text-center space-y-4">
-                <UsersIcon className="h-12 w-12 text-purple-500 mx-auto" />
+                <UsersIcon className="h-12 w-12 text-red-700 mx-auto" />
                 <h3 className="text-lg font-semibold text-gray-900">Satisfied Customers</h3>
                 <div className="space-y-2">
-                  <div className="text-2xl font-bold text-purple-600">
+                  <div className="text-2xl font-bold text-red-700">
                     <AnimatedCounter target={50000} suffix="+" />
                   </div>
                   <p className="text-sm text-gray-600 leading-relaxed">
@@ -320,12 +322,12 @@ export default function AboutPage() {
             </Card>
 
             {/* Products Delivered */}
-            <Card className="bg-white shadow-lg border-l-4 border-l-orange-500 hover:shadow-xl transition-shadow duration-300">
+            <Card className="bg-white shadow-lg border-l-4 border-l-red-700 hover:shadow-xl transition-shadow duration-300">
               <CardContent className="p-6 text-center space-y-4">
-                <ShoppingBag className="h-12 w-12 text-orange-500 mx-auto" />
+                <ShoppingBag className="h-12 w-12 text-red-700 mx-auto" />
                 <h3 className="text-lg font-semibold text-gray-900">Products Delivered</h3>
                 <div className="space-y-2">
-                  <div className="text-2xl font-bold text-orange-600">
+                  <div className="text-2xl font-bold text-red-700">
                     <AnimatedCounter target={250000} suffix="+" />
                   </div>
                   <p className="text-sm text-gray-600 leading-relaxed">
