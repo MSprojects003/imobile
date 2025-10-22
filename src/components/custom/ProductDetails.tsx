@@ -405,8 +405,7 @@ export default function ViewProduct() {
       }}
       zoomImage={{
           src: mainImage,
-          width:1200,
-          height: 1200,
+          
           
           alt: "My Product Zoom"
       }}
