@@ -127,7 +127,7 @@ export default function NewProducts({ products, limit }: NewProductsProps) {
           <div className="mb-8">
             <h2 className="text-3xl font-medium text-gray-900">New Arrivals</h2>
           </div>
-          <div className="flex flex-col items-center justify-center py-20 px-4">
+          <div className="flex flex-col items-center justify-center py-2 px-4">
             <div className="relative mb-8">
                
             <Image src={noProducts} alt="no products" width={150} height={150} className="w-36 h-36 md:w-48 md:h-48" />
