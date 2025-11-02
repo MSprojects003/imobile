@@ -19,7 +19,7 @@ import founder   from "@/pictures/profiles/founder.png";
 import abdullah  from "@/pictures/profiles/abdullah.png";
 import store1 from "../../pictures/background/store.webp";
 import bgImage from "../../pictures/background/about-us.jpg";
-import atheef from "@/pictures/profiles/Mohamed Atheef.jpg";
+import atheef from "@/pictures/profiles/Mohamed Atheef.png";
 
 // Animated Counter Component
 const AnimatedCounter: React.FC<{ 

@@ -277,18 +277,7 @@ export function NavigationBar() {
   ];
 
   const brands = [
-    "Apple",
-    "Samsung",
-    "Google Pixel",
-    "Huawei",
-    "Xiaomi",
-    "OnePlus",
-    "Sony",
-    "Nokia",
-    "Motorola",
-    "Realme",
-    "Oppo",
-    "Vivo",
+    "Lanex","I-Power","JBL"
   ];
 
   const handleCategoryClick = (category: string) => {
@@ -304,9 +293,9 @@ export function NavigationBar() {
   const handleDisabledClick = () => {
     router.push("/login");
   };
-const phoneNumber = "+94 77 581 1775" // Your WhatsApp number
+ 
   const message = encodeURIComponent("Hello, I have a Discussion from imobile ")
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`
+  const whatsappUrl = `https://wa.me/imobile?text=${message}`
   return (
     <div className={isDesktop ? "flex flex-col mb-[-70px]" : "flex flex-col"}>
       {/* Top Announcement Bar */}
@@ -315,7 +304,7 @@ const phoneNumber = "+94 77 581 1775" // Your WhatsApp number
           <Link href="https://web.facebook.com/iMobileuniqueplaza/?_rdc=1&_rdr#">
             <Facebook className="h-4 w-4" />
           </Link>
-          <Link href="https://www.instagram.com/_abdul_laah_/">
+          <Link href="https://www.instagram.com/imobile_lk?igsh=MXdiaDZiOWN3aGprdA%3D%3D&utm_source=qr">
             <Instagram className="h-4 w-4" />
           </Link>
            <Link href="http://www.youtube.com/@Imobile_lk">

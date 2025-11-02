@@ -44,7 +44,7 @@ export function Footer() {
                     <Facebook size={18} />
                   </div>
                 </Link>
-                <Link href="https://www.instagram.com/_abdul_laah_/" className="group">
+                <Link href="https://www.instagram.com/imobile_lk?igsh=MXdiaDZiOWN3aGprdA%3D%3D&utm_source=qr" className="group">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 transition-colors group-hover:bg-pink-600">
                     <Instagram size={18} />
                   </div>
