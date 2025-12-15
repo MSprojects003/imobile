@@ -6,6 +6,10 @@ import { Toaster } from 'sonner';
 import QueryProvider from "@/components/providers/QueryProvider";
 import { Footer } from "@/components/custom/Footer";
 import WhatsApp from "@/components/custom/Whatsapp";
+import SnowfallWrapper from "@/components/custom/SnowFallWarapper";
+  // ✅ Matches your file/component name (camelCase)
+ 
+ 
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,14 +35,19 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      > 
         <QueryProvider>
+          <SnowfallWrapper>
           <NavigationBar />
           <Toaster />
+           
           {children}
+         
           <WhatsApp/>
             <Footer />
+            </SnowfallWrapper>
         </QueryProvider>
+         
       
       </body>
     </html>

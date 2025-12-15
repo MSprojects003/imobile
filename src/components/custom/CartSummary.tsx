@@ -363,10 +363,10 @@ export default function CartSummary({
                         <div className="hidden lg:block">
                           <div className="grid grid-cols-12 gap-4 pb-4 border-b border-gray-200 text-sm font-medium text-gray-600">
                             <div className="col-span-1">Item</div>
-                            <div className="col-span-5">Name</div>
+                            <div className="col-span-3">Name</div>
                             <div className="col-span-2">Price</div>
-                            <div className="col-span-2">Qty</div>
-                            <div className="col-span-2">Total</div>
+                            <div className="col-span-3">Qty</div>
+                            <div className="col-span-3">Total</div>
                           </div>
                           {localCart.map((item: CartItem) => (
                             <div
@@ -382,7 +382,7 @@ export default function CartSummary({
                                   className="rounded object-cover"
                                 />
                               </div>
-                              <div className="col-span-5">
+                              <div className="col-span-3">
                                 <TooltipProvider>
                                   <Tooltip>
                                     <TooltipTrigger asChild>
@@ -430,7 +430,7 @@ export default function CartSummary({
                                   </p>
                                 )}
                               </div>
-                              <div className="col-span-2">
+                              <div className="col-span-3">
                                 <div className="flex items-center gap-2">
                                   <Button
                                     size="icon"
@@ -455,7 +455,7 @@ export default function CartSummary({
                                   </Button>
                                 </div>
                               </div>
-                              <div className="col-span-2 flex items-center justify-between">
+                              <div className="col-span-3 flex items-center justify-between">
                                 <p className="font-semibold text-red-600">
                                   {formatCurrency(
                                     item.products && Number(item.products.discounted_price) > 0 && Number(item.products.discounted_price) < Number(item.products.price)
@@ -555,7 +555,7 @@ export default function CartSummary({
                                       </span>
                                     )}
                                   </p>
-                                  <div className="flex items-center justify-between mt-3">
+                                  <div className="col items-center justify-between  mt-1">
                                     <div className="flex items-center gap-2">
                                       <Button
                                         size="icon"
