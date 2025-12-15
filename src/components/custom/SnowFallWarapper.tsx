@@ -10,7 +10,7 @@ export default function SnowfallWrapper({ children }: SnowfallWrapperProps) {
   return (
     <>
       {children}
-      {/* Full-viewport overlay for always-visible snow (better than relative for scrolling sites) */}
+      {/* Full-viewport snow overlay */}
       <div
         style={{
           position: 'fixed',
@@ -18,35 +18,19 @@ export default function SnowfallWrapper({ children }: SnowfallWrapperProps) {
           left: 0,
           width: '100vw',
           height: '100vh',
-          pointerEvents: 'none', // Lets clicks pass through to your content
-          zIndex: -1, // Behind everything
+          pointerEvents: 'none', // Clicks pass through
+          zIndex: -1, // Behind all content
         }}
       >
         <Snowfall
-          // DEBUG: Obvious styling to test visibility
-          color="#ff0000" // Bright red flakes (change to "rgba(255, 255, 255, 0.8)" once working)
-          snowflakeCount={50} // Low for testing (no lag)
-          speed={[0.1, 0.5]} // Super slow fall
-          wind={[0, 0]} // No wind for straight drop
-          radius={[3, 6]} // Bigger flakes
-          opacity={[1, 1]} // Fully solid
-          style={{ width: '100%', height: '100%' }} // Force full canvas size
+          color="rgba(255, 255, 255, 0.8)" // Soft white flakes
+          snowflakeCount={100} // Adjust for density (50 for mobile)
+          speed={[0.5, 2]} // Gentle fall
+          wind={[-0.2, 0.2]} // Light breeze
+          radius={[0.5, 1.5]} // Natural sizes
+          opacity={[0.8, 1]} // Varied transparency
+          style={{ width: '100%', height: '100%' }} // Full canvas fill
         />
-      </div>
-      {/* DEBUG: Green badge to confirm component loads */}
-      <div
-        style={{
-          position: 'fixed',
-          top: 10,
-          right: 10,
-          zIndex: 9999,
-          background: 'green',
-          color: 'white',
-          padding: '5px',
-          fontSize: '12px',
-        }}
-      >
-        Snow Loaded! ❄️
       </div>
     </>
   );
