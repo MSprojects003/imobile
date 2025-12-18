@@ -73,7 +73,7 @@ const teamMembers = [
   {
     name: "Mohamed Firdous Jalaldeen",
     position: "Founder & CEO",
-    description: "Over 25 years in the mobile phone industry, driving iMobile&apos;s vision and growth.",
+    description: "Over 10 years in the mobile phone industry, driving iMobile&apos;s vision and growth.",
     image:  founder,
   },
   {
@@ -296,7 +296,7 @@ export default function AboutPage() {
                 <h3 className="text-lg font-semibold text-gray-900">Wholesale Network</h3>
                 <div className="space-y-2">
                   <div className="text-2xl font-bold text-red-700">
-                    <AnimatedCounter target={100} suffix="+" />
+                    <AnimatedCounter target={200} suffix="+" />
                   </div>
                   <p className="text-sm text-gray-600 leading-relaxed">
                     Partner Shops Islandwide - Strongest wholesale distribution network
@@ -347,7 +347,7 @@ export default function AboutPage() {
                   <h4 className="text-md font-semibold text-gray-900">Years of Excellence</h4>
                 </div>
                 <div className="text-xl font-bold text-slate-900">
-                  <AnimatedCounter target={25} suffix="+" />
+                  <AnimatedCounter target={10} suffix="+" />
                 </div>
                 <p className="text-xs text-gray-600">Industry Experience</p>
               </CardContent>
