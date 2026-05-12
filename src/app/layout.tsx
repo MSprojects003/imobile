@@ -45,7 +45,7 @@ export default function RootLayout({
          
           <WhatsApp/>
             <Footer />
-            </SnowfallWrapper>
+            
         </QueryProvider>
          
       
