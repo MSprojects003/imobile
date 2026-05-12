@@ -6,7 +6,7 @@ import { Toaster } from 'sonner';
 import QueryProvider from "@/components/providers/QueryProvider";
 import { Footer } from "@/components/custom/Footer";
 import WhatsApp from "@/components/custom/Whatsapp";
-import SnowfallWrapper from "@/components/custom/SnowFallWarapper";
+ 
   // ✅ Matches your file/component name (camelCase)
  
  
@@ -37,7 +37,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       > 
         <QueryProvider>
-          <SnowfallWrapper>
+           
           <NavigationBar />
           <Toaster />
            
